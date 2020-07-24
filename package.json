@@ -1,8 +1,25 @@
 {
-  "name": "@narrative/core",
-  "version": "0.0.0",
+  "name": "narrative-build",
+  "private": true,
+  "workspaces": [
+    "packages/core"
+  ],
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "yarn run lint:core",
+    "lint:core": "eslint packages/core --ext .js,.jsx,.ts,.tsx",
+    "format": "yarn run format:core",
+    "format:core": "eslint --fix --ext .jsx,.js,.ts,.tsx packages/core/**/*.{js,jsx,ts,tsx}",
+    "test": "jest --config=test/jest.config.js",
+    "jest:clear": "jest --clearCache",
+    "cover": "jest --coverage --config=test/jest.config.js",
+    "ci": "yarn run build && yarn run cover && codecov",
+    "release": "lerna publish",
+    "release:next": "lerna publish --dist-tag next",
+    "deploy": "gh-pages -d dist"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/joe-sky/narrative/nornj.git"
@@ -11,5 +28,76 @@
     "url": "https://github.com/joe-sky/narrative/issues"
   },
   "author": "Joe_Sky <hitomi_doax@sina.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/polyfill": "^7.4.0",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.0.0",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@types/chai": "^4.2.4",
+    "@types/enzyme": "^3.10.3",
+    "@types/jest": "^24.0.22",
+    "@types/jsdom": "^12.2.4",
+    "@types/lodash": "^4.14.148",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "babel-jest": "^26.0.1",
+    "codecov": "^3.7.0",
+    "commitlint": "^8.2.0",
+    "cross-env": "^5.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.5.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "gh-pages": "^2.2.0",
+    "husky": "^3.0.9",
+    "jest": "^24.5.0",
+    "jest-css-modules-transform": "^2.1.1",
+    "jest-environment-enzyme": "^7.0.2",
+    "jest-enzyme": "^7.0.2",
+    "lerna": "^3.18.3",
+    "lint-staged": "^9.4.2",
+    "lodash": "^4.13.1",
+    "prettier": "^1.19.1",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^1.26.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-dts": "^1.1.12",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-license": "^0.8.1",
+    "rollup-plugin-node-resolve": "^5.0.2",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-uglify": "^6.0.2",
+    "typescript": "^3.7.2"
+  },
+  "resolutions": {
+    "eslint": "^6.5.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "packages/core/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "@narrative/core",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/narrative/nornj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/narrative/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT"
+}
