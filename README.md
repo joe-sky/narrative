@@ -10,6 +10,6 @@ npm install @narrative/core
 
 ## The Origin Of Name
 
-🤖 `Narrative Gundam`
+🤖 `Gundam Narrative`
 
 <img src="./public/images/narrative-gundam.jpg" alt="Narrative">

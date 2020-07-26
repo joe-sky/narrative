@@ -2,9 +2,9 @@
   "name": "narrative-build",
   "private": true,
   "workspaces": [
-    "packages/core"
+    "packages/*"
   ],
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "build": "lerna run build",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joe-sky/narrative/nornj.git"
+    "url": "https://github.com/joe-sky/narrative.git"
   },
   "bugs": {
     "url": "https://github.com/joe-sky/narrative/issues"
