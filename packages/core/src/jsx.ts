@@ -1,9 +1,7 @@
-export type H = (type: any, props: Record<string, any>, ...children: any[]) => any;
+export type H<HResult = any> = (type: any, props: Record<string, any>, ...children: any[]) => HResult;
 
-let createElement: H;
-
-export function bind(h: H) {
-  createElement = h;
+export function bind<HResult>(h?: H<HResult>) {
+  return function(type, props) {} as H<HResult>;
 }
 
-export const jsx: H = function(type, props) {};
+export const jsx: H = bind();
