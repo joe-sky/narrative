@@ -2,22 +2,6 @@
   "presets": [["@babel/preset-typescript", { "allowNamespaces": true }], "@babel/preset-env", "@babel/preset-react"],
   "plugins": [
     [
-      "nornj-in-jsx",
-      {
-        "extensionConfig": {
-          "stateBind": {
-            "isDirective": true,
-            "isBindable": true
-          },
-          "bind": {
-            "isDirective": true,
-            "isBindable": true
-          }
-        },
-        "noTaggedTemplates": true
-      }
-    ],
-    [
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true

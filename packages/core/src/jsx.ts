@@ -1,7 +1,16 @@
 export type H<HResult = any> = (type: any, props: Record<string, any>, ...children: any[]) => HResult;
 
+export const tags: Record<string, any> = {};
+
 export function bind<HResult>(h?: H<HResult>) {
-  return function(type, props) {} as H<HResult>;
+  return function(type, props, ...children) {
+    const tagH = tags[type];
+    if (tagH) {
+      return tagH(h, props, ...children);
+    }
+
+    return h && h(type, props, ...children);
+  } as H<HResult>;
 }
 
 export const jsx: H = bind();
