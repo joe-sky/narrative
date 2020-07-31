@@ -3,9 +3,9 @@ import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '../src/index';
 /** @jsx jsx */
-const jsx = nt.bind<React.ReactElement>(React.createElement);
+const jsx = nt.bind<React.ReactElement>(React.createElement, Fragment);
 
-nt.registerTag('if', (h, props, ...children) => {
+nt.registerTag('if', ({ h, Fragment }, props, ...children) => {
   if (props?.condition) {
     return children.length === 1 ? children[0] : h(Fragment, null, children);
   } else {
