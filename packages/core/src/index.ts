@@ -1,2 +1,3 @@
+export * from './interface';
+export * from './register/element';
 export * from './jsx';
-export * from './register/tag';

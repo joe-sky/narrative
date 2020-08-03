@@ -1,9 +1,15 @@
 module.exports = {
   rootDir: '../',
-  collectCoverageFrom: ['packages/core/src/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: [
+    'packages/core/src/**/*.{js,jsx,ts,tsx}',
+    'packages/control-statement/src/**/*.{js,jsx,ts,tsx}'
+  ],
   setupFiles: ['<rootDir>/test/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/node_modules/jest-enzyme/lib/index.js'],
-  testMatch: ['<rootDir>/packages/core/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'],
+  testMatch: [
+    '<rootDir>/packages/core/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
+    '<rootDir>/packages/control-statement/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
+  ],
   testEnvironment: 'enzyme',
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['<rootDir>/node_modules/babel-jest', { configFile: './test/jest.babelrc' }],

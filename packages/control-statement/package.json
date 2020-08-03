@@ -1,0 +1,38 @@
+{
+  "name": "@narrative/control-statement",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/narrative-control-statement.common.js",
+  "module": "dist/narrative-control-statement.esm.js",
+  "unpkg": "dist/narrative-control-statement.js",
+  "jsdelivr": "dist/narrative-control-statement.js",
+  "files": [
+    "dist/",
+    "lib/",
+    "src/",
+    "types/",
+    "index.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "cjs": "cross-env NODE_ENV=cjs rollup -c -o dist/narrative-control-statement.common.js",
+    "esm": "cross-env NODE_ENV=es rollup -c -o dist/narrative-control-statement.esm.js",
+    "umd": "cross-env NODE_ENV=development rollup -c -o dist/narrative-control-statement.js",
+    "min": "cross-env NODE_ENV=production rollup -c -o dist/narrative-control-statement.min.js",
+    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "dts": "cross-env TYPE=dts NODE_ENV=es rollup -c -o types/narrative-control-statement.d.ts",
+    "build": "yarn run cjs && yarn run esm && yarn run umd && yarn run min && yarn run lib && yarn run dts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/narrative.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/narrative/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@narrative/core": "^0.0.1"
+  }
+}

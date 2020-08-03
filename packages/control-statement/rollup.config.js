@@ -12,9 +12,17 @@ const type = process.env.TYPE;
 let config;
 
 if (type !== 'dts') {
+  const external = ['@narrative/core'];
+
   config = {
     input: './src/index.ts',
-    output: { name: 'Narrative' },
+    output: {
+      name: 'NtControlStatement',
+      globals: {
+        '@narrative/core': 'Narrative'
+      }
+    },
+    external,
     plugins: [
       babel({
         babelrc: false,
@@ -73,7 +81,7 @@ if (type !== 'dts') {
           {
             src: 'types/dist.definition.ts',
             dest: 'dist',
-            rename: `${env === 'cjs' ? 'narrative-core.common' : 'narrative-core.esm'}.d.ts`
+            rename: `${env === 'cjs' ? 'narrative-control-statement.common' : 'narrative-control-statement.esm'}.d.ts`
           }
         ]
       })
@@ -90,7 +98,7 @@ if (type !== 'dts') {
 config.plugins.push(
   license({
     banner: `/*!
- * @narrative/core v${require('../../package.json').version}
+ * @narrative/control-statement v${require('../../package.json').version}
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */`
