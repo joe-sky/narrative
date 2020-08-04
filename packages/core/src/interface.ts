@@ -15,3 +15,11 @@ export interface DelegateOption {
   alias?: string[];
   [key: string]: any;
 }
+
+export type JSXNode = JSX.Element | string | number | boolean | null | undefined;
+
+export type JSXChild = JSXNode | Array<JSXNode>;
+
+export interface Childrenable {
+  children?: JSXChild;
+}

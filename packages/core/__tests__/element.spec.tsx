@@ -6,11 +6,7 @@ import * as nt from '../src/index';
 /** @jsx jsx */
 const jsx = nt.bind<React.ReactElement>(React.createElement, React.Fragment);
 
-nt.registerElement('p-in-div', ({ h, fragment }, props, ...children) => (
-  <div {...props}>
-    <p>{h(fragment, null, ...children)}</p>
-  </div>
-));
+nt.registerElement('p-in-div', ({ h }, props, ...children) => <div {...props}>{h('p', null, ...children)}</div>);
 
 const TestPinDiv = props => {
   return <p-in-div>test</p-in-div>;

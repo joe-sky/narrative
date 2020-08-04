@@ -1,9 +1,7 @@
 declare namespace JSX {
   namespace NT {
-    type Children = Element | string | number | boolean | null | typeof undefined;
-
     interface Childrenable {
-      children?: Children | Children[];
+      children?: Narrative.JSXChild;
     }
 
     interface If extends Childrenable {
@@ -17,7 +15,7 @@ declare namespace JSX {
     interface Else extends Childrenable {}
 
     interface Switch extends Childrenable {
-      value: any;
+      expression: any;
     }
 
     interface Case extends Childrenable {
@@ -26,17 +24,11 @@ declare namespace JSX {
 
     interface Default extends Childrenable {}
 
-    interface Each<T = any> extends Childrenable {
-      of: Iterable<T> | string;
-      item?: string;
-      index?: string;
-      $key?: string;
-      first?: string;
-      last?: string;
-    }
-
-    interface With extends Childrenable {
-      [id: string]: any;
+    interface For<T = any> {
+      of: Iterable<T> | ArrayLike<T> | null | undefined;
+      children:
+        | NtControlStatement.ForCallback<T, number>
+        | (NtControlStatement.ForCallback<T, number> | Narrative.JSXNode)[];
     }
 
     interface Empty extends Childrenable {}
@@ -123,42 +115,38 @@ declare namespace JSX {
     /**
      * Narrative Custom Element `each`, example:
      *
-     * `<each of={[1, 2, 3]}><i key={index}>{item}</i></each>`
+     * `<for of={[1, 2, 3]}><i key={index}>{item}</i></for>`
      */
-    each: NT.Each;
+    for: NT.For;
 
     /**
      * Narrative Custom Element `each`, example:
      *
-     * `<nt-each of={[1, 2, 3]}><i key={index}>{item}</i></nt-each>`
+     * `<nt-for of={[1, 2, 3]}><i key={index}>{item}</i></nt-for>`
      */
-    'nt-each': NT.Each;
+    'nt-for': NT.For;
 
     /**
      * Narrative Custom Element `empty`, example:
      *
-     * `<each of={[1, 2, 3]}><i key={index}>{item}</i><empty>nothing</empty></each>`
+     * `<for of={[1, 2, 3]}><i key={index}>{item}</i><empty>nothing</empty></for>`
      */
     empty: NT.Empty;
 
     /**
      * Narrative Custom Element `empty`, example:
      *
-     * `<nt-each of={[1, 2, 3]}><i key={index}>{item}</i><nt-empty>nothing</nt-empty></nt-each>`
+     * `<nt-for of={[1, 2, 3]}><i key={index}>{item}</i><nt-empty>nothing</nt-empty></nt-for>`
      */
     'nt-empty': NT.Empty;
 
-    for: NT.Each;
+    each: NT.For;
 
-    'nt-for': NT.Each;
-
-    with: NT.With;
-
-    'nt-with': NT.With;
+    'nt-each': NT.For;
   }
 
   interface IntrinsicAttributes {
-    children?: NT.Children | NT.Children[];
+    children?: Narrative.JSXChild;
 
     /**
      * Narrative Custom Attribute `ntShow`, example:

@@ -10,9 +10,9 @@ interface ParseChildrenResult {
 function parseChildren(children: Children) {
   const ret: ParseChildrenResult = { then: [], else: null, elseifs: [] };
   children.forEach(child => {
-    if (child.ntElse) {
+    if (child?.ntElse) {
       ret.else = child.ntElse;
-    } else if (child.ntElseif) {
+    } else if (child?.ntElseif) {
       ret.elseifs.push(child);
     } else {
       ret.then.push(child);
@@ -39,7 +39,7 @@ registerElement(
             ret = elseif.ntElseif();
             return false;
           } else if (i === l - 1) {
-            ret = _children?.else();
+            ret = _children.else?.();
           }
         },
         true
@@ -47,7 +47,7 @@ registerElement(
 
       return ret;
     } else {
-      return _children?.else();
+      return _children.else?.();
     }
   },
   { alias: ['nt-if'] }
@@ -62,7 +62,7 @@ registerElement(
       }
     };
   },
-  { alias: ['nt-else'] }
+  { alias: ['nt-else', 'empty', 'nt-empty', 'default', 'nt-default'] }
 );
 
 registerElement(

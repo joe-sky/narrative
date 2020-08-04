@@ -3,6 +3,8 @@
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
+/// <reference types="react" />
+
 declare type Props = Record<string, any>;
 declare type Children = any[];
 declare type H<HResult = any> = (type: any, props: Props, ...children: Children) => HResult;
@@ -14,6 +16,11 @@ interface DelegateProps<HResult = any, HFragment = Fragment> {
 interface DelegateOption {
   alias?: string[];
   [key: string]: any;
+}
+declare type JSXNode = JSX.Element | string | number | boolean | null | undefined;
+declare type JSXChild = JSXNode | Array<JSXNode>;
+interface Childrenable {
+  children?: JSXChild;
 }
 
 interface ElementDelegate<HResult = any, HFragment = Fragment> {
@@ -33,11 +40,14 @@ declare const jsx: H;
 
 export {
   Children,
+  Childrenable,
   DelegateOption,
   DelegateProps,
   ElementDelegate,
   Fragment,
   H,
+  JSXChild,
+  JSXNode,
   Props,
   adjustChildren,
   bind,
