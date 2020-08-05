@@ -31,5 +31,8 @@
     "url": "https://github.com/joe-sky/narrative/issues"
   },
   "author": "Joe_Sky <hitomi_doax@sina.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
