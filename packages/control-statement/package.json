@@ -1,6 +1,6 @@
 {
   "name": "@narrative/control-statement",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/narrative-control-statement.common.js",
   "module": "dist/narrative-control-statement.esm.js",
@@ -33,6 +33,6 @@
   "author": "Joe_Sky <hitomi_doax@sina.com>",
   "license": "MIT",
   "devDependencies": {
-    "@narrative/core": "^0.1.1"
+    "@narrative/core": "^0.1.2"
   }
 }
