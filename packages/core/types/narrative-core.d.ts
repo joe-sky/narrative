@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.0.1
+ * @narrative/core v0.1.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -26,17 +26,18 @@ interface Childrenable {
 interface ElementDelegate<HResult = any, HFragment = Fragment> {
   (delegateProps: DelegateProps<HResult, HFragment>, props: Props, ...children: Children): any;
 }
-declare const elements: Record<string, ElementDelegate>;
+declare const elements: Map<string | ElementDelegate, ElementDelegate>;
 declare const elementOptions: Map<ElementDelegate, DelegateOption>;
 declare function registerElement<HResult = any, HFragment = Fragment>(
   name: string,
   delegate: ElementDelegate<HResult, HFragment>,
   options?: DelegateOption
-): void;
+): any;
 
 declare function bind<HResult>(h?: H<HResult>, fragment?: Fragment): H<HResult>;
 declare function adjustChildren(children: Children, delegateProps?: DelegateProps): any;
 declare const jsx: H;
+declare function jsxValue<T = any>(jsxElement: JSX.Element): T;
 
 export {
   Children,
@@ -54,5 +55,6 @@ export {
   elementOptions,
   elements,
   jsx,
+  jsxValue,
   registerElement
 };

@@ -30,7 +30,15 @@ function parseChildren(children: Children) {
   return ret;
 }
 
-registerElement(
+/**
+ * Narrative Custom Element `for`, example:
+ *
+ * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
+ */
+export const For: <T>(props: {
+  of: Iterable<T> | ArrayLike<T> | null | undefined;
+  children: ForCallback<T, number> | (ForCallback<T, number> | Narrative.JSXNode)[];
+}) => JSX.Element = registerElement(
   'for',
   (_, props, ...children) => {
     const _children = parseChildren(children);
@@ -67,3 +75,10 @@ registerElement(
   },
   { alias: ['nt-for', 'each', 'nt-each'] }
 );
+
+/**
+ * Narrative Custom Element `each`, example:
+ *
+ * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
+ */
+export const Each = For;

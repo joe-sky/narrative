@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 import * as nt from '../src/index';
 
 /** @jsx jsx */
-const jsx = nt.bind<React.ReactElement>(React.createElement, React.Fragment);
+const jsx = nt.bind(React.createElement, React.Fragment);
 
 nt.registerElement('p-in-div', ({ h }, props, ...children) => <div {...props}>{h('p', null, ...children)}</div>);
 

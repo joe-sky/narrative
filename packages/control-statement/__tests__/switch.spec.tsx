@@ -5,7 +5,7 @@ import * as nt from '@narrative/core';
 import '../src/index';
 
 /** @jsx jsx */
-const jsx = nt.bind<React.ReactElement>(React.createElement, React.Fragment);
+const jsx = nt.bind(React.createElement, React.Fragment);
 
 const TestSwitch = props => {
   return (

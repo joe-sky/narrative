@@ -5,11 +5,11 @@ declare namespace JSX {
     }
 
     interface If extends Childrenable {
-      condition: boolean | number | string;
+      condition: any;
     }
 
     interface Elseif extends Childrenable {
-      condition: boolean | number | string;
+      condition: any;
     }
 
     interface Else extends Childrenable {}
@@ -78,65 +78,65 @@ declare namespace JSX {
     'nt-else': NT.Else;
 
     /**
-     * Narrative Custom Element `Switch`, example:
+     * Narrative Custom Element `switch`, example:
      *
-     * `<nt-switch value={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><nt-default>nothing</nt-default></nt-switch>`
+     * `<nt-switch expression={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><nt-default>nothing</nt-default></nt-switch>`
      */
     'nt-switch': NT.Switch;
 
     /**
      * Narrative Custom Element `case`, example:
      *
-     * `<switch value={foo}><case value={1}><input /></case><case value={2}><input type="button" /></case><default>nothing</default></switch>`
+     * `<switch expression={foo}><case value={1}><input /></case><case value={2}><input type="button" /></case><default>nothing</default></switch>`
      */
     case: NT.Case;
 
     /**
      * Narrative Custom Element `case`, example:
      *
-     * `<nt-switch value={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><nt-default>nothing</nt-default></nt-switch>`
+     * `<nt-switch expression={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><nt-default>nothing</nt-default></nt-switch>`
      */
     'nt-case': NT.Case;
 
     /**
      * Narrative Custom Element `default`, example:
      *
-     * `<switch value={foo}><case value={1}><input /></case><case value={2}><input type="button" /></case><default>nothing</default></switch>`
+     * `<switch expression={foo}><case value={1}><input /></case><case value={2}><input type="button" /></case><default>nothing</default></switch>`
      */
     default: NT.Default;
 
     /**
      * Narrative Custom Element `default`, example:
      *
-     * `<nt-switch value={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><n-default>nothing</nt-default></nt-switch>`
+     * `<nt-switch expression={foo}><nt-case value={1}><input /></nt-case><nt-case value={2}><input type="button" /></nt-case><n-default>nothing</nt-default></nt-switch>`
      */
     'nt-default': NT.Default;
 
     /**
-     * Narrative Custom Element `each`, example:
+     * Narrative Custom Element `for`, example:
      *
-     * `<for of={[1, 2, 3]}><i key={index}>{item}</i></for>`
+     * `<for of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</for>`
      */
     for: NT.For;
 
     /**
-     * Narrative Custom Element `each`, example:
+     * Narrative Custom Element `for`, example:
      *
-     * `<nt-for of={[1, 2, 3]}><i key={index}>{item}</i></nt-for>`
+     * `<nt-for of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</nt-for>`
      */
     'nt-for': NT.For;
 
     /**
      * Narrative Custom Element `empty`, example:
      *
-     * `<for of={[1, 2, 3]}><i key={index}>{item}</i><empty>nothing</empty></for>`
+     * `<for of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<empty>nothing</empty></for>`
      */
     empty: NT.Empty;
 
     /**
      * Narrative Custom Element `empty`, example:
      *
-     * `<nt-for of={[1, 2, 3]}><i key={index}>{item}</i><nt-empty>nothing</nt-empty></nt-for>`
+     * `<nt-for of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<nt-empty>nothing</nt-empty></nt-for>`
      */
     'nt-empty': NT.Empty;
 
@@ -146,8 +146,6 @@ declare namespace JSX {
   }
 
   interface IntrinsicAttributes {
-    children?: Narrative.JSXChild;
-
     /**
      * Narrative Custom Attribute `ntShow`, example:
      *

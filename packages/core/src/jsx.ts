@@ -3,12 +3,12 @@ import { elements } from './register/element';
 
 export function bind<HResult>(h?: H<HResult>, fragment?: Fragment) {
   return function(type, props, ...children) {
-    const elH = elements[type];
-    if (elH) {
-      return elH({ h, fragment }, props, ...children);
+    const elDelegate = elements.get(type);
+    if (elDelegate) {
+      return elDelegate({ h, fragment }, props, ...children);
     }
 
-    return h && h(type, props, ...children);
+    return h?.(type, props, ...children);
   } as H<HResult>;
 }
 
@@ -21,3 +21,7 @@ export function adjustChildren(children: Children, delegateProps?: DelegateProps
 }
 
 export const jsx: H = bind();
+
+export function jsxValue<T = any>(jsxElement: JSX.Element) {
+  return (jsxElement as any) as T;
+}

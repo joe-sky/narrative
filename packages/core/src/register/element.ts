@@ -4,7 +4,7 @@ export interface ElementDelegate<HResult = any, HFragment = Fragment> {
   (delegateProps: DelegateProps<HResult, HFragment>, props: Props, ...children: Children): any;
 }
 
-export const elements: Record<string, ElementDelegate> = {};
+export const elements: Map<string | ElementDelegate, ElementDelegate> = new Map();
 export const elementOptions: Map<ElementDelegate, DelegateOption> = new Map();
 
 export function registerElement<HResult = any, HFragment = Fragment>(
@@ -12,10 +12,13 @@ export function registerElement<HResult = any, HFragment = Fragment>(
   delegate: ElementDelegate<HResult, HFragment>,
   options: DelegateOption = {}
 ) {
-  elements[name] = delegate;
+  elements.set(name, delegate);
+  elements.set(delegate, delegate);
+  elementOptions.set(delegate, options);
+
   if (options.alias) {
-    options.alias.forEach(_alias => (elements[_alias] = delegate));
+    options.alias.forEach(_alias => elements.set(_alias, delegate));
   }
 
-  elementOptions.set(delegate, options);
+  return delegate as any;
 }

@@ -19,29 +19,42 @@ function parseChildren(children: Children) {
   return ret;
 }
 
-registerElement('nt-switch', (_, props, ...children) => {
-  const _children = parseChildren(children);
-  const value = props?.expression;
-  const l = _children.cases.length;
-  let ret = null;
+/**
+ * Narrative Custom Element `switch`, example:
+ *
+ * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ */
+export const Switch: (props: { expression: any }) => JSX.Element = registerElement(
+  'nt-switch',
+  (_, props, ...children) => {
+    const _children = parseChildren(children);
+    const value = props?.expression;
+    const l = _children.cases.length;
+    let ret = null;
 
-  each(
-    _children.cases,
-    (_case, i) => {
-      if (value === _case.value) {
-        ret = _case.ntCase();
-        return false;
-      } else if (i === l - 1) {
-        ret = _children.default?.();
-      }
-    },
-    true
-  );
+    each(
+      _children.cases,
+      (_case, i) => {
+        if (value === _case.value) {
+          ret = _case.ntCase();
+          return false;
+        } else if (i === l - 1) {
+          ret = _children.default?.();
+        }
+      },
+      true
+    );
 
-  return ret;
-});
+    return ret;
+  }
+);
 
-registerElement(
+/**
+ * Narrative Custom Element `case`, example:
+ *
+ * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ */
+export const Case: (props: { value: any }) => JSX.Element = registerElement(
   'case',
   (_, props, ...children) => {
     return {

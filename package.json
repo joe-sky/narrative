@@ -2,9 +2,10 @@
   "name": "narrative-build",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/core",
+    "packages/control-statement"
   ],
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "build": "lerna run build",
@@ -17,8 +18,7 @@
     "cover": "jest --coverage --config=test/jest.config.js",
     "ci": "yarn run build && yarn run cover && codecov",
     "release": "lerna publish",
-    "release:next": "lerna publish --dist-tag next",
-    "deploy": "gh-pages -d dist"
+    "release:next": "lerna publish --dist-tag next"
   },
   "repository": {
     "type": "git",
@@ -96,6 +96,10 @@
   },
   "lint-staged": {
     "packages/core/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "packages/control-statement/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "git add"
     ]
