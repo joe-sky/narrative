@@ -68,7 +68,7 @@
     "jest-environment-enzyme": "^7.0.2",
     "jest-enzyme": "^7.0.2",
     "lerna": "^3.18.3",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^10.2.11",
     "lodash": "^4.13.1",
     "prettier": "^1.19.1",
     "react": "^16.11.0",
