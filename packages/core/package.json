@@ -1,6 +1,6 @@
 {
   "name": "@narrative/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/narrative-core.common.js",
   "module": "dist/narrative-core.esm.js",
