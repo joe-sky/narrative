@@ -15,6 +15,28 @@
 npm install @narrative/core
 ```
 
+## Usage
+
+React/Preact:
+
+```js
+import React from 'react';
+import * as nt from '@narrative/core';
+
+/** @jsx ntH */
+const ntH = nt.bind(React.createElement, React.Fragment);
+```
+
+Vue(v3 only):
+
+```js
+import * as Vue from 'vue';
+import * as nt from '@narrative/core';
+
+/** @jsx ntH */
+const ntH = nt.bind(Vue.h);
+```
+
 ## The Origin Of Name
 
 🤖 `Narrative Gundam`, ready to launch!

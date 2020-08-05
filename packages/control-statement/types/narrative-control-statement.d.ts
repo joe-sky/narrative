@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.1.3
+ * @narrative/control-statement v0.1.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

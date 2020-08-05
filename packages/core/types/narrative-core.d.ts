@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.1.3
+ * @narrative/core v0.1.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -34,7 +34,7 @@ declare function registerElement<HResult = any, HFragment = Fragment>(
   options?: DelegateOption
 ): any;
 
-declare function bind<HResult>(h?: H<HResult>, fragment?: Fragment): H<HResult>;
+declare function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean): H<HResult>;
 declare function adjustChildren(children: Children, delegateProps?: DelegateProps): any;
 declare const jsx: H;
 declare function jsxValue<T = any>(jsxElement: JSX.Element): T;

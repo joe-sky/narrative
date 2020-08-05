@@ -1,23 +1,34 @@
 import { H, Fragment, DelegateProps, Children } from './interface';
 import { elements } from './register/element';
 
-export function bind<HResult>(h?: H<HResult>, fragment?: Fragment) {
+export function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean) {
   return function(type, props, ...children) {
     const elDelegate = elements.get(type);
     if (elDelegate) {
       return elDelegate({ h, fragment }, props, ...children);
     }
 
-    return h?.(type, props, ...children);
+    if (h) {
+      if (fragment) {
+        return h(type, props, ...children);
+      } else {
+        return h(type, props, children);
+      }
+    }
   } as H<HResult>;
 }
 
 export function adjustChildren(children: Children, delegateProps?: DelegateProps) {
-  return children.length === 1
-    ? children[0]
-    : delegateProps.fragment
-    ? delegateProps.h(delegateProps.fragment, null, children)
-    : children;
+  if (children.length === 1) {
+    return children[0];
+  } else {
+    const { h, fragment } = delegateProps;
+    if (fragment) {
+      return h(fragment, null, ...children);
+    } else {
+      return children;
+    }
+  }
 }
 
 export const jsx: H = bind();
