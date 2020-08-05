@@ -1,16 +1,10 @@
 {
-  "packages": [
-    "packages/core",
-    "packages/control-statement"
-  ],
+  "packages": ["packages/core", "packages/control-statement"],
   "command": {
     "publish": {
       "message": "chore(release): :bookmark: publish %s"
     }
   },
   "version": "0.1.1",
-  "npmClient": "yarn",
-  "publishConfig": {
-    "access": "public"
-  }
+  "npmClient": "yarn"
 }

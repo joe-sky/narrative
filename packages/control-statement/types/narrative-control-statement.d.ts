@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.1.1
+ * @narrative/control-statement v0.1.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -12,6 +12,7 @@ declare const isSet: (obj: any) => boolean;
 declare const isWeakSet: (obj: any) => boolean;
 declare function isArrayLike(obj: any): boolean;
 declare function each(obj: any, func: Function, isArr?: boolean): void;
+
 /**
  * Narrative Custom Element `if`, example:
  *
@@ -71,6 +72,7 @@ declare const Each: <T>(props: {
   of: Iterable<T> | ArrayLike<T>;
   children: ForCallback<T, number> | (string | number | boolean | JSX.Element | ForCallback<T, number>)[];
 }) => JSX.Element;
+
 /**
  * Narrative Custom Element `switch`, example:
  *
