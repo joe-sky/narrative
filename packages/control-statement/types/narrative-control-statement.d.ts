@@ -12,7 +12,6 @@ declare const isSet: (obj: any) => boolean;
 declare const isWeakSet: (obj: any) => boolean;
 declare function isArrayLike(obj: any): boolean;
 declare function each(obj: any, func: Function, isArr?: boolean): void;
-
 /**
  * Narrative Custom Element `if`, example:
  *
@@ -72,7 +71,6 @@ declare const Each: <T>(props: {
   of: Iterable<T> | ArrayLike<T>;
   children: ForCallback<T, number> | (string | number | boolean | JSX.Element | ForCallback<T, number>)[];
 }) => JSX.Element;
-
 /**
  * Narrative Custom Element `switch`, example:
  *
