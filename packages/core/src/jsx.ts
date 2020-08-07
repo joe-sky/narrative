@@ -1,11 +1,11 @@
-import { H, Fragment, DelegateProps, Children } from './interface';
+import { H, Fragment, DelegateOption, Children } from './interface';
 import { elements } from './register/element';
 
 export function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean) {
   return function(type, props, ...children) {
     const elDelegate = elements.get(type);
     if (elDelegate) {
-      return elDelegate({ h, fragment }, props, children);
+      return elDelegate(props, children, { h, fragment });
     }
 
     if (h) {
@@ -18,11 +18,11 @@ export function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean) {
   } as H<HResult>;
 }
 
-export function adjustChildren(children: Children, delegateProps?: DelegateProps) {
+export function adjustChildren(children: Children, option?: DelegateOption) {
   if (children.length === 1) {
     return children[0];
   } else {
-    const { h, fragment } = delegateProps;
+    const { h, fragment } = option;
     if (fragment) {
       return h(fragment, null, ...children);
     } else {

@@ -29,10 +29,10 @@ function parseChildren(children: Children) {
  */
 export const If: (props: { condition: any }) => JSX.Element = registerElement(
   'if',
-  (_, props, children) => {
+  (props, children, option) => {
     const _children = parseChildren(children);
     if (props?.condition) {
-      return adjustChildren(_children.then, _);
+      return adjustChildren(_children.then, option);
     } else if (_children.elseifs.length) {
       const l = _children.elseifs.length;
       let ret = null;
@@ -65,10 +65,10 @@ export const If: (props: { condition: any }) => JSX.Element = registerElement(
  */
 export const Else: () => JSX.Element = registerElement(
   'else',
-  (_, props, children) => {
+  (props, children, option) => {
     return {
       ntElse() {
-        return adjustChildren(children, _);
+        return adjustChildren(children, option);
       }
     };
   },
@@ -96,11 +96,11 @@ export const Default = Else;
  */
 export const Elseif: (props: { condition: any }) => JSX.Element = registerElement(
   'elseif',
-  (_, props, children) => {
+  (props, children, option) => {
     return {
       condition: props?.condition,
       ntElseif() {
-        return adjustChildren(children, _);
+        return adjustChildren(children, option);
       }
     };
   },

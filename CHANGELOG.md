@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [v0.2.0] 2020.08.07
+## [v0.2.1] 2020.08.07
 
 - 🌟 Changed the children argument to pure array for ElementDelegate.
 

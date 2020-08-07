@@ -6,12 +6,12 @@ export type H<HResult = any> = (type: any, props: Props, ...children: Children) 
 
 export interface Fragment {}
 
-export interface DelegateProps<HResult = any, HFragment = Fragment> {
+export interface DelegateOption<HResult = any, HFragment = Fragment> {
   h?: H<HResult>;
   fragment?: HFragment;
 }
 
-export interface DelegateOption {
+export interface ElementOption {
   alias?: string[];
   [key: string]: any;
 }

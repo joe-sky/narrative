@@ -40,7 +40,7 @@ export const For: <T>(props: {
   children: ForCallback<T, number> | (ForCallback<T, number> | Narrative.JSXNode)[];
 }) => JSX.Element = registerElement(
   'for',
-  (_, props, children) => {
+  (props, children) => {
     const _children = parseChildren(children);
     const list = props?.of;
     let ret = null;

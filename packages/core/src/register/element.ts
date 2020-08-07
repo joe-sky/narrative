@@ -1,16 +1,16 @@
-import { DelegateProps, DelegateOption, Props, Children, Fragment } from '../interface';
+import { DelegateOption, ElementOption, Props, Children, Fragment } from '../interface';
 
 export interface ElementDelegate<HResult = any, HFragment = Fragment> {
-  (delegateProps: DelegateProps<HResult, HFragment>, props: Props, children: Children): any;
+  (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
 }
 
 export const elements: Map<string | ElementDelegate, ElementDelegate> = new Map();
-export const elementOptions: Map<ElementDelegate, DelegateOption> = new Map();
+export const elementOptions: Map<ElementDelegate, ElementOption> = new Map();
 
 export function registerElement<HResult = any, HFragment = Fragment>(
   name: string,
   delegate: ElementDelegate<HResult, HFragment>,
-  options: DelegateOption = {}
+  options: ElementOption = {}
 ) {
   elements.set(name, delegate);
   elements.set(delegate, delegate);
