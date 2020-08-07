@@ -1,7 +1,7 @@
 import { DelegateProps, DelegateOption, Props, Children, Fragment } from '../interface';
 
 export interface ElementDelegate<HResult = any, HFragment = Fragment> {
-  (delegateProps: DelegateProps<HResult, HFragment>, props: Props, ...children: Children): any;
+  (delegateProps: DelegateProps<HResult, HFragment>, props: Props, children: Children): any;
 }
 
 export const elements: Map<string | ElementDelegate, ElementDelegate> = new Map();

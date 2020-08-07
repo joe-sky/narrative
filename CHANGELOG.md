@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.0] 2020.08.07
+
+- 🌟 Changed the children argument to pure array for ElementDelegate.
+
 ## [v0.1.4] 2020.08.05
 
 - 🐞 Fixed the wrong form of children nodes on Vue 3.

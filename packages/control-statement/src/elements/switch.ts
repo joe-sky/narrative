@@ -26,7 +26,7 @@ function parseChildren(children: Children) {
  */
 export const Switch: (props: { expression: any }) => JSX.Element = registerElement(
   'nt-switch',
-  (_, props, ...children) => {
+  (_, props, children) => {
     const _children = parseChildren(children);
     const value = props?.expression;
     const l = _children.cases.length;
@@ -56,7 +56,7 @@ export const Switch: (props: { expression: any }) => JSX.Element = registerEleme
  */
 export const Case: (props: { value: any }) => JSX.Element = registerElement(
   'case',
-  (_, props, ...children) => {
+  (_, props, children) => {
     return {
       value: props?.value,
       ntCase() {

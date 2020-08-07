@@ -29,7 +29,7 @@ function parseChildren(children: Children) {
  */
 export const If: (props: { condition: any }) => JSX.Element = registerElement(
   'if',
-  (_, props, ...children) => {
+  (_, props, children) => {
     const _children = parseChildren(children);
     if (props?.condition) {
       return adjustChildren(_children.then, _);
@@ -65,7 +65,7 @@ export const If: (props: { condition: any }) => JSX.Element = registerElement(
  */
 export const Else: () => JSX.Element = registerElement(
   'else',
-  (_, props, ...children) => {
+  (_, props, children) => {
     return {
       ntElse() {
         return adjustChildren(children, _);
@@ -96,7 +96,7 @@ export const Default = Else;
  */
 export const Elseif: (props: { condition: any }) => JSX.Element = registerElement(
   'elseif',
-  (_, props, ...children) => {
+  (_, props, children) => {
     return {
       condition: props?.condition,
       ntElseif() {

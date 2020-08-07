@@ -5,7 +5,7 @@ export function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean) {
   return function(type, props, ...children) {
     const elDelegate = elements.get(type);
     if (elDelegate) {
-      return elDelegate({ h, fragment }, props, ...children);
+      return elDelegate({ h, fragment }, props, children);
     }
 
     if (h) {

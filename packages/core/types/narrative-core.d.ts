@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.1.4
+ * @narrative/core v0.2.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -24,7 +24,7 @@ interface Childrenable {
 }
 
 interface ElementDelegate<HResult = any, HFragment = Fragment> {
-  (delegateProps: DelegateProps<HResult, HFragment>, props: Props, ...children: Children): any;
+  (delegateProps: DelegateProps<HResult, HFragment>, props: Props, children: Children): any;
 }
 declare const elements: Map<string | ElementDelegate, ElementDelegate>;
 declare const elementOptions: Map<ElementDelegate, DelegateOption>;
