@@ -16,7 +16,7 @@ export interface ElementOption {
   [key: string]: any;
 }
 
-export type JSXNode = JSX.Element | string | number | boolean | null | undefined;
+export type JSXNode = JSX.Element | string | number | boolean | null | undefined | Record<any, any>;
 
 export type JSXChild = JSXNode | Array<JSXNode>;
 
