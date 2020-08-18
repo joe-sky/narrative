@@ -5,7 +5,7 @@
     "packages/core",
     "packages/control-statement"
   ],
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "",
   "scripts": {
     "build": "lerna run build",

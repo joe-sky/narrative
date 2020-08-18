@@ -1,10 +1,11 @@
 /*!
- * @narrative/control-statement v0.2.2
+ * @narrative/control-statement v0.3.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
 /// <reference types="react" />
 import { JSXChild } from '@narrative/core';
+import { AttributeResult } from '@narrative/core/types/narrative-core';
 
 declare const isMap: (obj: any) => boolean;
 declare const isWeakMap: (obj: any) => boolean;
@@ -88,6 +89,13 @@ declare const Switch: (props: { expression: any }) => JSX.Element;
  */
 declare const Case: (props: { value: any }) => JSX.Element;
 
+/**
+ * Narrative Spread Attribute `show`, example:
+ *
+ * `<input {...show(false)} />`
+ */
+declare const show: AttributeResult<any, any, any, any, any>;
+
 export {
   Case,
   Default,
@@ -104,5 +112,6 @@ export {
   isMap,
   isSet,
   isWeakMap,
-  isWeakSet
+  isWeakSet,
+  show
 };

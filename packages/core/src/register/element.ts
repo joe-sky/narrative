@@ -1,8 +1,4 @@
-import { DelegateOption, ElementOption, Props, Children, Fragment } from '../interface';
-
-export interface ElementDelegate<HResult = any, HFragment = Fragment> {
-  (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
-}
+import { ElementDelegate, DelegateOption, ElementOption, Props, Children, Fragment } from '../interface';
 
 export const elements: Map<string | ElementDelegate, ElementDelegate> = new Map();
 export const elementOptions: Map<ElementDelegate, ElementOption> = new Map();
