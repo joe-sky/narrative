@@ -1,4 +1,4 @@
-import { registerAttribute, runPrevDelegate } from '@narrative/core';
+import { registerAttribute, renderPrevDelegate } from '@narrative/core';
 
 /**
  * Narrative Spread Attribute `show`, example:
@@ -19,5 +19,5 @@ export const show = registerAttribute<boolean>('ntShow', (props, children, optio
     }
   }
 
-  return runPrevDelegate(props, children, option);
+  return renderPrevDelegate(props, children, option);
 });

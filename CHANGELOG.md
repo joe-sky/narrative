@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.2.3] 2020.08.19
+
+- 🌟 Support spread attributes.
+- 🌟 Add show attribute.
+
 ## [v0.2.1] 2020.08.07
 
 - 🌟 Changed the children argument to pure array for ElementDelegate.

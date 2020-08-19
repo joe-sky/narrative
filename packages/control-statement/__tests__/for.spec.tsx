@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
-import { For } from '../src/index';
+import { For, Empty } from '../src/index';
 
 /** @jsx jsx */
 const jsx = nt.bind(React.createElement, React.Fragment);
@@ -10,8 +10,17 @@ const jsx = nt.bind(React.createElement, React.Fragment);
 const TestFor = (props: { list: number[] }) => {
   return (
     <For of={props.list}>
-      <empty>empty</empty>
-      {(item, { index }) => <i key={index}>{item}</i>}
+      <Empty>{() => 'empty'}</Empty>
+      {(item, { index, key }) => <i key={index}>{item}</i>}
+    </For>
+  );
+};
+
+const TestForObject = (props: { obj: Record<string, number> }) => {
+  return (
+    <For of={props.obj}>
+      <Empty>empty</Empty>
+      {(item, { key }) => <i key={key}>{item}</i>}
     </For>
   );
 };
@@ -27,5 +36,11 @@ describe('for element', function() {
 
   it('for with empty', () => {
     expect(app2.html()).toEqual('empty');
+  });
+
+  const app3 = mount(<TestForObject obj={{ a: 1, b: 2, c: 3 }} />);
+
+  it('for object', () => {
+    expect(app3.html()).toEqual('<i>1</i><i>2</i><i>3</i>');
   });
 });

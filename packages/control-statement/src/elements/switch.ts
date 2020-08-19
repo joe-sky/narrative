@@ -1,4 +1,4 @@
-import { Children, registerElement, adjustChildren } from '@narrative/core';
+import { Children, Childrenable, registerElement, adjustChildren } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -24,40 +24,43 @@ function parseChildren(children: Children) {
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Switch: (props: { expression: any }) => JSX.Element = registerElement('nt-switch', (props, children) => {
-  const _children = parseChildren(children);
-  const value = props?.expression;
-  const l = _children.cases.length;
-  let ret = null;
+export const Switch = registerElement<(props: { expression: any } & Childrenable) => JSX.Element>(
+  'nt-switch',
+  (props, children) => {
+    const _children = parseChildren(children);
+    const value = props?.expression;
+    const l = _children.cases.length;
+    let ret = null;
 
-  each(
-    _children.cases,
-    (_case, i) => {
-      if (value === _case.value) {
-        ret = _case.ntCase();
-        return false;
-      } else if (i === l - 1) {
-        ret = _children.default?.();
-      }
-    },
-    true
-  );
+    each(
+      _children.cases,
+      (_case, i) => {
+        if (value === _case.value) {
+          ret = _case.ntCase();
+          return false;
+        } else if (i === l - 1) {
+          ret = _children.default?.();
+        }
+      },
+      true
+    );
 
-  return ret;
-});
+    return ret;
+  }
+);
 
 /**
  * Narrative Custom Element `case`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Case: (props: { value: any }) => JSX.Element = registerElement(
+export const Case = registerElement<(props: { value: any } & Childrenable) => JSX.Element>(
   'case',
   (props, children, option) => {
     return {
       value: props?.value,
       ntCase() {
-        return adjustChildren(children, option);
+        return adjustChildren(children, option, true);
       }
     };
   },

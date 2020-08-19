@@ -1,4 +1,4 @@
-import { Children, registerElement, adjustChildren } from '@narrative/core';
+import { Children, Childrenable, registerElement, adjustChildren } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -27,12 +27,12 @@ function parseChildren(children: Children) {
  *
  * `<If condition={false}><input /></If>`
  */
-export const If: (props: { condition: any }) => JSX.Element = registerElement(
+export const If = registerElement<(props: { condition: any } & Childrenable) => JSX.Element>(
   'if',
   (props, children, option) => {
     const _children = parseChildren(children);
     if (props?.condition) {
-      return adjustChildren(_children.then, option);
+      return adjustChildren(_children.then, option, true);
     } else if (_children.elseifs.length) {
       const l = _children.elseifs.length;
       let ret = null;
@@ -63,12 +63,12 @@ export const If: (props: { condition: any }) => JSX.Element = registerElement(
  *
  * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
  */
-export const Else: () => JSX.Element = registerElement(
+export const Else = registerElement<(props: Childrenable) => JSX.Element>(
   'else',
   (props, children, option) => {
     return {
       ntElse() {
-        return adjustChildren(children, option);
+        return adjustChildren(children, option, true);
       }
     };
   },
@@ -94,13 +94,13 @@ export const Default = Else;
  *
  * `<If condition={foo > 10}><input /><Elseif condition={foo > 5}><input type="button" /></Elseif></If>`
  */
-export const Elseif: (props: { condition: any }) => JSX.Element = registerElement(
+export const Elseif = registerElement<(props: { condition: any } & Childrenable) => JSX.Element>(
   'elseif',
   (props, children, option) => {
     return {
       condition: props?.condition,
       ntElseif() {
-        return adjustChildren(children, option);
+        return adjustChildren(children, option, true);
       }
     };
   },

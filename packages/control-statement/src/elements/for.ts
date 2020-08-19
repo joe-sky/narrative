@@ -1,4 +1,4 @@
-import { Children, registerElement, JSXChild } from '@narrative/core';
+import { Children, registerElement, JSXChild, JSXNode } from '@narrative/core';
 import * as utils from '../utils';
 
 export type ForCallback<T = any, K = number> = (
@@ -30,22 +30,36 @@ function parseChildren(children: Children) {
   return ret;
 }
 
+function ForFunc<K, V>(props: {
+  of: Map<K, V> | null | undefined;
+  children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
+}): JSX.Element;
+function ForFunc<T>(props: {
+  of: Iterable<T> | ArrayLike<T> | null | undefined;
+  children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
+}): JSX.Element;
+function ForFunc<O extends {}, K extends keyof O>(props: {
+  of: O | null | undefined;
+  children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
+}): JSX.Element;
+function ForFunc() {
+  return {} as JSX.Element;
+}
+
 /**
  * Narrative Custom Element `for`, example:
  *
  * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
  */
-export const For: <T>(props: {
-  of: Iterable<T> | ArrayLike<T> | null | undefined;
-  children: ForCallback<T, number> | (ForCallback<T, number> | Narrative.JSXNode)[];
-}) => JSX.Element = registerElement(
+export const For = registerElement<typeof ForFunc>(
   'for',
   (props, children) => {
     const _children = parseChildren(children);
+    const { empty } = _children;
     const list = props?.of;
     let ret = null;
 
-    if (list?.length) {
+    if (list) {
       ret = [];
       const isArrayLike = utils.isArrayLike(list);
       const isArrayLoop = isArrayLike || utils.isSet(list) || utils.isWeakSet(list);
@@ -67,8 +81,12 @@ export const For: <T>(props: {
         },
         isArrayLike
       );
-    } else if (_children.empty) {
-      ret = _children.empty();
+
+      if (!ret.length && empty) {
+        ret = empty();
+      }
+    } else if (empty) {
+      ret = empty();
     }
 
     return ret;

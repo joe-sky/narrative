@@ -20,7 +20,7 @@ const visible = nt.registerAttribute<boolean>('ntVisible', (props, children, opt
     }
   }
 
-  return nt.runPrevDelegate(props, children, option);
+  return nt.renderPrevDelegate(props, children, option);
 });
 
 const TestVisible: React.FC<{ visible: boolean }> = props => {
@@ -42,11 +42,11 @@ describe('visible attribute', function() {
 });
 
 const wrapSpan = nt.registerAttribute<boolean>('ntWrapSpan', (props, children, option) => {
-  return <span>{nt.runPrevDelegate(props, children, option)}</span>;
+  return <span>{nt.renderPrevDelegate(props, children, option)}</span>;
 });
 
 const wrapDiv = nt.registerAttribute<boolean>('ntWrapDiv', (props, children, option) => {
-  return <div>{nt.runPrevDelegate(props, children, option)}</div>;
+  return <div>{nt.renderPrevDelegate(props, children, option)}</div>;
 });
 
 const TestWrapSpanFirst: React.FC<{ visible: boolean }> = props => {

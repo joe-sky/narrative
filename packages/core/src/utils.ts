@@ -8,9 +8,14 @@ export function render(type: any, props: Props, children: Children, h: H, fragme
   }
 }
 
-export function adjustChildren(children: Children, option?: DelegateOption) {
+export function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean) {
   if (children.length === 1) {
-    return children[0];
+    const child = children[0];
+    if (lazy && typeof child === 'function') {
+      return child();
+    }
+
+    return child;
   } else {
     const { h, fragment } = option;
     if (fragment) {
@@ -21,7 +26,7 @@ export function adjustChildren(children: Children, option?: DelegateOption) {
   }
 }
 
-export function runPrevDelegate(props: Props, children: Children, option: DelegateOption) {
+export function renderPrevDelegate(props: Props, children: Children, option: DelegateOption) {
   const { prevDelegates, h, fragment, type } = option;
   const prevDelegate = prevDelegates.pop();
 

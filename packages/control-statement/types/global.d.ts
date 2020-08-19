@@ -1,28 +1,24 @@
 declare namespace JSX {
   namespace NT {
-    interface Childrenable {
-      children?: Narrative.JSXChild;
-    }
-
-    interface If extends Childrenable {
+    interface If extends Narrative.Childrenable {
       condition: any;
     }
 
-    interface Elseif extends Childrenable {
+    interface Elseif extends Narrative.Childrenable {
       condition: any;
     }
 
-    interface Else extends Childrenable {}
+    interface Else extends Narrative.Childrenable {}
 
-    interface Switch extends Childrenable {
+    interface Switch extends Narrative.Childrenable {
       expression: any;
     }
 
-    interface Case extends Childrenable {
+    interface Case extends Narrative.Childrenable {
       value: any;
     }
 
-    interface Default extends Childrenable {}
+    interface Default extends Narrative.Childrenable {}
 
     interface For<T = any> {
       of: Iterable<T> | ArrayLike<T> | null | undefined;
@@ -31,7 +27,7 @@ declare namespace JSX {
         | (NtControlStatement.ForCallback<T, number> | Narrative.JSXNode)[];
     }
 
-    interface Empty extends Childrenable {}
+    interface Empty extends Narrative.Childrenable {}
   }
 
   interface IntrinsicElements {
@@ -140,25 +136,26 @@ declare namespace JSX {
      */
     'nt-empty': NT.Empty;
 
+    /**
+     * Narrative Custom Element `each`, example:
+     *
+     * `<each of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</each>`
+     */
     each: NT.For;
 
+    /**
+     * Narrative Custom Element `each`, example:
+     *
+     * `<nt-each of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</nt-each>`
+     */
     'nt-each': NT.For;
   }
 
   interface IntrinsicAttributes {
     /**
-     * Narrative Custom Attribute `ntShow`, example:
-     *
-     * `<input ntShow={false} />`
+     * Narrative Spread Attribute sign, for detection.
      */
-    ['ntShow']?: boolean | number | string;
-
-    /**
-     * Narrative Custom Attribute `ntDebounce`, example:
-     *
-     * `<input ntDebounce={200} />`
-     */
-    ['ntDebounce']?: number | string;
+    __nt__?: boolean;
   }
 }
 
