@@ -1,13 +1,17 @@
 # CHANGELOG
 
+## [v0.2.4] 2020.08.20
+
+- 🐞 Add `WeakMap` and `WeakSet` typings for element `for`.
+
 ## [v0.2.3] 2020.08.19
 
-- 🌟 Support spread attributes.
+- 🌟 Support custom attributes.
 - 🌟 Add show attribute.
 
 ## [v0.2.1] 2020.08.07
 
-- 🌟 Changed the children argument to pure array for ElementDelegate.
+- 🌟 Changed the children argument to pure array for `ElementDelegate`.
 
 ## [v0.1.4] 2020.08.05
 

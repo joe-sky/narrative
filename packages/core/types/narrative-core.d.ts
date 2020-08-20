@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.2.3
+ * @narrative/core v0.2.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

@@ -1,7 +1,7 @@
 import { registerAttribute, renderPrevDelegate } from '@narrative/core';
 
 /**
- * Narrative Spread Attribute `show`, example:
+ * Narrative Custom Attribute `show`, example:
  *
  * `<input {...show(false)} />`
  */

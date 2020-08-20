@@ -1,16 +1,15 @@
 import { Children, registerElement, JSXChild, JSXNode } from '@narrative/core';
 import * as utils from '../utils';
 
-export type ForCallback<T = any, K = number> = (
-  item: T,
-  meta: {
-    index: number;
-    length: number;
-    key: K;
-    isFirst: boolean;
-    isLast: boolean;
-  }
-) => JSXChild;
+export interface ForCallbackMeta<K = number> {
+  index: number;
+  length: number;
+  key: K;
+  isFirst: boolean;
+  isLast: boolean;
+}
+
+export type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild;
 
 interface ParseChildrenResult {
   for: ForCallback;
@@ -30,9 +29,17 @@ function parseChildren(children: Children) {
   return ret;
 }
 
+function ForFunc<K extends object, V>(props: {
+  of: WeakMap<K, V> | null | undefined;
+  children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
+}): JSX.Element;
 function ForFunc<K, V>(props: {
   of: Map<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
+}): JSX.Element;
+function ForFunc<V extends object>(props: {
+  of: WeakSet<V> | null | undefined;
+  children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
 }): JSX.Element;
 function ForFunc<T>(props: {
   of: Iterable<T> | ArrayLike<T> | null | undefined;

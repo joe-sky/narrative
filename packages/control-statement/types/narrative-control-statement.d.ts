@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.2.3
+ * @narrative/control-statement v0.2.4
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -53,19 +53,25 @@ declare const Elseif: (
   } & Childrenable
 ) => JSX.Element;
 
-declare type ForCallback<T = any, K = number> = (
-  item: T,
-  meta: {
-    index: number;
-    length: number;
-    key: K;
-    isFirst: boolean;
-    isLast: boolean;
-  }
-) => JSXChild;
+interface ForCallbackMeta<K = number> {
+  index: number;
+  length: number;
+  key: K;
+  isFirst: boolean;
+  isLast: boolean;
+}
+declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild;
+declare function ForFunc<K extends object, V>(props: {
+  of: WeakMap<K, V> | null | undefined;
+  children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
+}): JSX.Element;
 declare function ForFunc<K, V>(props: {
   of: Map<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
+}): JSX.Element;
+declare function ForFunc<V extends object>(props: {
+  of: WeakSet<V> | null | undefined;
+  children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
 }): JSX.Element;
 declare function ForFunc<T>(props: {
   of: Iterable<T> | ArrayLike<T> | null | undefined;
@@ -110,7 +116,7 @@ declare const Case: (
 ) => JSX.Element;
 
 /**
- * Narrative Spread Attribute `show`, example:
+ * Narrative Custom Attribute `show`, example:
  *
  * `<input {...show(false)} />`
  */
@@ -125,6 +131,7 @@ export {
   Empty,
   For,
   ForCallback,
+  ForCallbackMeta,
   If,
   Switch,
   each,
