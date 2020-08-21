@@ -1,6 +1,12 @@
 # Narrative
 
-`Narrative` (abbreviated as `nt`)
+<p>
+  <a href="https://travis-ci.org/joe-sky/narrative"><img src="https://travis-ci.org/joe-sky/narrative.svg?branch=master" alt="Travis CI Status"></a>
+  <a href="https://codecov.io/gh/joe-sky/narrative"><img src="https://codecov.io/gh/joe-sky/narrative/branch/master/graph/badge.svg" alt="Codecov"></a>
+  <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
+</p>
+
+`Narrative` (abbreviated as `nt`) is a tiny size(about `1kb`) library that create runtime JSX custom elements and attributes. It's type safe and can cross environment(React/Vue/Preact/htm/vanilla js).
 
 ## Packages
 
@@ -27,7 +33,7 @@ import * as nt from '@narrative/core';
 const ntH = nt.bind(React.createElement, React.Fragment);
 ```
 
-Vue(v3 only):
+Vue(v3 only at present):
 
 ```js
 import * as Vue from 'vue';

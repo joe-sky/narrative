@@ -1,7 +1,7 @@
 {
   "name": "@narrative/control-statement",
   "version": "0.2.4",
-  "description": "",
+  "description": "JSX control statement syntax collection based on @narrative/core.",
   "main": "dist/narrative-control-statement.common.js",
   "module": "dist/narrative-control-statement.esm.js",
   "unpkg": "dist/narrative-control-statement.js",

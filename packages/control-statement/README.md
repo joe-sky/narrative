@@ -1,5 +1,3 @@
 # @narrative/control-statement
 
-🤖 `Narrative Gundam A Pack`
-
-<img src="../../public/images/narrative-gundam-a-pack.jpg" alt="Narrative">
+JSX control statement syntax collection based on @narrative/core.
