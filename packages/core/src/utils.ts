@@ -30,7 +30,7 @@ export function renderPrevDelegate(props: Props, children: Children, option: Del
   const { prevDelegates, h, fragment, type } = option;
   const prevDelegate = prevDelegates.pop();
 
-  if ('delegate' in prevDelegate) {
+  if (prevDelegate && 'delegate' in prevDelegate) {
     return prevDelegate.delegate(props, children, { ...option, args: prevDelegate.args });
   } else {
     return render(type, props, children, h, fragment);

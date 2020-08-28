@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.2.5] 2020.08.28
+
+- 🐞 Fix `renderPrevDelegate`.
+
 ## [v0.2.4] 2020.08.20
 
 - 🐞 Add `WeakMap` and `WeakSet` typings for element `for`.
