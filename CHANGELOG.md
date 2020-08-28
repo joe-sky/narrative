@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [v0.2.5] 2020.08.28
+## [v0.2.6] 2020.08.28
 
 - 🐞 Fix `renderPrevDelegate`.
 
