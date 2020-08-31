@@ -4,7 +4,7 @@ declare namespace JSX {
       condition: any;
     }
 
-    interface Elseif extends Narrative.Childrenable {
+    interface ElseIf extends Narrative.Childrenable {
       condition: any;
     }
 
@@ -50,14 +50,14 @@ declare namespace JSX {
      *
      * `<if condition={foo > 10}><input /><elseif condition={foo > 5}><input type="button" /></elseif></if>`
      */
-    elseif: NT.Elseif;
+    elseif: NT.ElseIf;
 
     /**
      * Narrative Custom Element `elseif`, example:
      *
      * `<nt-if condition={foo > 10}><input /><nt-elseif condition={foo > 5}><input type="button" /></nt-elseif></nt-if>`
      */
-    'nt-elseif': NT.Elseif;
+    'nt-elseif': NT.ElseIf;
 
     /**
      * Narrative Custom Element `else`, example:

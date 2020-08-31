@@ -54,7 +54,7 @@ function ForFunc() {
 }
 
 /**
- * Narrative Custom Element `for`, example:
+ * Narrative Custom Element `For`, example:
  *
  * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
  */
@@ -102,7 +102,7 @@ export const For = registerElement<typeof ForFunc>(
 );
 
 /**
- * Narrative Custom Element `each`, example:
+ * Narrative Custom Element `Each`, example:
  *
  * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
  */

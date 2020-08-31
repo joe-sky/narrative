@@ -20,7 +20,7 @@ function parseChildren(children: Children) {
 }
 
 /**
- * Narrative Custom Element `switch`, example:
+ * Narrative Custom Element `Switch`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
@@ -50,7 +50,7 @@ export const Switch = registerElement<(props: { expression: any } & Childrenable
 );
 
 /**
- * Narrative Custom Element `case`, example:
+ * Narrative Custom Element `Case`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */

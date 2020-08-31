@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [v0.3.0] 2020.08.31
+## [v0.3.1] 2020.08.31
 
 - 🌟 Support React 15.
+- 🌟 Rename `Elseif` to `ElseIf`.
 
 ## [v0.2.6] 2020.08.28
 

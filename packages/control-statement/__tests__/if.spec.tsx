@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
-import { If, Else, Elseif } from '../src/index';
+import { If, Else, ElseIf } from '../src/index';
 
 /** @jsx ntH */
 const ntH = nt.bind(React.createElement, { Fragment });
