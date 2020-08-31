@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.2.6
+ * @narrative/core v0.3.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -10,13 +10,17 @@ declare type Props = Record<string, any>;
 declare type Children = any[];
 declare type H<HResult = any> = (type: any, props: Props, ...children: Children) => HResult;
 interface Fragment {}
+interface HOption {
+  Fragment?: Fragment;
+  vue2?: boolean;
+}
 interface DelegateWithArgs {
   delegate: ElementDelegate | AttributeDelegate;
   args?: any[];
 }
 interface DelegateOption<HResult = any, HFragment = Fragment> {
   h?: H<HResult>;
-  fragment?: HFragment;
+  hOption?: HOption;
   type?: any;
   args?: any;
   prevDelegates?: (DelegateWithArgs | H)[];
@@ -75,13 +79,13 @@ declare function registerAttribute<
   options?: AttributeOption
 ): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5>;
 
-declare function render(type: any, props: Props, children: Children, h: H, fragment?: Fragment): any;
+declare function render(type: any, props: Props, children: Children, h: H, hOption: HOption): any;
 declare function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean): any;
-declare function renderPrevDelegate(props: Props, children: Children, option: DelegateOption): any;
+declare function renderPrevAttr(props: Props, children: Children, option: DelegateOption): any;
 
-declare function bind<HResult>(h?: H<HResult>, fragment?: Fragment | boolean): H<HResult>;
-declare const jsx: H;
-declare function jsxValue<T = any>(jsxElement: JSX.Element): T;
+declare function bind<HResult>(h?: H<HResult>, hOption?: HOption): H<HResult>;
+declare const h: H;
+declare function jsx<T = any>(jsxElement: JSX.Element): T;
 
 export {
   AttributeDelegate,
@@ -95,6 +99,7 @@ export {
   ElementOption,
   Fragment,
   H,
+  HOption,
   JSXChild,
   JSXNode,
   PropType,
@@ -105,10 +110,10 @@ export {
   bind,
   elementOptions,
   elements,
+  h,
   jsx,
-  jsxValue,
   registerAttribute,
   registerElement,
   render,
-  renderPrevDelegate
+  renderPrevAttr
 };

@@ -1,10 +1,10 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '../src/index';
 
-/** @jsx jsx */
-const jsx = nt.bind(React.createElement, React.Fragment);
+/** @jsx ntH */
+const ntH = nt.bind(React.createElement, { Fragment });
 
 const visible = nt.registerAttribute<boolean>('ntVisible', (props, children, option) => {
   const { args } = option;
@@ -20,7 +20,7 @@ const visible = nt.registerAttribute<boolean>('ntVisible', (props, children, opt
     }
   }
 
-  return nt.renderPrevDelegate(props, children, option);
+  return nt.renderPrevAttr(props, children, option);
 });
 
 const TestVisible: React.FC<{ visible: boolean }> = props => {
@@ -42,11 +42,11 @@ describe('visible attribute', function() {
 });
 
 const wrapSpan = nt.registerAttribute<boolean>('ntWrapSpan', (props, children, option) => {
-  return <span>{nt.renderPrevDelegate(props, children, option)}</span>;
+  return <span>{nt.renderPrevAttr(props, children, option)}</span>;
 });
 
 const wrapDiv = nt.registerAttribute<boolean>('ntWrapDiv', (props, children, option) => {
-  return <div>{nt.renderPrevDelegate(props, children, option)}</div>;
+  return <div>{nt.renderPrevAttr(props, children, option)}</div>;
 });
 
 const TestWrapSpanFirst: React.FC<{ visible: boolean }> = props => {

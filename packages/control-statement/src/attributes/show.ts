@@ -1,4 +1,4 @@
-import { registerAttribute, renderPrevDelegate } from '@narrative/core';
+import { registerAttribute, renderPrevAttr } from '@narrative/core';
 
 /**
  * Narrative Custom Attribute `show`, example:
@@ -19,5 +19,5 @@ export const show = registerAttribute<boolean>('ntShow', (props, children, optio
     }
   }
 
-  return renderPrevDelegate(props, children, option);
+  return renderPrevAttr(props, children, option);
 });

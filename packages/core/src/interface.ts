@@ -8,6 +8,11 @@ export type H<HResult = any> = (type: any, props: Props, ...children: Children) 
 
 export interface Fragment {}
 
+export interface HOption {
+  Fragment?: Fragment;
+  vue2?: boolean;
+}
+
 export interface DelegateWithArgs {
   delegate: ElementDelegate | AttributeDelegate;
   args?: any[];
@@ -15,7 +20,7 @@ export interface DelegateWithArgs {
 
 export interface DelegateOption<HResult = any, HFragment = Fragment> {
   h?: H<HResult>;
-  fragment?: HFragment;
+  hOption?: HOption;
   type?: any;
   args?: any;
   prevDelegates?: (DelegateWithArgs | H)[];

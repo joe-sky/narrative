@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.0] 2020.08.31
+
+- 🌟 Support React 15.
+
 ## [v0.2.6] 2020.08.28
 
 - 🐞 Fix `renderPrevDelegate`.

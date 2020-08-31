@@ -1,11 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
 import { For, Empty } from '../src/index';
 
-/** @jsx jsx */
-const jsx = nt.bind(React.createElement, React.Fragment);
+/** @jsx ntH */
+const ntH = nt.bind(React.createElement, { Fragment });
 
 const TestFor = (props: { list: number[] }) => {
   return (
