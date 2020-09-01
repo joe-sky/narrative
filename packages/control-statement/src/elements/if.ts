@@ -37,18 +37,14 @@ export const If = registerElement<(props: { condition: any } & Childrenable) => 
       const l = _children.elseIfs.length;
       let ret = null;
 
-      each(
-        _children.elseIfs,
-        (elseIf, i) => {
-          if (elseIf.condition) {
-            ret = elseIf.ntElseIf();
-            return false;
-          } else if (i === l - 1) {
-            ret = _children.else?.();
-          }
-        },
-        true
-      );
+      each(_children.elseIfs, (elseIf, i) => {
+        if (elseIf.condition) {
+          ret = elseIf.ntElseIf();
+          return false;
+        } else if (i === l - 1) {
+          ret = _children.else?.();
+        }
+      });
 
       return ret;
     } else {

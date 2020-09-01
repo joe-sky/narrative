@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.2] 2020.09.01
+
+- 🌟 Add `in`, `ofMap`, `ofSet` props to `For` element.
+
 ## [v0.3.1] 2020.08.31
 
 - 🌟 Support React 15.

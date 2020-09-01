@@ -30,15 +30,19 @@ function parseChildren(children: Children) {
 }
 
 function ForFunc<K extends object, V>(props: {
-  of: WeakMap<K, V> | null | undefined;
+  ofMap: WeakMap<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
 }): JSX.Element;
 function ForFunc<K, V>(props: {
-  of: Map<K, V> | null | undefined;
+  ofMap: Map<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
 }): JSX.Element;
 function ForFunc<V extends object>(props: {
-  of: WeakSet<V> | null | undefined;
+  ofSet: WeakSet<V> | null | undefined;
+  children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
+}): JSX.Element;
+function ForFunc<V>(props: {
+  ofSet: Set<V> | null | undefined;
   children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
 }): JSX.Element;
 function ForFunc<T>(props: {
@@ -46,7 +50,7 @@ function ForFunc<T>(props: {
   children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
 }): JSX.Element;
 function ForFunc<O extends {}, K extends keyof O>(props: {
-  of: O | null | undefined;
+  in: O | null | undefined;
   children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;
 function ForFunc() {
@@ -63,16 +67,34 @@ export const For = registerElement<typeof ForFunc>(
   (props, children) => {
     const _children = parseChildren(children);
     const { empty } = _children;
-    const list = props?.of;
+    let record = null;
+    let type: utils.EachType = null;
     let ret = null;
 
-    if (list) {
+    if (props) {
+      const { of, ofMap, ofSet } = props;
+
+      if (of) {
+        record = of;
+        type = 1;
+      } else if (props.in) {
+        record = props.in;
+        type = 2;
+      } else if (ofMap) {
+        record = ofMap;
+        type = 3;
+      } else if (ofSet) {
+        record = ofSet;
+        type = 4;
+      }
+    }
+
+    if (record) {
       ret = [];
-      const isArrayLike = utils.isArrayLike(list);
-      const isArrayLoop = isArrayLike || utils.isSet(list) || utils.isWeakSet(list);
+      const isArrayLoop = type === 1 || type === 4;
 
       utils.each(
-        list,
+        record,
         (item, index, len, lenObj) => {
           const _index: number = isArrayLoop ? index : len;
           const _len: number = isArrayLoop ? len : lenObj;
@@ -86,7 +108,7 @@ export const For = registerElement<typeof ForFunc>(
 
           ret.push(_children.for(item, { index: _index, length: _len, key, isFirst, isLast }));
         },
-        isArrayLike
+        type
       );
 
       if (!ret.length && empty) {

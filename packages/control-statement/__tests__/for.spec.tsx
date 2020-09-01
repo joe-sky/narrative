@@ -18,7 +18,7 @@ const TestFor = (props: { list: number[] }) => {
 
 const TestForObject = (props: { obj: Record<string, number> }) => {
   return (
-    <For of={props.obj}>
+    <For in={props.obj}>
       <Empty>empty</Empty>
       {(item, { key }) => <i key={key}>{item}</i>}
     </For>
@@ -27,7 +27,7 @@ const TestForObject = (props: { obj: Record<string, number> }) => {
 
 const TestForMap = (props: { map: Map<string, number> }) => {
   return (
-    <For of={props.map}>
+    <For ofMap={props.map}>
       <Empty>{() => 'empty'}</Empty>
       {(item, { index, key }) => <i key={index}>{item}</i>}
     </For>
@@ -36,7 +36,7 @@ const TestForMap = (props: { map: Map<string, number> }) => {
 
 const TestForWeakMap = (props: { map: WeakMap<object, number> }) => {
   return (
-    <For of={props.map}>
+    <For ofMap={props.map}>
       <Empty>{() => 'empty'}</Empty>
       {(item, { index, key }) => <i key={index}>{item}</i>}
     </For>
@@ -45,18 +45,18 @@ const TestForWeakMap = (props: { map: WeakMap<object, number> }) => {
 
 const TestForSet = (props: { set: Set<number> }) => {
   return (
-    <For of={props.set}>
+    <For ofSet={props.set}>
       <Empty>{() => 'empty'}</Empty>
-      {(item, { index, key }) => <i key={index}>{item}</i>}
+      {(item, { index }) => <i key={index}>{item}</i>}
     </For>
   );
 };
 
 const TestForWeakSet = (props: { set: WeakSet<object> }) => {
   return (
-    <For of={props.set}>
+    <For ofSet={props.set}>
       <Empty>{() => 'empty'}</Empty>
-      {(item, { index, key }) => <i key={index}>{item}</i>}
+      {(item, { index }) => <i key={index}>{item}</i>}
     </For>
   );
 };

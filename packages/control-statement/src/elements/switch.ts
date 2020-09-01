@@ -32,18 +32,14 @@ export const Switch = registerElement<(props: { expression: any } & Childrenable
     const l = _children.cases.length;
     let ret = null;
 
-    each(
-      _children.cases,
-      (_case, i) => {
-        if (value === _case.value) {
-          ret = _case.ntCase();
-          return false;
-        } else if (i === l - 1) {
-          ret = _children.default?.();
-        }
-      },
-      true
-    );
+    each(_children.cases, (_case, i) => {
+      if (value === _case.value) {
+        ret = _case.ntCase();
+        return false;
+      } else if (i === l - 1) {
+        ret = _children.default?.();
+      }
+    });
 
     return ret;
   }

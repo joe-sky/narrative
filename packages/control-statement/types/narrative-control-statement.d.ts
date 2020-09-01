@@ -7,12 +7,9 @@
 import { Childrenable, JSXChild, JSXNode } from '@narrative/core';
 import { AttributeResult } from '@narrative/core/types/narrative-core';
 
-declare const isMap: (obj: any) => boolean;
-declare const isWeakMap: (obj: any) => boolean;
-declare const isSet: (obj: any) => boolean;
-declare const isWeakSet: (obj: any) => boolean;
-declare function isArrayLike(obj: any): boolean;
-declare function each(obj: any, func: Function, isArr?: boolean): void;
+declare type LoopFunc = (item: any, index: number, len: number, lenObj: number) => any;
+declare type EachType = 1 | 2 | 3 | 4;
+declare function each(record: any, func: LoopFunc, type?: EachType): void;
 
 /**
  * Narrative Custom Element `If`, example:
@@ -62,15 +59,19 @@ interface ForCallbackMeta<K = number> {
 }
 declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild;
 declare function ForFunc<K extends object, V>(props: {
-  of: WeakMap<K, V> | null | undefined;
+  ofMap: WeakMap<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
 }): JSX.Element;
 declare function ForFunc<K, V>(props: {
-  of: Map<K, V> | null | undefined;
+  ofMap: Map<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
 }): JSX.Element;
 declare function ForFunc<V extends object>(props: {
-  of: WeakSet<V> | null | undefined;
+  ofSet: WeakSet<V> | null | undefined;
+  children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
+}): JSX.Element;
+declare function ForFunc<V>(props: {
+  ofSet: Set<V> | null | undefined;
   children: ForCallback<V, number> | (ForCallback<V, number> | JSXNode)[];
 }): JSX.Element;
 declare function ForFunc<T>(props: {
@@ -78,7 +79,7 @@ declare function ForFunc<T>(props: {
   children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
 }): JSX.Element;
 declare function ForFunc<O extends {}, K extends keyof O>(props: {
-  of: O | null | undefined;
+  in: O | null | undefined;
   children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;
 /**
@@ -126,6 +127,7 @@ export {
   Case,
   Default,
   Each,
+  EachType,
   Else,
   ElseIf,
   Empty,
@@ -135,10 +137,5 @@ export {
   If,
   Switch,
   each,
-  isArrayLike,
-  isMap,
-  isSet,
-  isWeakMap,
-  isWeakSet,
   show
 };

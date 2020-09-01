@@ -20,11 +20,14 @@ declare namespace JSX {
 
     interface Default extends Narrative.Childrenable {}
 
-    interface For<T = any> {
-      of: Iterable<T> | ArrayLike<T> | null | undefined;
+    interface For {
+      of?: Iterable<any> | ArrayLike<any> | null | undefined;
+      in?: Record<any, any> | null | undefined;
+      ofMap?: Map<any, any> | WeakMap<any, any> | null | undefined;
+      ofSet?: Set<any> | WeakSet<any> | null | undefined;
       children:
-        | NtControlStatement.ForCallback<T, number>
-        | (NtControlStatement.ForCallback<T, number> | Narrative.JSXNode)[];
+        | NtControlStatement.ForCallback<any, number>
+        | (NtControlStatement.ForCallback<any, number> | Narrative.JSXNode)[];
     }
 
     interface Empty extends Narrative.Childrenable {}
