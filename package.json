@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/core",
-    "packages/control-statement"
+    "packages/control-statement",
+    "packages/babel-plugin-compiler"
   ],
   "version": "0.3.2",
   "description": "Fast 1kb library that create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
@@ -14,9 +15,10 @@
     "format": "yarn run format:core",
     "format:core": "eslint --fix --ext .jsx,.js,.ts,.tsx packages/core/**/*.{js,jsx,ts,tsx}",
     "test": "jest --config=test/jest.config.js",
+    "test:compile": "yarn run jest:clear && jest --config=test/jest.config.compile.js",
     "jest:clear": "jest --clearCache",
     "cover": "jest --coverage --config=test/jest.config.js",
-    "ci": "yarn run build && yarn run cover && codecov",
+    "ci": "yarn run build && yarn run cover && test:compile && codecov",
     "release": "lerna publish",
     "release:next": "lerna publish --dist-tag next"
   },
@@ -41,6 +43,8 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.0.0",
+    "@babel/traverse": "^7.7.5",
+    "@babel/types": "^7.7.5",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@types/chai": "^4.2.4",

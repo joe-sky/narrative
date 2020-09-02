@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/core", "packages/control-statement"],
+  "packages": ["packages/core", "packages/control-statement", "packages/babel-plugin-compiler"],
   "command": {
     "publish": {
       "message": "chore(release): :bookmark: publish %s"

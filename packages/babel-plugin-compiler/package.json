@@ -1,0 +1,32 @@
+{
+  "name": "@narrative/babel-plugin-compiler",
+  "version": "0.3.1",
+  "description": "Performance enhancement compiler for Narrative.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/narrative.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/narrative/issues"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-syntax-jsx": "^7.7.5",
+    "@babel/traverse": "^7.7.5",
+    "@babel/types": "^7.7.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

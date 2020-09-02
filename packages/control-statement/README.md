@@ -2,4 +2,8 @@
 
 JSX control statement syntax collection based on @narrative/core.
 
-<img src="../../public/images/narrative-gundam-a-pack.jpg" alt="Narrative">
+## The Origin Of Name
+
+🤖 `Narrative Gundam A Pack`
+
+<img src="https://raw.githubusercontent.com/joe-sky/narrative/master/public/images/narrative-gundam-a-pack.jpg" alt="Narrative">

@@ -103,7 +103,7 @@ Vue(v2):
 
 🤖 `Narrative Gundam`, ready to launch!
 
-<img src="./public/images/narrative-gundam.jpg" alt="Narrative">
+<img src="https://raw.githubusercontent.com/joe-sky/narrative/master/public/images/narrative-gundam.jpg" alt="Narrative">
 
 ## License
 

@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [v0.3.2] 2020.09.01
+## [v0.3.2] 2020.09.02
 
+- 🌟 The first version of `@narrative/babel-plugin-compiler` have been completed.
 - 🌟 Add `in`, `ofMap`, `ofSet` props to `For` element.
 
 ## [v0.3.1] 2020.08.31

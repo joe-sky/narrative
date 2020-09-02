@@ -2,24 +2,27 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
-import { If, Else, ElseIf } from '../src/index';
-
 /** @jsx ntH */
 const ntH = nt.bind(React.createElement, { Fragment });
+import { If, Else, ElseIf } from '../src/index';
 
 const TestIf = props => {
   return (
-    <If condition={props.condition}>
-      {() => <i>test</i>}
+    <If condition={props.condition == 1}>
+      <i>test1</i>
+      <ElseIf condition={props.condition == 2}>{() => <i>test2</i>}</ElseIf>
+      <ElseIf condition={props.condition == 3}>
+        <i>test3</i>
+      </ElseIf>
       <Else>
-        <i>test2</i>
+        <i>else</i>
       </Else>
     </If>
   );
 };
 
 describe('if element', function() {
-  const app = mount(<TestIf condition={false} />);
+  const app = mount(<TestIf condition={2} />);
   console.log(
     <nt-if condition={false}>
       test111
