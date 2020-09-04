@@ -24,11 +24,11 @@ const TestIf = props => {
 describe('if element', function() {
   const app = mount(<TestIf condition={2} />);
   console.log(
-    <nt-if condition={false}>
+    <If condition={false}>
       test111
-      <nt-elseif condition={true}>{() => 'test3'}</nt-elseif>
-      <nt-else>test2</nt-else>
-    </nt-if>
+      <ElseIf condition={true}>{() => 'test3'}</ElseIf>
+      <Else>test2</Else>
+    </If>
   );
 
   it('if', () => {

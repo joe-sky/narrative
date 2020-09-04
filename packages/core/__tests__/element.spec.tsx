@@ -6,10 +6,10 @@ import * as nt from '../src/index';
 /** @jsx ntH */
 const ntH = nt.bind(React.createElement, { Fragment });
 
-nt.registerElement('p-in-div', (props, children, { h }) => <div {...props}>{h('p', null, ...children)}</div>);
+const PInDiv = nt.element((props, children, { h }) => <div {...props}>{h('p', null, ...children)}</div>);
 
 const TestPinDiv = props => {
-  return <p-in-div>test</p-in-div>;
+  return <PInDiv>test</PInDiv>;
 };
 
 describe('custom elements', function() {

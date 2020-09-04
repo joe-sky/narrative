@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.3.1
+ * @narrative/core v0.3.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -27,6 +27,7 @@ interface DelegateOption<HResult = any, HFragment = Fragment> {
 }
 interface ElementDelegate<HResult = any, HFragment = Fragment> {
   (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
+  __nt__?: boolean;
 }
 interface AttributeDelegate<HResult = any, HFragment = Fragment> {
   (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
@@ -44,16 +45,14 @@ interface Childrenable {
   children?: JSXChild;
 }
 
-declare const elements: Map<string | ElementDelegate, ElementDelegate>;
-declare const elementOptions: Map<ElementDelegate, ElementOption>;
-declare function registerElement<T, HResult = any, HFragment = Fragment>(
-  name: string,
-  delegate: ElementDelegate<HResult, HFragment>,
-  options?: ElementOption
-): T;
+declare function isEl(type: any): type is ElementDelegate;
+declare function element<ElFunc extends (props: Childrenable) => JSX.Element, HResult = any, HFragment = Fragment>(
+  delegate: ElementDelegate<HResult, HFragment>
+): ElFunc;
+declare function element<ElProps extends {}, HResult = any, HFragment = Fragment>(
+  delegate: ElementDelegate<HResult, HFragment>
+): (props: ElProps & Childrenable) => JSX.Element;
 
-declare const attributes: Map<string, AttributeDelegate>;
-declare const attributeOptions: Map<AttributeDelegate, AttributeOption>;
 declare type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> = (
   arg1?: Arg1,
   arg2?: Arg2,
@@ -62,10 +61,11 @@ declare type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg
   arg5?: Arg5,
   ...args: any[]
 ) => {
-  __nt__: true;
+  __nt__: any;
   [name: string]: any;
 };
-declare function registerAttribute<
+declare const NT_ATTR = '__ntAttr__';
+declare function attribute<
   Arg1 = any,
   Arg2 = any,
   Arg3 = any,
@@ -73,11 +73,7 @@ declare function registerAttribute<
   Arg5 = any,
   HResult = any,
   HFragment = Fragment
->(
-  name: string,
-  delegate: AttributeDelegate<HResult, HFragment>,
-  options?: AttributeOption
-): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5>;
+>(delegate: AttributeDelegate<HResult, HFragment>): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5>;
 
 declare function render(type: any, props: Props, children: Children, h: H, hOption: HOption): any;
 declare function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean): any;
@@ -102,18 +98,16 @@ export {
   HOption,
   JSXChild,
   JSXNode,
+  NT_ATTR,
   PropType,
   Props,
   adjustChildren,
-  attributeOptions,
-  attributes,
+  attribute,
   bind,
-  elementOptions,
-  elements,
+  element,
   h,
+  isEl,
   jsx,
-  registerAttribute,
-  registerElement,
   render,
   renderPrevAttr
 };

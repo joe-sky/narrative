@@ -9,17 +9,17 @@ const ntH = nt.bind(React.createElement, { Fragment });
 
 const TestSwitch = props => {
   return (
-    <nt-switch expression={props.expression}>
-      <case value={1}>
+    <Switch expression={props.expression}>
+      <Case value={1}>
         <i>test1</i>
-      </case>
-      <case value={2}>
+      </Case>
+      <Case value={2}>
         <i>test2</i>
-      </case>
-      <default>
+      </Case>
+      <Default>
         <i>test3</i>
-      </default>
-    </nt-switch>
+      </Default>
+    </Switch>
   );
 };
 

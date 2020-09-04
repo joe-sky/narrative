@@ -1,7 +1,9 @@
 # CHANGELOG
 
-## [v0.3.2] 2020.09.02
+## [v0.3.2] 2020.09.04
 
+- 🌟 Use esbuild instead babel and uglify.
+- 🌟 Remove the custom element features and use them like the components only.
 - 🌟 The first version of `@narrative/babel-plugin-compiler` have been completed.
 - 🌟 Add `in`, `ofMap`, `ofSet` props to `For` element.
 

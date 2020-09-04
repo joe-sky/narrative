@@ -1,11 +1,11 @@
-import { registerAttribute, renderPrevAttr } from '@narrative/core';
+import { attribute, renderPrevAttr } from '@narrative/core';
 
 /**
- * Narrative Custom Attribute `show`, example:
+ * Narrative Attribute `show`, example:
  *
  * `<input {...show(false)} />`
  */
-export const show = registerAttribute<boolean>('ntShow', (props, children, option) => {
+export const show = attribute<boolean>((props, children, option) => {
   const { args } = option;
   if (!args?.[0]) {
     if (!props.style) {

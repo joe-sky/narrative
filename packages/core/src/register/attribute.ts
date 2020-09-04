@@ -1,7 +1,4 @@
-import { AttributeDelegate, DelegateOption, AttributeOption, Props, Children, Fragment } from '../interface';
-
-export const attributes: Map<string, AttributeDelegate> = new Map();
-export const attributeOptions: Map<AttributeDelegate, AttributeOption> = new Map();
+import { AttributeDelegate, Fragment } from '../interface';
 
 export type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5 = any> = (
   arg1?: Arg1,
@@ -11,11 +8,15 @@ export type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5
   arg5?: Arg5,
   ...args: any[]
 ) => {
-  __nt__: true;
+  __nt__: any;
   [name: string]: any;
 };
 
-export function registerAttribute<
+let __attrNum = 0;
+
+export const NT_ATTR = '__ntAttr__';
+
+export function attribute<
   Arg1 = any,
   Arg2 = any,
   Arg3 = any,
@@ -23,16 +24,15 @@ export function registerAttribute<
   Arg5 = any,
   HResult = any,
   HFragment = Fragment
->(
-  name: string,
-  delegate: AttributeDelegate<HResult, HFragment>,
-  options: AttributeOption = {}
-): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5> {
-  attributes.set(name, delegate);
-  attributeOptions.set(delegate, options);
+>(delegate: AttributeDelegate<HResult, HFragment>): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5> {
+  const attrNum = __attrNum++;
 
-  return (...args) => ({
-    __nt__: true,
-    [name]: args
-  });
+  return (...args) => {
+    const attr = [delegate, args];
+
+    return {
+      __nt__: attr,
+      [NT_ATTR + attrNum]: attr
+    };
+  };
 }

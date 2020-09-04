@@ -1,18 +1,18 @@
 /*!
- * @narrative/control-statement v0.3.1
+ * @narrative/control-statement v0.3.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
 /// <reference types="react" />
-import { Childrenable, JSXChild, JSXNode } from '@narrative/core';
-import { AttributeResult } from '@narrative/core/types/narrative-core';
+import { Childrenable, AttributeResult } from '@narrative/core/types/narrative-core';
+import { JSXChild, JSXNode } from '@narrative/core';
 
 declare type LoopFunc = (item: any, index: number, len: number, lenObj: number) => any;
 declare type EachType = 1 | 2 | 3 | 4;
 declare function each(record: any, func: LoopFunc, type?: EachType): void;
 
 /**
- * Narrative Custom Element `If`, example:
+ * Narrative Element `If`, example:
  *
  * `<If condition={false}><input /></If>`
  */
@@ -22,25 +22,25 @@ declare const If: (
   } & Childrenable
 ) => JSX.Element;
 /**
- * Narrative Custom Element `Else`, example:
+ * Narrative Element `Else`, example:
  *
  * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
  */
 declare const Else: (props: Childrenable) => JSX.Element;
 /**
- * Narrative Custom Element `Empty`, example:
+ * Narrative Element `Empty`, example:
  *
  * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<Empty>nothing</Empty></For>`
  */
 declare const Empty: (props: Childrenable) => JSX.Element;
 /**
- * Narrative Custom Element `Default`, example:
+ * Narrative Element `Default`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
 declare const Default: (props: Childrenable) => JSX.Element;
 /**
- * Narrative Custom Element `ElseIf`, example:
+ * Narrative Element `ElseIf`, example:
  *
  * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
  */
@@ -83,20 +83,20 @@ declare function ForFunc<O extends {}, K extends keyof O>(props: {
   children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;
 /**
- * Narrative Custom Element `For`, example:
+ * Narrative Element `For`, example:
  *
  * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
  */
 declare const For: typeof ForFunc;
 /**
- * Narrative Custom Element `Each`, example:
+ * Narrative Element `Each`, example:
  *
  * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
  */
 declare const Each: typeof ForFunc;
 
 /**
- * Narrative Custom Element `Switch`, example:
+ * Narrative Element `Switch`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
@@ -106,7 +106,7 @@ declare const Switch: (
   } & Childrenable
 ) => JSX.Element;
 /**
- * Narrative Custom Element `Case`, example:
+ * Narrative Element `Case`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
@@ -117,7 +117,7 @@ declare const Case: (
 ) => JSX.Element;
 
 /**
- * Narrative Custom Attribute `show`, example:
+ * Narrative Attribute `show`, example:
  *
  * `<input {...show(false)} />`
  */

@@ -1,6 +1,6 @@
 # @narrative/sfc
 
-`Narrative` SFC (Standalone Functional Component)
+`Narrative` SFC (Styled Functional Component)
 
 > It's going to be a very interesting feature, and I'll implement it in the near future! :satisfied:
 

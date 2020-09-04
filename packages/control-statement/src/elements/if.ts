@@ -1,4 +1,4 @@
-import { Children, Childrenable, registerElement, adjustChildren } from '@narrative/core';
+import { Children, element, adjustChildren } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -23,82 +23,70 @@ function parseChildren(children: Children) {
 }
 
 /**
- * Narrative Custom Element `If`, example:
+ * Narrative Element `If`, example:
  *
  * `<If condition={false}><input /></If>`
  */
-export const If = registerElement<(props: { condition: any } & Childrenable) => JSX.Element>(
-  'if',
-  (props, children, option) => {
-    const _children = parseChildren(children);
-    if (props?.condition) {
-      return adjustChildren(_children.then, option, true);
-    } else if (_children.elseIfs.length) {
-      const l = _children.elseIfs.length;
-      let ret = null;
+export const If = element<{ condition: any }>((props, children, option) => {
+  const _children = parseChildren(children);
+  if (props?.condition) {
+    return adjustChildren(_children.then, option, true);
+  } else if (_children.elseIfs.length) {
+    const l = _children.elseIfs.length;
+    let ret = null;
 
-      each(_children.elseIfs, (elseIf, i) => {
-        if (elseIf.condition) {
-          ret = elseIf.ntElseIf();
-          return false;
-        } else if (i === l - 1) {
-          ret = _children.else?.();
-        }
-      });
+    each(_children.elseIfs, (elseIf, i) => {
+      if (elseIf.condition) {
+        ret = elseIf.ntElseIf();
+        return false;
+      } else if (i === l - 1) {
+        ret = _children.else?.();
+      }
+    });
 
-      return ret;
-    } else {
-      return _children.else?.();
-    }
-  },
-  { alias: ['nt-if'] }
-);
+    return ret;
+  } else {
+    return _children.else?.();
+  }
+});
 
 /**
- * Narrative Custom Element `Else`, example:
+ * Narrative Element `Else`, example:
  *
  * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
  */
-export const Else = registerElement<(props: Childrenable) => JSX.Element>(
-  'else',
-  (props, children, option) => {
-    return {
-      ntElse() {
-        return adjustChildren(children, option, true);
-      }
-    };
-  },
-  { alias: ['nt-else', 'empty', 'nt-empty', 'default', 'nt-default'] }
-);
+export const Else = element((props, children, option) => {
+  return {
+    ntElse() {
+      return adjustChildren(children, option, true);
+    }
+  };
+});
 
 /**
- * Narrative Custom Element `Empty`, example:
+ * Narrative Element `Empty`, example:
  *
  * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<Empty>nothing</Empty></For>`
  */
 export const Empty = Else;
 
 /**
- * Narrative Custom Element `Default`, example:
+ * Narrative Element `Default`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
 export const Default = Else;
 
 /**
- * Narrative Custom Element `ElseIf`, example:
+ * Narrative Element `ElseIf`, example:
  *
  * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
  */
-export const ElseIf = registerElement<(props: { condition: any } & Childrenable) => JSX.Element>(
-  'elseif',
-  (props, children, option) => {
-    return {
-      condition: props?.condition,
-      ntElseIf() {
-        return adjustChildren(children, option, true);
-      }
-    };
-  },
-  { alias: ['nt-elseif'] }
-);
+export const ElseIf = element<{ condition: any }>((props, children, option) => {
+  return {
+    condition: props?.condition,
+    ntElseIf() {
+      return adjustChildren(children, option, true);
+    }
+  };
+});

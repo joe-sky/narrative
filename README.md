@@ -6,7 +6,7 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative` (abbreviated as `nt`) is a tiny size(about `1kb`) library that create runtime JSX custom elements and attributes. It's type safe and can cross environment(React/Vue/Preact/htm/vanilla js).
+`Narrative`(abbreviated as `nt`) is a tiny library(about `1kb`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
 > Currently it is in the experimental stage.
 
@@ -16,6 +16,86 @@
 | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                           | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
 | [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement) | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
+
+## Features
+
+- 🌟 **Goal:** A wonderful new usage scene for JSX.
+- ✨ **Small:** Tiny size, `core`(about `1kb`, can be used independently), `control-statement`(about `2kb`, optional).
+- 💫 **Extensible:** Everything is extensible.
+- ⭐ **Type safe:** Fully developed by TypeScript, fully supports type inference.
+- 🔥 **Cross environments:** One write, run in multiple environments(React/Vue/etc).
+- ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
+- 🚀 **No dependencies**
+
+## Installation
+
+```bash
+npm install @narrative/core @narrative/control-statement
+```
+
+## Basic Usage
+
+`Narrative` usually needs to work with a host framework, let's take a look at a React example. We use `nt.bind` to bind React as the host, and use `@jsx` to tell the compiler that `JSX factory` has changed:
+
+```js
+import React, { Fragment } from 'react';
+import * as nt from '@narrative/core';
+
+/** @jsx ntH */
+const ntH = nt.bind(React.createElement, { Fragment });
+```
+
+Then we can use the `Narrative` registered Elements and Attributes:
+
+```js
+import { If, ElseIf, For, show } from '@narrative/control-statement';
+
+const App: React.FC = () => {
+  const [todos, setTodos] = React.useState([]);
+
+  const addTodo = () => {
+    setTodos(todos.concat(`Item ${todos.length}`));
+  };
+
+  return (
+    <div className="app">
+      <ul>
+        <For of={todos} item="todo">
+          {(todo, { index }) => (
+            <If condition={index > 5}>
+              <li>{todo * 2}</li>
+              <ElseIf condition={index > 10}>
+                <li>{todo * 3}</li>
+              </ElseIf>
+            </If>
+          )}
+        </For>
+      </ul>
+      <button {...show(todos.length < 10)} onClick={addTodo}>
+        Add Todo
+      </button>
+    </div>
+  );
+};
+```
+
+The feature of above example:
+
+- `If/ElseIf/For` are not normal React components, they will not be parsed to the VDOM by React. Actually, they are special functions which is handled by `Narrative`.
+
+- The same, `show` is not a normal JSX spread attribute, it also is a special function which is handled by `Narrative`.
+
+## The Benefit
+
+- To do
+
+### Elements
+
+### Attributes
+
+## Performance
+
+- To do
 
 ## Why
 
@@ -49,37 +129,11 @@ These are two excellent implementations of react JSX syntax, but they�
 
 ## Inspiration
 
-`Narrative`'s inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler problems! :wink:
+`Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler problems! :wink:
 
 And the author is also proficient in developing Babel plugins, so we will provide optional compilers to optimize performance in the future.
 
-## Features
-
-- 🌟 **Goal:** Define a new way to use JSX in specific scenes: `Custom Elements and Attributes`.
-- ✨ **Small:** Tiny size: core(About `1kb`, can be used independently), control-statement(About `2kb`).
-- 💫 **Extensible:** Everything is extensible(With all built-in JSX syntax).
-- ⭐ **Type safe:** Fully developed with TS, all JSX syntax fully supports type inference.
-- 🔥 **Cross environment:** Support one write, run in multiple environments(React/Vue/etc).
-- ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
-- 🚀 **No dependencies**
-
-## Installation
-
-```bash
-npm install @narrative/core
-```
-
-## Usage
-
-React/Preact:
-
-```js
-import React, { Fragment } from 'react';
-import * as nt from '@narrative/core';
-
-/** @jsx ntH */
-const ntH = nt.bind(React.createElement, { Fragment });
-```
+## About Vue
 
 Vue(v3):
 
@@ -96,6 +150,10 @@ Vue(v2):
 - To do
 
 ## Roadmap
+
+- To do
+
+## Who is using it
 
 - To do
 

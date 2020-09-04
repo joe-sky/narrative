@@ -1,7 +1,6 @@
-import babel from 'rollup-plugin-babel';
+import esbuild from 'rollup-plugin-esbuild';
 import dts from 'rollup-plugin-dts';
 import replace from 'rollup-plugin-replace';
-import { uglify } from 'rollup-plugin-uglify';
 import filesize from 'rollup-plugin-filesize';
 import license from 'rollup-plugin-license';
 import resolve from 'rollup-plugin-node-resolve';
@@ -24,18 +23,26 @@ if (type !== 'dts') {
     },
     external,
     plugins: [
-      babel({
-        babelrc: false,
-        presets: [
-          ['@babel/preset-typescript', { allowNamespaces: true }],
-          [
-            '@babel/preset-env',
-            {
-              modules: false
-            }
-          ]
-        ],
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      esbuild({
+        include: /\.[jt]sx?$/, // default, inferred from `loaders` option
+        exclude: /node_modules/, // default
+        sourceMap: false, // default
+        minify: process.env.NODE_ENV === 'production',
+        target: 'es2017', // default, or 'es20XX', 'esnext'
+        jsxFactory: 'React.createElement',
+        jsxFragment: 'React.Fragment',
+        // Like @rollup/plugin-replace
+        define: {
+          __VERSION__: '"x.y.z"'
+        },
+        // Add extra loaders
+        loaders: {
+          // Add .json files support
+          // require @rollup/plugin-commonjs
+          '.json': 'json',
+          // Enable JSX in .js files too
+          '.js': 'jsx'
+        }
       }),
       resolve({
         customResolveOptions: {
@@ -55,19 +62,6 @@ if (type !== 'dts') {
     config.plugins.push(
       replace({
         'process.env.NODE_ENV': JSON.stringify(env)
-      })
-    );
-  }
-
-  if (env === 'production') {
-    config.plugins.push(
-      uglify({
-        compress: {
-          pure_getters: true, // eslint-disable-line
-          unsafe: true,
-          unsafe_comps: true // eslint-disable-line
-        },
-        warnings: false
       })
     );
   }

@@ -1,31 +1,31 @@
 import { H, HOption, PropType, DelegateOption, DelegateWithArgs } from './interface';
-import { elements } from './register/element';
-import { attributes } from './register/attribute';
+import { isEl } from './register/element';
+import { NT_ATTR } from './register/attribute';
 import { render } from './utils';
 
 export function bind<HResult>(h?: H<HResult>, hOption: HOption = {}) {
   return function(type, props, ...children) {
-    if (props?.__nt__) {
+    if (props?.__nt__ != null) {
       delete props.__nt__;
 
       const attrDelegates: DelegateWithArgs[] = [];
       Object.keys(props).forEach(prop => {
-        const attrDelegate = attributes.get(prop);
-        if (attrDelegate) {
+        if (prop.startsWith(NT_ATTR)) {
+          const attr = props[prop];
           attrDelegates.push({
-            delegate: attrDelegate,
-            args: props[prop]
+            delegate: attr[0],
+            args: attr[1]
           });
+
           delete props[prop];
         }
       });
 
       const lastIndex = attrDelegates.length - 1;
       const prevDelegates: PropType<DelegateOption, 'prevDelegates'> = attrDelegates.slice(0, lastIndex);
-      const elDelegate = elements.get(type);
-      if (elDelegate) {
+      if (isEl(type)) {
         prevDelegates.unshift({
-          delegate: elDelegate
+          delegate: type
         });
       } else {
         prevDelegates.unshift(h);
@@ -35,9 +35,8 @@ export function bind<HResult>(h?: H<HResult>, hOption: HOption = {}) {
       return lastAttr.delegate(props, children, { h, hOption, type, args: lastAttr.args, prevDelegates });
     }
 
-    const elDelegate = elements.get(type);
-    if (elDelegate) {
-      return elDelegate(props, children, { h, hOption, type });
+    if (isEl(type)) {
+      return type(props, children, { h, hOption, type });
     }
 
     return render(type, props, children, h, hOption);

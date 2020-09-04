@@ -28,6 +28,7 @@ export interface DelegateOption<HResult = any, HFragment = Fragment> {
 
 export interface ElementDelegate<HResult = any, HFragment = Fragment> {
   (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
+  __nt__?: boolean;
 }
 
 export interface AttributeDelegate<HResult = any, HFragment = Fragment> {

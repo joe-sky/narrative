@@ -6,7 +6,7 @@ import * as nt from '../src/index';
 /** @jsx ntH */
 const ntH = nt.bind(React.createElement, { Fragment });
 
-const visible = nt.registerAttribute<boolean>('ntVisible', (props, children, option) => {
+const visible = nt.attribute<boolean>((props, children, option) => {
   const { args } = option;
   if (!args?.[0]) {
     if (!props.style) {
@@ -41,11 +41,11 @@ describe('visible attribute', function() {
   });
 });
 
-const wrapSpan = nt.registerAttribute<boolean>('ntWrapSpan', (props, children, option) => {
+const wrapSpan = nt.attribute<boolean>((props, children, option) => {
   return <span>{nt.renderPrevAttr(props, children, option)}</span>;
 });
 
-const wrapDiv = nt.registerAttribute<boolean>('ntWrapDiv', (props, children, option) => {
+const wrapDiv = nt.attribute<boolean>((props, children, option) => {
   return <div>{nt.renderPrevAttr(props, children, option)}</div>;
 });
 

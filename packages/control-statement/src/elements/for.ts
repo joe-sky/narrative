@@ -1,4 +1,4 @@
-import { Children, registerElement, JSXChild, JSXNode } from '@narrative/core';
+import { Children, element, JSXChild, JSXNode } from '@narrative/core';
 import * as utils from '../utils';
 
 export interface ForCallbackMeta<K = number> {
@@ -58,73 +58,69 @@ function ForFunc() {
 }
 
 /**
- * Narrative Custom Element `For`, example:
+ * Narrative Element `For`, example:
  *
  * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
  */
-export const For = registerElement<typeof ForFunc>(
-  'for',
-  (props, children) => {
-    const _children = parseChildren(children);
-    const { empty } = _children;
-    let record = null;
-    let type: utils.EachType = null;
-    let ret = null;
+export const For = element<typeof ForFunc>((props, children) => {
+  const _children = parseChildren(children);
+  const { empty } = _children;
+  let record = null;
+  let type: utils.EachType = null;
+  let ret = null;
 
-    if (props) {
-      const { of, ofMap, ofSet } = props;
+  if (props) {
+    const { of, ofMap, ofSet } = props;
 
-      if (of) {
-        record = of;
-        type = 1;
-      } else if (props.in) {
-        record = props.in;
-        type = 2;
-      } else if (ofMap) {
-        record = ofMap;
-        type = 3;
-      } else if (ofSet) {
-        record = ofSet;
-        type = 4;
-      }
+    if (of) {
+      record = of;
+      type = 1;
+    } else if (props.in) {
+      record = props.in;
+      type = 2;
+    } else if (ofMap) {
+      record = ofMap;
+      type = 3;
+    } else if (ofSet) {
+      record = ofSet;
+      type = 4;
     }
+  }
 
-    if (record) {
-      ret = [];
-      const isArrayLoop = type === 1 || type === 4;
+  if (record) {
+    ret = [];
+    const isArrayLoop = type === 1 || type === 4;
 
-      utils.each(
-        record,
-        (item, index, len, lenObj) => {
-          const _index: number = isArrayLoop ? index : len;
-          const _len: number = isArrayLoop ? len : lenObj;
-          const isFirst = _index === 0;
-          const isLast = _index === _len - 1;
-          let key: number = null;
+    utils.each(
+      record,
+      (item, index, len, lenObj) => {
+        const _index: number = isArrayLoop ? index : len;
+        const _len: number = isArrayLoop ? len : lenObj;
+        const isFirst = _index === 0;
+        const isLast = _index === _len - 1;
+        let key: number = null;
 
-          if (!isArrayLoop) {
-            key = index;
-          }
+        if (!isArrayLoop) {
+          key = index;
+        }
 
-          ret.push(_children.for(item, { index: _index, length: _len, key, isFirst, isLast }));
-        },
-        type
-      );
+        ret.push(_children.for(item, { index: _index, length: _len, key, isFirst, isLast }));
+      },
+      type
+    );
 
-      if (!ret.length && empty) {
-        ret = empty();
-      }
-    } else if (empty) {
+    if (!ret.length && empty) {
       ret = empty();
     }
+  } else if (empty) {
+    ret = empty();
+  }
 
-    return ret;
-  },
-  { alias: ['nt-for', 'each', 'nt-each'] }
-);
+  return ret;
+});
 
 /**
- * Narrative Custom Element `Each`, example:
+ * Narrative Element `Each`, example:
  *
  * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
  */

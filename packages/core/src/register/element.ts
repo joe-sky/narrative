@@ -1,20 +1,17 @@
-import { ElementDelegate, DelegateOption, ElementOption, Props, Children, Fragment } from '../interface';
+import { ElementDelegate, Childrenable, Fragment } from '../interface';
 
-export const elements: Map<string | ElementDelegate, ElementDelegate> = new Map();
-export const elementOptions: Map<ElementDelegate, ElementOption> = new Map();
+export function isEl(type: any): type is ElementDelegate {
+  return (type as ElementDelegate)?.__nt__;
+}
 
-export function registerElement<T, HResult = any, HFragment = Fragment>(
-  name: string,
-  delegate: ElementDelegate<HResult, HFragment>,
-  options: ElementOption = {}
-): T {
-  elements.set(name, delegate);
-  elements.set(delegate, delegate);
-  elementOptions.set(delegate, options);
-
-  if (options.alias) {
-    options.alias.forEach(_alias => elements.set(_alias, delegate));
-  }
+export function element<ElFunc extends (props: Childrenable) => JSX.Element, HResult = any, HFragment = Fragment>(
+  delegate: ElementDelegate<HResult, HFragment>
+): ElFunc;
+export function element<ElProps extends {}, HResult = any, HFragment = Fragment>(
+  delegate: ElementDelegate<HResult, HFragment>
+): (props: ElProps & Childrenable) => JSX.Element;
+export function element(delegate: ElementDelegate) {
+  delegate.__nt__ = true;
 
   return delegate as any;
 }
