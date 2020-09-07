@@ -1,4 +1,4 @@
-import { Children, element, JSXChild, JSXNode } from '@narrative/core';
+import { Children, defineElement, JSXChild, JSXNode } from '@narrative/core';
 import * as utils from '../utils';
 
 export interface ForCallbackMeta<K = number> {
@@ -62,7 +62,7 @@ function ForFunc() {
  *
  * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
  */
-export const For = element<typeof ForFunc>((props, children) => {
+export const For = defineElement<typeof ForFunc>((props, children) => {
   const _children = parseChildren(children);
   const { empty } = _children;
   let record = null;

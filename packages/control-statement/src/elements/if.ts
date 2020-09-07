@@ -1,4 +1,4 @@
-import { Children, element, adjustChildren } from '@narrative/core';
+import { Children, defineElement, adjustChildren } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -27,7 +27,7 @@ function parseChildren(children: Children) {
  *
  * `<If condition={false}><input /></If>`
  */
-export const If = element<{ condition: any }>((props, children, option) => {
+export const If = defineElement<{ condition: any }>((props, children, option) => {
   const _children = parseChildren(children);
   if (props?.condition) {
     return adjustChildren(_children.then, option, true);
@@ -55,7 +55,7 @@ export const If = element<{ condition: any }>((props, children, option) => {
  *
  * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
  */
-export const Else = element((props, children, option) => {
+export const Else = defineElement((props, children, option) => {
   return {
     ntElse() {
       return adjustChildren(children, option, true);
@@ -82,7 +82,7 @@ export const Default = Else;
  *
  * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
  */
-export const ElseIf = element<{ condition: any }>((props, children, option) => {
+export const ElseIf = defineElement<{ condition: any }>((props, children, option) => {
   return {
     condition: props?.condition,
     ntElseIf() {

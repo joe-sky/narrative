@@ -6,7 +6,7 @@
     "packages/control-statement",
     "packages/babel-plugin-compiler"
   ],
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Fast 1kb library that create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
   "scripts": {
     "build": "lerna run build",
@@ -60,7 +60,7 @@
     "cross-env": "^5.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "esbuild": "^0.6.30",
+    "esbuild": "^0.6.32",
     "eslint": "^6.5.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
@@ -85,7 +85,8 @@
     "rollup-plugin-license": "^0.8.1",
     "rollup-plugin-node-resolve": "^5.0.2",
     "rollup-plugin-replace": "^2.1.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "vue": "3.0.0-rc.10"
   },
   "resolutions": {
     "eslint": "^6.5.1"

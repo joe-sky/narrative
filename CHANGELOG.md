@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.3] 2020.09.07
+
+- 🌟 Changed `nt.element`, `nt.attribute` to `nt.defineElement`, `nt.defineAttribute`.
+
 ## [v0.3.2] 2020.09.04
 
 - 🌟 Use esbuild instead babel and uglify.

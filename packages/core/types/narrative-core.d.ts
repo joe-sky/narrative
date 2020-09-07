@@ -1,10 +1,8 @@
 /*!
- * @narrative/core v0.3.2
+ * @narrative/core v0.3.3
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-/// <reference types="react" />
-
 declare type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
 declare type Props = Record<string, any>;
 declare type Children = any[];
@@ -46,10 +44,12 @@ interface Childrenable {
 }
 
 declare function isEl(type: any): type is ElementDelegate;
-declare function element<ElFunc extends (props: Childrenable) => JSX.Element, HResult = any, HFragment = Fragment>(
-  delegate: ElementDelegate<HResult, HFragment>
-): ElFunc;
-declare function element<ElProps extends {}, HResult = any, HFragment = Fragment>(
+declare function defineElement<
+  ElFunc extends (props: Childrenable) => JSX.Element,
+  HResult = any,
+  HFragment = Fragment
+>(delegate: ElementDelegate<HResult, HFragment>): ElFunc;
+declare function defineElement<ElProps extends {}, HResult = any, HFragment = Fragment>(
   delegate: ElementDelegate<HResult, HFragment>
 ): (props: ElProps & Childrenable) => JSX.Element;
 
@@ -65,7 +65,7 @@ declare type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg
   [name: string]: any;
 };
 declare const NT_ATTR = '__ntAttr__';
-declare function attribute<
+declare function defineAttribute<
   Arg1 = any,
   Arg2 = any,
   Arg3 = any,
@@ -78,10 +78,10 @@ declare function attribute<
 declare function render(type: any, props: Props, children: Children, h: H, hOption: HOption): any;
 declare function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean): any;
 declare function renderPrevAttr(props: Props, children: Children, option: DelegateOption): any;
+declare function toType<T = any>(value: any): T;
 
 declare function bind<HResult>(h?: H<HResult>, hOption?: HOption): H<HResult>;
-declare const h: H;
-declare function jsx<T = any>(jsxElement: JSX.Element): T;
+declare const jsx: H;
 
 export {
   AttributeDelegate,
@@ -102,12 +102,12 @@ export {
   PropType,
   Props,
   adjustChildren,
-  attribute,
   bind,
-  element,
-  h,
+  defineAttribute,
+  defineElement,
   isEl,
   jsx,
   render,
-  renderPrevAttr
+  renderPrevAttr,
+  toType
 };

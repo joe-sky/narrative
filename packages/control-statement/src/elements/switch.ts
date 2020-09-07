@@ -1,4 +1,4 @@
-import { Children, element, adjustChildren } from '@narrative/core';
+import { Children, defineElement, adjustChildren } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -24,7 +24,7 @@ function parseChildren(children: Children) {
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Switch = element<{ expression: any }>((props, children) => {
+export const Switch = defineElement<{ expression: any }>((props, children) => {
   const _children = parseChildren(children);
   const value = props?.expression;
   const l = _children.cases.length;
@@ -47,7 +47,7 @@ export const Switch = element<{ expression: any }>((props, children) => {
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Case = element<{ value: any }>((props, children, option) => {
+export const Case = defineElement<{ value: any }>((props, children, option) => {
   return {
     value: props?.value,
     ntCase() {

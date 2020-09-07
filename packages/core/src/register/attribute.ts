@@ -16,7 +16,7 @@ let __attrNum = 0;
 
 export const NT_ATTR = '__ntAttr__';
 
-export function attribute<
+export function defineAttribute<
   Arg1 = any,
   Arg2 = any,
   Arg3 = any,

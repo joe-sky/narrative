@@ -43,8 +43,4 @@ export function bind<HResult>(h?: H<HResult>, hOption: HOption = {}) {
   } as H<HResult>;
 }
 
-export const h: H = bind();
-
-export function jsx<T = any>(jsxElement: JSX.Element) {
-  return (jsxElement as any) as T;
-}
+export const jsx: H = bind();

@@ -6,7 +6,7 @@ import * as nt from '../src/index';
 /** @jsx ntH */
 const ntH = nt.bind(React.createElement, { Fragment });
 
-const PInDiv = nt.element((props, children, { h }) => <div {...props}>{h('p', null, ...children)}</div>);
+const PInDiv = nt.defineElement((props, children, { h }) => <div {...props}>{h('p', null, ...children)}</div>);
 
 const TestPinDiv = props => {
   return <PInDiv>test</PInDiv>;

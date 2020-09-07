@@ -36,3 +36,7 @@ export function renderPrevAttr(props: Props, children: Children, option: Delegat
     return render(type, props, children, h, hOption);
   }
 }
+
+export function toType<T = any>(value: any) {
+  return value as T;
+}

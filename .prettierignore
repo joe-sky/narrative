@@ -1,3 +1,6 @@
 /node_modules
 /packages/core/dist
 /packages/core/lib
+/packages/control-statement/dist
+/packages/control-statement/lib
+/packages/babel-plugin-compiler/lib
