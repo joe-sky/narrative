@@ -10,7 +10,6 @@ declare type H<HResult = any> = (type: any, props: Props, ...children: Children)
 interface Fragment {}
 interface HOption {
   Fragment?: Fragment;
-  vue2?: boolean;
 }
 interface DelegateWithArgs {
   delegate: ElementDelegate | AttributeDelegate;
@@ -29,13 +28,6 @@ interface ElementDelegate<HResult = any, HFragment = Fragment> {
 }
 interface AttributeDelegate<HResult = any, HFragment = Fragment> {
   (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
-}
-interface ElementOption {
-  alias?: string[];
-  [key: string]: any;
-}
-interface AttributeOption {
-  [key: string]: any;
 }
 declare type JSXNode = JSX.Element | string | number | boolean | null | undefined | Record<any, any>;
 declare type JSXChild = JSXNode | Array<JSXNode>;
@@ -75,7 +67,6 @@ declare function defineAttribute<
   HFragment = Fragment
 >(delegate: AttributeDelegate<HResult, HFragment>): AttributeResult<Arg1, Arg2, Arg3, Arg4, Arg5>;
 
-declare function render(type: any, props: Props, children: Children, h: H, hOption: HOption): any;
 declare function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean): any;
 declare function renderPrevAttr(props: Props, children: Children, option: DelegateOption): any;
 declare function toType<T = any>(value: any): T;
@@ -85,14 +76,12 @@ declare const jsx: H;
 
 export {
   AttributeDelegate,
-  AttributeOption,
   AttributeResult,
   Children,
   Childrenable,
   DelegateOption,
   DelegateWithArgs,
   ElementDelegate,
-  ElementOption,
   Fragment,
   H,
   HOption,
@@ -107,7 +96,6 @@ export {
   defineElement,
   isEl,
   jsx,
-  render,
   renderPrevAttr,
   toType
 };

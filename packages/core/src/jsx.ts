@@ -1,7 +1,6 @@
 import { H, HOption, PropType, DelegateOption, DelegateWithArgs } from './interface';
 import { isEl } from './register/element';
 import { NT_ATTR } from './register/attribute';
-import { render } from './utils';
 
 export function bind<HResult>(h?: H<HResult>, hOption: HOption = {}) {
   return function(type, props, ...children) {
@@ -39,7 +38,7 @@ export function bind<HResult>(h?: H<HResult>, hOption: HOption = {}) {
       return type(props, children, { h, hOption, type });
     }
 
-    return render(type, props, children, h, hOption);
+    return h(type, props, ...children);
   } as H<HResult>;
 }
 

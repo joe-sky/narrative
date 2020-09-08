@@ -10,7 +10,6 @@ export interface Fragment {}
 
 export interface HOption {
   Fragment?: Fragment;
-  vue2?: boolean;
 }
 
 export interface DelegateWithArgs {
@@ -33,15 +32,6 @@ export interface ElementDelegate<HResult = any, HFragment = Fragment> {
 
 export interface AttributeDelegate<HResult = any, HFragment = Fragment> {
   (props: Props, children: Children, option: DelegateOption<HResult, HFragment>): any;
-}
-
-export interface ElementOption {
-  alias?: string[];
-  [key: string]: any;
-}
-
-export interface AttributeOption {
-  [key: string]: any;
 }
 
 export type JSXNode = JSX.Element | string | number | boolean | null | undefined | Record<any, any>;

@@ -6,25 +6,31 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny library(about `1kb`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny library(about `800b`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
 > Currently it is in the experimental stage.
 
+## JSX !== React JSX
+
+There are many frameworks using JSX at present, such as React/Vue/[Omi](https://github.com/Tencent/omi)/etc. **So this library is just created for JSX, not just for React JSX**. But it can also adapt to various frameworks that use JSX, and follow the JSX pattern. 😉
+
 ## Packages
 
-| Package                                                                                                     | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                           | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
-| [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement) | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
+| Package                                                                                                             | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                                   | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
+| [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement)         | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
+| [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a>                                                                                                                                                                                      |
 
 ## Features
 
-- 🌟 **Goal:** A wonderful new usage scene for JSX.
-- ✨ **Small:** Tiny size, `core`(about `1kb`, can be used independently), `control-statement`(about `2kb`, optional).
-- 💫 **Extensible:** Everything is extensible.
+- 🌟 **Goal:** A wonderful idea, run JSX at any expressions or statements.
+- ✨ **Small:** Tiny size. `core`(about `800b`, can be used independently); `control-statement`(about `1.2kb`, optional).
+- 💫 **Simple:** No new syntax, just like native JSX.
 - ⭐ **Type safe:** Fully developed by TypeScript, fully supports type inference.
 - 🔥 **Cross environments:** One write, run in multiple environments(React/Vue/etc).
 - ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
+- 🔧 **Extensible:** Everything is extensible.
 - 🚀 **No dependencies**
 
 ## Installation
@@ -41,8 +47,8 @@ npm install @narrative/core @narrative/control-statement
 import React, { Fragment } from 'react';
 import * as nt from '@narrative/core';
 
-/** @jsx ntH */
-const ntH = nt.bind(React.createElement, { Fragment });
+/** @jsx jsx */
+const jsx = nt.bind(React.createElement, { Fragment });
 ```
 
 Then we can use the `Narrative` registered Elements and Attributes:
@@ -60,7 +66,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <ul>
-        <For of={todos} item="todo">
+        <For of={todos}>
           {(todo, { index }) => (
             <If condition={index > 5}>
               <li>{todo * 2}</li>
@@ -131,7 +137,7 @@ These are two excellent implementations of react JSX syntax, but they�
 
 `Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler problems! :wink:
 
-And the author is also proficient in developing Babel plugins, so we will provide optional compilers to optimize performance in the future.
+And the author is also proficient in developing Babel plugins, so the optional [babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) can provide better performance.
 
 ## About Vue
 
@@ -141,8 +147,8 @@ Vue(v3):
 import * as Vue from 'vue';
 import * as nt from '@narrative/core';
 
-/** @jsx ntH */
-const ntH = nt.bind(Vue.h);
+/** @jsx jsx */
+const jsx = nt.bind(Vue.h);
 ```
 
 Vue(v2):

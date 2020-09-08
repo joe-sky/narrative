@@ -2,10 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
+/** @jsx jsx */
+const jsx = nt.bind(React.createElement, { Fragment });
 import { Switch, Case, Default } from '../src/index';
-
-/** @jsx ntH */
-const ntH = nt.bind(React.createElement, { Fragment });
 
 const TestSwitch = props => {
   return (

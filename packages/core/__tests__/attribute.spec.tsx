@@ -3,8 +3,8 @@ import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '../src/index';
 
-/** @jsx ntH */
-const ntH = nt.bind(React.createElement, { Fragment });
+/** @jsx jsx */
+const jsx = nt.bind(React.createElement, { Fragment });
 
 const visible = nt.defineAttribute<boolean>((props, children, option) => {
   const { args } = option;

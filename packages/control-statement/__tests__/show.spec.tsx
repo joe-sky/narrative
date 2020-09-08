@@ -2,10 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import * as nt from '@narrative/core';
+/** @jsx jsx */
+const jsx = nt.bind(React.createElement, { Fragment });
 import { show } from '../src/index';
-
-/** @jsx ntH */
-const ntH = nt.bind(React.createElement, { Fragment });
 
 const TestShow: React.FC<{ show: boolean }> = props => {
   return <i {...show(props.show)}>test</i>;
