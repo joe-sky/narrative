@@ -1,6 +1,6 @@
 {
   "name": "@narrative/control-statement",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "JSX control statement syntax collection based on @narrative/core.",
   "main": "dist/narrative-control-statement.common.js",
   "module": "dist/narrative-control-statement.esm.js",
@@ -33,7 +33,7 @@
   "author": "Joe_Sky <hitomi_doax@sina.com>",
   "license": "MIT",
   "devDependencies": {
-    "@narrative/core": "^0.3.2"
+    "@narrative/core": "^0.3.3"
   },
   "publishConfig": {
     "access": "public"
