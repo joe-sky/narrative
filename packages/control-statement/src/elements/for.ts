@@ -9,7 +9,7 @@ export interface ForCallbackMeta<K = number> {
   isLast: boolean;
 }
 
-export type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild;
+export type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
 
 interface ParseChildrenResult {
   for: ForCallback;

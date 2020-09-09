@@ -22,7 +22,9 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.7.5",
-    "@babel/plugin-syntax-jsx": "^7.7.5"
+    "@babel/plugin-syntax-jsx": "^7.7.5",
+    "@narrative/control-statement": "^0.3.2",
+    "@narrative/core": "^0.3.2"
   },
   "publishConfig": {
     "access": "public"

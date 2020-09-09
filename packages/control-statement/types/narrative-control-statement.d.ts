@@ -56,7 +56,7 @@ interface ForCallbackMeta<K = number> {
   isFirst: boolean;
   isLast: boolean;
 }
-declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild;
+declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
 declare function ForFunc<K extends object, V>(props: {
   ofMap: WeakMap<K, V> | null | undefined;
   children: ForCallback<V, K> | (ForCallback<V, K> | JSXNode)[];
