@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [v0.3.3] 2020.09.07
+## [v0.3.3] 2020.09.09
 
 - 🌟 Changed `nt.element`, `nt.attribute` to `nt.defineElement`, `nt.defineAttribute`.
+- 🌟 Add `nt.as`.
 
 ## [v0.3.2] 2020.09.04
 

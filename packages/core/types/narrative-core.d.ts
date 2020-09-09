@@ -69,7 +69,7 @@ declare function defineAttribute<
 
 declare function adjustChildren(children: Children, option?: DelegateOption, lazy?: boolean): any;
 declare function renderPrevAttr(props: Props, children: Children, option: DelegateOption): any;
-declare function toType<T = any>(value: any): T;
+declare function as<R, T = any>(value: T): R;
 
 declare function bind<HResult>(h?: H<HResult>, hOption?: HOption): H<HResult>;
 declare const jsx: H;
@@ -91,11 +91,11 @@ export {
   PropType,
   Props,
   adjustChildren,
+  as,
   bind,
   defineAttribute,
   defineElement,
   isEl,
   jsx,
-  renderPrevAttr,
-  toType
+  renderPrevAttr
 };
