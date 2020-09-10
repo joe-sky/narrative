@@ -6,7 +6,7 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny library(about `800b`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny library(about `750b`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
 > Currently it is in the experimental stage.
 
@@ -25,7 +25,7 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 ## Features
 
 - 🌟 **Goal:** A wonderful idea, run JSX at any expressions or statements.
-- ✨ **Small:** Tiny size. `core`(about `800b`, can be used independently); `control-statement`(about `1.2kb`, optional).
+- ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
 - 💫 **Simple:** No new syntax, just like native JSX.
 - ⭐ **Type safe:** Fully developed by TypeScript, fully supports type inference.
 - 🔥 **Cross environments:** One write, run in multiple environments(React/Vue/etc).
@@ -103,7 +103,7 @@ The feature of above example:
 
 - To do
 
-## Why
+## Why?
 
 At present, there are some Babel plugins that can implement special JSX syntax, such as:
 
@@ -115,9 +115,11 @@ At present, there are some Babel plugins that can implement special J
 
 All of these schemes only deal with JSX syntax at compile time, so the performance can be optimized to be very good without additional runtime code.
 
-### New issues
+### Troubled issues
 
-But recently, Unbundled build tools(such as: [Vite](https://github.com/vitejs/vite)/[Snowpack](https://github.com/pikapkg/snowpack)) have come into people's view, they all use extremely fast tool `esbuild` to convert JSX by default. So the Babel plugins often can't be used(or not work perfectly) when using the new type build tools.
+But there is an important fact that all the above plugins must rely on Babel to run~ 😂
+
+For example, it is difficult to run in some environments without Babel (such as TSC, [esbuild](https://github.com/evanw/esbuild), [Vite](https://github.com/vitejs/vite) and so on). Sometimes we even need to rebuild a same compiler plugin for the specific environment.
 
 ### Another way of thinking
 
@@ -131,15 +133,15 @@ It turns out that it is feasible to implement JSX special syntax at�
 
 - [react-loops](https://github.com/leebyron/react-loops)
 
-These are two excellent implementations of react JSX syntax, but they can't run in other environments like preact/Vue.
+These are two excellent implementations of React JSX syntax, but they can't run in other environments like preact/Vue.
 
 ## Inspiration
 
-`Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler problems! :wink:
+Part of `Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler environments. It can also support the development of extensibility at runtime like React/Vue! 😉
 
-And the author is also proficient in developing Babel plugins, so the optional [babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) can provide better performance.
+However, we also developed a optional [babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler), it can provide better performance.
 
-## About Vue
+## Usage in Vue
 
 Vue(v3):
 
