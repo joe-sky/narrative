@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.4] 2020.09.16
+
+- 🐞 `@narrative/babel-plugin-compiler` has supported Vue 2.
+
 ## [v0.3.3] 2020.09.09
 
 - 🌟 Changed `nt.element`, `nt.attribute` to `nt.defineElement`, `nt.defineAttribute`.

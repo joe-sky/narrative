@@ -5,7 +5,7 @@ import * as types from '@babel/types';
 import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
 import * as astUtil from '../utils/ast';
 
-const ELEMENTS = {
+export const SUB_ELEMENTS_SWITCH = {
   Case: 'Case',
   Default: 'Default'
 };
@@ -17,7 +17,7 @@ function getBlocks(expression: any, children: any[], key: string) {
   };
 
   children.forEach(child => (
-    <If condition={astUtil.isTag(child, ELEMENTS.Case)}>
+    <If condition={astUtil.isTag(child, SUB_ELEMENTS_SWITCH.Case)}>
       {() => {
         const attrs = astUtil.getAttributeMap(child);
         const childNodes = astUtil.getChildren(child);
@@ -27,7 +27,7 @@ function getBlocks(expression: any, children: any[], key: string) {
           children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
         });
       }}
-      <ElseIf condition={astUtil.isTag(child, ELEMENTS.Default)}>
+      <ElseIf condition={astUtil.isTag(child, SUB_ELEMENTS_SWITCH.Default)}>
         {() => {
           const childNodes = astUtil.getChildren(child);
 

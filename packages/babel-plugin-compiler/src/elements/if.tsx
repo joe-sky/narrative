@@ -5,8 +5,7 @@ import * as types from '@babel/types';
 import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
 import * as astUtil from '../utils/ast';
 
-const ELEMENTS = {
-  If: 'If',
+export const SUB_ELEMENTS_IF = {
   ElseIf: 'ElseIf',
   Else: 'Else'
 };
@@ -19,7 +18,7 @@ function getBlocks(condition: any, children: any[], key: string) {
   };
 
   children.forEach(child => (
-    <If condition={astUtil.isTag(child, ELEMENTS.ElseIf)}>
+    <If condition={astUtil.isTag(child, SUB_ELEMENTS_IF.ElseIf)}>
       {() => {
         const attrs = astUtil.getAttributeMap(child);
         const childNodes = astUtil.getChildren(child);
@@ -29,7 +28,7 @@ function getBlocks(condition: any, children: any[], key: string) {
           children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
         });
       }}
-      <ElseIf condition={astUtil.isTag(child, ELEMENTS.Else)}>
+      <ElseIf condition={astUtil.isTag(child, SUB_ELEMENTS_IF.Else)}>
         {() => {
           const childNodes = astUtil.getChildren(child);
 

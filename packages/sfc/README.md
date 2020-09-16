@@ -6,6 +6,6 @@
 
 ## The Origin Of Name
 
-🤖 `Narrative Gundam C Pack`
+🤖 `Narrative Gundam C Packs`
 
 <img src="https://raw.githubusercontent.com/joe-sky/narrative/master/public/images/narrative-gundam-c-pack.jpg" alt="Narrative">

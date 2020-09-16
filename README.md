@@ -143,19 +143,60 @@ However, we also developed a optional [babel-plugin-compiler](https://github.com
 
 ## Usage in Vue
 
-Vue(v3):
+- Vue(v3)
+
+The usage in vue 3 is almost the same as react:
 
 ```js
-import * as Vue from 'vue';
+import { h, defineComponent } from 'vue';
 import * as nt from '@narrative/core';
-
 /** @jsx jsx */
-const jsx = nt.bind(Vue.h);
+const jsx = nt.bind(h);
+import { If, Else } from '@narrative/control-statement';
+
+export default defineComponent({
+  name: 'App',
+  setup() {
+    return () => (
+      <If condition={Math.random() > 0.5}>
+        <div id="app">Hello World!</div>
+        <Else>nothing</Else>
+      </If>
+    );
+  }
+});
 ```
 
-Vue(v2):
+- Vue(v2)
 
-- To do
+Currently, only use [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) to transform JSX in Vue 2:
+
+```vue
+<script>
+import { If, Else } from '@narrative/control-statement';
+
+export default {
+  name: 'App',
+  render() {
+    return (
+      <If condition={Math.random() > 0.5}>
+        <div id="app">Hello World!</div>
+        <Else>nothing</Else>
+      </If>
+    );
+  }
+};
+</script>
+
+<style scoped>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
 
 ## Roadmap
 
