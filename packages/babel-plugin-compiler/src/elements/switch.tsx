@@ -23,7 +23,12 @@ function getBlocks(expression: any, children: any[], key: string) {
         const childNodes = astUtil.getChildren(child);
 
         ret.cases.push({
-          condition: types.binaryExpression('===', astUtil.getExpression(attrs?.value), expression),
+          condition: attrs?.values
+            ? types.callExpression(
+                types.memberExpression(astUtil.getExpression(attrs.values), types.identifier('includes')),
+                [expression]
+              )
+            : types.binaryExpression('===', astUtil.getExpression(attrs?.value), expression),
           children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
         });
       }}

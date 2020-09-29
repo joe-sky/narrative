@@ -6,7 +6,11 @@ import * as nt from '@narrative/core';
 const jsx = nt.bind(React.createElement, { Fragment });
 import { Switch, Case, Default } from '../src/index';
 
-const TestSwitch = props => {
+interface Props {
+  expression: number;
+}
+
+const TestSwitch: React.FC<Props> = props => {
   return (
     <Switch expression={props.expression}>
       <Case value={1}>
@@ -22,13 +26,13 @@ const TestSwitch = props => {
   );
 };
 
-const TestSwitchComponent = props => {
+const TestSwitchComponent: React.FC<Props> = props => {
   return (
     <Switch expression={props.expression}>
       <Case value={1}>
         <i>test1</i>
       </Case>
-      <Case value={2}>
+      <Case values={[2, 3]}>
         <i>test2</i>
       </Case>
       <Default>

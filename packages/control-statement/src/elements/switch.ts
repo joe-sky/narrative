@@ -1,4 +1,4 @@
-import { Children, defineElement, adjustChildren } from '@narrative/core';
+import { Children, defineElement, adjustChildren, Childrenable } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -19,19 +19,23 @@ function parseChildren(children: Children) {
   return ret;
 }
 
+function SwitchFunc<T>(props: { expression: T } & Childrenable): JSX.Element {
+  return {} as JSX.Element;
+}
+
 /**
  * Narrative Element `Switch`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Switch = defineElement<{ expression: any }>((props, children) => {
+export const Switch = defineElement<typeof SwitchFunc>((props, children) => {
   const _children = parseChildren(children);
   const value = props?.expression;
   const l = _children.cases.length;
   let ret = null;
 
   each(_children.cases, (_case, i) => {
-    if (value === _case.value) {
+    if (('value' in _case && value === _case.value) || (Array.isArray(_case.values) && _case.values.includes(value))) {
       ret = _case.ntCase();
       return false;
     } else if (i === l - 1) {
@@ -42,16 +46,29 @@ export const Switch = defineElement<{ expression: any }>((props, children) => {
   return ret;
 });
 
+function CaseFunc<T>(props: { value: T } & Childrenable): JSX.Element;
+function CaseFunc<T>(props: { values: ArrayLike<T> } & Childrenable): JSX.Element;
+function CaseFunc() {
+  return {} as JSX.Element;
+}
+
 /**
  * Narrative Element `Case`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-export const Case = defineElement<{ value: any }>((props, children, option) => {
-  return {
-    value: props?.value,
+export const Case = defineElement<typeof CaseFunc>((props, children, option) => {
+  const ret: { value?: any; values?: any; ntCase: Function } = {
     ntCase() {
       return adjustChildren(children, option, true);
     }
   };
+
+  if (props?.value) {
+    ret.value = props.value;
+  } else if (props?.values) {
+    ret.values = props.values;
+  }
+
+  return ret;
 });

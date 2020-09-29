@@ -6,4 +6,4 @@ JSX control statement syntax collection based on @narrative/core.
 
 🤖 `Narrative Gundam A Packs`
 
-<img src="https://raw.githubusercontent.com/joe-sky/narrative/master/public/images/narrative-gundam-a-pack.jpg" alt="Narrative">
+<img src="../../public/images/narrative-gundam-a-pack.jpg" alt="Narrative">

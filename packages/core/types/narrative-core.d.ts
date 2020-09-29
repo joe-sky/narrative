@@ -1,5 +1,5 @@
 /*!
- * @narrative/core v0.3.4
+ * @narrative/core v0.3.5
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -53,7 +53,6 @@ declare type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg
   arg5?: Arg5,
   ...args: any[]
 ) => {
-  __nt__: any;
   [name: string]: any;
 };
 declare const NT_ATTR = '__ntAttr__';

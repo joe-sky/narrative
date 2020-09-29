@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.5] 2020.09.29
+
+- 🌟 Add `values` property to `Case`, for judge multiple values at the same time.
+
 ## [v0.3.4] 2020.09.16
 
 - 🐞 `@narrative/babel-plugin-compiler` has supported Vue 2.

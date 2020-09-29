@@ -8,7 +8,6 @@ export type AttributeResult<Arg1 = any, Arg2 = any, Arg3 = any, Arg4 = any, Arg5
   arg5?: Arg5,
   ...args: any[]
 ) => {
-  __nt__: any;
   [name: string]: any;
 };
 

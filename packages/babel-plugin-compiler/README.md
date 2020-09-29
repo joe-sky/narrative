@@ -20,4 +20,4 @@ npm install @narrative/babel-plugin-compiler
 
 🤖 `Narrative Gundam B Packs`
 
-<img src="https://raw.githubusercontent.com/joe-sky/narrative/master/public/images/narrative-gundam-b-pack.jpg" alt="Narrative">
+<img src="../../public/images/narrative-gundam-b-pack.jpg" alt="Narrative">

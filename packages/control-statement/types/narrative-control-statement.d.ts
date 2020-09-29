@@ -1,25 +1,26 @@
 /*!
- * @narrative/control-statement v0.3.4
+ * @narrative/control-statement v0.3.5
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
-import { Childrenable, AttributeResult } from '@narrative/core/types/narrative-core';
-import { JSXChild, JSXNode } from '@narrative/core';
+import { Childrenable, JSXChild, JSXNode } from '@narrative/core';
+import { AttributeResult } from '@narrative/core/types/narrative-core';
 
 declare type LoopFunc = (item: any, index: number, len: number, lenObj: number) => any;
 declare type EachType = 1 | 2 | 3 | 4;
 declare function each(record: any, func: LoopFunc, type?: EachType): void;
 
+declare function IfFunc<T>(
+  props: {
+    condition: T;
+  } & Childrenable
+): JSX.Element;
 /**
  * Narrative Element `If`, example:
  *
  * `<If condition={false}><input /></If>`
  */
-declare const If: (
-  props: {
-    condition: any;
-  } & Childrenable
-) => JSX.Element;
+declare const If: typeof IfFunc;
 /**
  * Narrative Element `Else`, example:
  *
@@ -43,11 +44,7 @@ declare const Default: (props: Childrenable) => JSX.Element;
  *
  * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
  */
-declare const ElseIf: (
-  props: {
-    condition: any;
-  } & Childrenable
-) => JSX.Element;
+declare const ElseIf: typeof IfFunc;
 
 interface ForCallbackMeta<K = number> {
   index: number;
@@ -94,26 +91,33 @@ declare const For: typeof ForFunc;
  */
 declare const Each: typeof ForFunc;
 
+declare function SwitchFunc<T>(
+  props: {
+    expression: T;
+  } & Childrenable
+): JSX.Element;
 /**
  * Narrative Element `Switch`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-declare const Switch: (
+declare const Switch: typeof SwitchFunc;
+declare function CaseFunc<T>(
   props: {
-    expression: any;
+    value: T;
   } & Childrenable
-) => JSX.Element;
+): JSX.Element;
+declare function CaseFunc<T>(
+  props: {
+    values: ArrayLike<T>;
+  } & Childrenable
+): JSX.Element;
 /**
  * Narrative Element `Case`, example:
  *
  * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
  */
-declare const Case: (
-  props: {
-    value: any;
-  } & Childrenable
-) => JSX.Element;
+declare const Case: typeof CaseFunc;
 
 /**
  * Narrative Attribute `show`, example:

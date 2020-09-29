@@ -1,4 +1,4 @@
-import { Children, defineElement, adjustChildren } from '@narrative/core';
+import { Children, defineElement, adjustChildren, Childrenable } from '@narrative/core';
 import { each } from '../utils';
 
 interface ParseChildrenResult {
@@ -22,12 +22,16 @@ function parseChildren(children: Children) {
   return ret;
 }
 
+function IfFunc<T>(props: { condition: T } & Childrenable): JSX.Element {
+  return {} as JSX.Element;
+}
+
 /**
  * Narrative Element `If`, example:
  *
  * `<If condition={false}><input /></If>`
  */
-export const If = defineElement<{ condition: any }>((props, children, option) => {
+export const If = defineElement<typeof IfFunc>((props, children, option) => {
   const _children = parseChildren(children);
   if (props?.condition) {
     return adjustChildren(_children.then, option, true);
@@ -82,7 +86,7 @@ export const Default = Else;
  *
  * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
  */
-export const ElseIf = defineElement<{ condition: any }>((props, children, option) => {
+export const ElseIf = defineElement<typeof IfFunc>((props, children, option) => {
   return {
     condition: props?.condition,
     ntElseIf() {
