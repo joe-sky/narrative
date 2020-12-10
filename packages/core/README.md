@@ -4,6 +4,6 @@ Fast 1kb library that create runtime JSX custom elements and attributes, type sa
 
 ## The Origin Of Name
 
-🤖 `Narrative Gundam`
+🤖 `Narrative Gundam C Packs`
 
-<img src="../../public/images/narrative-gundam-no-pack.jpg" alt="Narrative">
+<img src="../../public/images/narrative-gundam-c-pack.jpg" alt="Narrative Gundam C Packs">
