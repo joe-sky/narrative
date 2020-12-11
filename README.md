@@ -206,7 +206,7 @@ export default {
 
 - To do
 
-## The Origin Of Name
+## The origin of library name
 
 🤖 `Narrative Gundam`, ready to launch!
 

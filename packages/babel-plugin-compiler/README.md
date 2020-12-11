@@ -16,8 +16,8 @@ npm install @narrative/babel-plugin-compiler
 }
 ```
 
-## The Origin Of Name
+## The origin of library name
 
-🤖 `Narrative Gundam B Packs`
+🤖 `Narrative Gundam`
 
-<img src="../../public/images/narrative-gundam-b-pack.jpg" alt="Narrative B Packs">
+<img src="../../public/images/narrative-gundam-b-pack.jpg" alt="Narrative">
