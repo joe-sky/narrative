@@ -10,7 +10,6 @@ module.exports = {
     '<rootDir>/packages/core/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
     '<rootDir>/packages/control-statement/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
   ],
-  testEnvironment: 'enzyme',
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['<rootDir>/node_modules/babel-jest', { configFile: './test/jest.babelrc' }],
     '^.+\\.m\\.(less|scss)$': '<rootDir>/node_modules/jest-css-modules-transform',
