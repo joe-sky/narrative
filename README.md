@@ -113,21 +113,25 @@ The feature of above example:
 
 The api document of `@narrative/control-statement` please look at the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts) first. The complete document will be supplemented later.
 
-#### If
+#### `<If>`
 
 See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L14).
 
-#### Switch
+#### `<Switch>`
 
 See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L95).
 
-#### For
+#### `<For>`
 
 See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L74).
 
-#### show
+#### `{...show(visible)}`
 
 See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L128).
+
+#### How to expand
+
+All of `Narrative elements and attributes` are extensible. The specific API documentation will be completed later.
 
 <!-- ## Performance
 
