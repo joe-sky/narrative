@@ -1,8 +1,9 @@
 /*!
- * @narrative/control-statement v0.3.5
+ * @narrative/control-statement v0.3.6
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
+/// <reference types="react" />
 import { Childrenable, JSXChild, JSXNode } from '@narrative/core';
 import { AttributeResult } from '@narrative/core/types/narrative-core';
 

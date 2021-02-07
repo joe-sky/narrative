@@ -1,8 +1,10 @@
 /*!
- * @narrative/core v0.3.5
+ * @narrative/core v0.3.6
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
+/// <reference types="react" />
+
 declare type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
 declare type Props = Record<string, any>;
 declare type Children = any[];

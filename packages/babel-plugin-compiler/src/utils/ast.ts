@@ -40,7 +40,11 @@ export function isTag(node: Node, tagName: string) {
  * @param {JSXAttribute} attribute
  */
 export function getExpression(attribute: JSXAttribute) {
-  return (attribute.value as JSXExpressionContainer).expression as types.Expression;
+  if (types.isJSXExpressionContainer(attribute.value)) {
+    return attribute.value.expression as types.Expression;
+  } else {
+    return attribute.value as types.Expression;
+  }
 }
 
 /**

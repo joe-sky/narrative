@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.3.6] 2021.02.07
+
+- 🐞 Fix a compile syntax bug for `<Case value="1">`.
+
 ## [v0.3.5] 2020.09.29
 
 - 🌟 Add `values` property to `Case`, for judge multiple values at the same time.

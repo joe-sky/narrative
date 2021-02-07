@@ -7,7 +7,8 @@ const jsx = nt.bind(React.createElement, { Fragment });
 import { Switch, Case, Default } from '../src/index';
 
 interface Props {
-  expression: number;
+  expression?: number;
+  expressionStr?: string;
 }
 
 const TestSwitch: React.FC<Props> = props => {
@@ -28,11 +29,11 @@ const TestSwitch: React.FC<Props> = props => {
 
 const TestSwitchComponent: React.FC<Props> = props => {
   return (
-    <Switch expression={props.expression}>
-      <Case value={1}>
+    <Switch expression={props.expressionStr}>
+      <Case value="1">
         <i>test1</i>
       </Case>
-      <Case values={[2, 3]}>
+      <Case values={['2', '3']}>
         <i>test2</i>
       </Case>
       <Default>
@@ -49,7 +50,7 @@ describe('switch element', function() {
     expect(app.html()).toEqual('<i>test2</i>');
   });
 
-  const app2 = mount(<TestSwitchComponent expression={2} />);
+  const app2 = mount(<TestSwitchComponent expressionStr="2" />);
 
   it('switch component', () => {
     expect(app2.html()).toEqual('<i>test2</i>');

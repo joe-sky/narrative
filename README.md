@@ -6,13 +6,13 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny library(about `750b`) that **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny tool(~1kb) for **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
-> Currently it is in the experimental stage.
+> Currently it is in the experimental stage, but the main syntax of v1.0 will not change.
 
-## JSX !== React JSX
+<!-- ## JSX !== React JSX
 
-There are many frameworks using JSX at present, such as React/Vue/[Omi](https://github.com/Tencent/omi)/etc. **So this library is just created for JSX, not just for React JSX**. But it can also adapt to various frameworks that use JSX, and follow the JSX pattern. 😉
+There are many frameworks using JSX at present, such as React/Vue/[Omi](https://github.com/Tencent/omi)/etc. **So this library is just created for JSX, not just for React JSX**. But it can also adapt to various frameworks that use JSX, and follow the JSX pattern. 😉 -->
 
 ## Packages
 
@@ -24,7 +24,7 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 
 ## Features
 
-- 🌟 **Goal:** A wonderful idea, run JSX at any expressions or statements.
+- 🌟 **Goal:** A fun idea that run JSX at any expressions or statements.
 - ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
 - 💫 **Simple:** No new syntax, just like native JSX.
 - ⭐ **Type safe:** Fully developed by TypeScript, fully supports type inference.
@@ -39,7 +39,21 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 npm install @narrative/core @narrative/control-statement
 ```
 
-## Basic Usage
+### Using with Babel
+
+```bash
+npm @narrative/babel-plugin-compiler
+```
+
+.babelrc:
+
+```json
+{
+  "plugins": ["@narrative/compiler"]
+}
+```
+
+## Basic Overview
 
 `Narrative` usually needs to work with a host framework, let's take a look at a React example. We use `nt.bind` to bind React as the host, and use `@jsx` to tell the compiler that `JSX factory` has changed:
 
@@ -91,17 +105,33 @@ The feature of above example:
 
 - The same, `show` is not a normal JSX spread attribute, it also is a special function which is handled by `Narrative`.
 
-## The Benefit
+<!-- ## The Benefit
 
-- To do
+- To do -->
 
-### Elements
+### Usage
 
-### Attributes
+The api document of `@narrative/control-statement` please look at the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts) first. The complete document will be supplemented later.
 
-## Performance
+#### If
 
-- To do
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L13).
+
+#### Switch
+
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L94).
+
+#### For
+
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L73).
+
+#### show
+
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L127).
+
+<!-- ## Performance
+
+- To do -->
 
 ## Why?
 
@@ -113,7 +143,7 @@ At present, there are some Babel plugins that can implement special J
 
 - [@vue/babel-plugin-jsx](https://github.com/vuejs/jsx-next) (Vue)
 
-All of these schemes only deal with JSX syntax at compile time, so the performance can be optimized to be very good without additional runtime code.
+All of these projects only deal with JSX syntax at compile time, so the performance can be optimized to be very good without additional runtime code.
 
 ### Troubled issues
 
@@ -200,11 +230,11 @@ export default {
 
 ## Roadmap
 
-- To do
+- [ ] Support JSX automatic runtime
 
-## Who is using it
+## Who is using
 
-- To do
+The author `Joe_Sky` and his front-end team in jd.com.
 
 ## The origin of library name
 

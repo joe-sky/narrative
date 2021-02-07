@@ -6,8 +6,8 @@
     "packages/control-statement",
     "packages/babel-plugin-compiler"
   ],
-  "version": "0.3.5",
-  "description": "Fast 750b library that create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
+  "version": "0.3.6",
+  "description": "A tiny tool(~1kb) for create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
   "scripts": {
     "build": "lerna run build",
     "lint": "yarn run lint:core",
