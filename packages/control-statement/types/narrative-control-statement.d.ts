@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.3.6
+ * @narrative/control-statement v0.3.7
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -82,7 +82,7 @@ declare function ForFunc<O extends {}, K extends keyof O>(props: {
 /**
  * Narrative Element `For`, example:
  *
- * `<For of={[1, 2, 3]}><i key={index}>{item}</i></For>`
+ * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</For>`
  */
 declare const For: typeof ForFunc;
 /**

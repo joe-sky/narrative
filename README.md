@@ -115,19 +115,19 @@ The api document of `@narrative/control-statement` please look at the [type defi
 
 #### If
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L13).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L14).
 
 #### Switch
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L94).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L95).
 
 #### For
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L73).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L74).
 
 #### show
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L127).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L128).
 
 <!-- ## Performance
 
