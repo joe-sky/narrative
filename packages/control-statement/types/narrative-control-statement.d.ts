@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.3.7
+ * @narrative/control-statement v0.3.8
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -85,12 +85,6 @@ declare function ForFunc<O extends {}, K extends keyof O>(props: {
  * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</For>`
  */
 declare const For: typeof ForFunc;
-/**
- * Narrative Element `Each`, example:
- *
- * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
- */
-declare const Each: typeof ForFunc;
 
 declare function SwitchFunc<T>(
   props: {
@@ -127,19 +121,4 @@ declare const Case: typeof CaseFunc;
  */
 declare const show: AttributeResult<boolean, any, any, any, any>;
 
-export {
-  Case,
-  Default,
-  Each,
-  EachType,
-  Else,
-  ElseIf,
-  Empty,
-  For,
-  ForCallback,
-  ForCallbackMeta,
-  If,
-  Switch,
-  each,
-  show
-};
+export { Case, Default, EachType, Else, ElseIf, Empty, For, ForCallback, ForCallbackMeta, If, Switch, each, show };

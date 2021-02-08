@@ -6,21 +6,17 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny tool(~1kb) for **create a kind of useful JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny tool(<1kb minimum) for create a kind of **light weight JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
-> Currently it is in the experimental stage, but the main syntax of v1.0 will not change.
+> Currently it is in the experimental stage, but the main syntax of v1.0 should not change. JSX automatic runtime is currently being processed.
 
 <!-- ## JSX !== React JSX
 
 There are many frameworks using JSX at present, such as React/Vue/[Omi](https://github.com/Tencent/omi)/etc. **So this library is just created for JSX, not just for React JSX**. But it can also adapt to various frameworks that use JSX, and follow the JSX pattern. 😉 -->
 
-## Packages
+## Demo
 
-| Package                                                                                                             | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                                   | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
-| [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement)         | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
-| [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a>                                                                                                                                                                                      |
+[Live demo is here.](https://codesandbox.io/s/green-resonance-3fz52)
 
 ## Features
 
@@ -32,6 +28,37 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 - ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
 - 🔧 **Extensible:** Everything is extensible.
 - 🚀 **No dependencies**
+
+## Packages
+
+| Package                                                                                                             | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                                   | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
+| [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement)         | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
+| [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a>                                                                                                                                                                                      |
+
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Packages](#packages)
+- [Installation](#installation)
+  - [Using with Babel](#using-with-babel)
+- [Basic Overview](#basic-overview)
+- [Usage](#usage)
+  - [`<If>`](#if)
+  - [`<Switch>`](#switch)
+  - [`<For>`](#for)
+  - [`show`](#show)
+  - [How to expand](#how-to-expand)
+    - [Elements](#elements)
+    - [Attributes](#attributes)
+  - [Usage in Vue](#usage-in-vue)
+- [Why](#why)
+- [Inspiration](#inspiration)
+- [Roadmap](#roadmap)
+- [Who is using](#who-is-using)
+- [The Origin of Name](#the-origin-of-name)
 
 ## Installation
 
@@ -109,73 +136,39 @@ The feature of above example:
 
 - To do -->
 
-### Usage
+## Usage
 
-The api document of `@narrative/control-statement` please look at the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts) first. The complete document will be supplemented later.
+> The api document of `@narrative/control-statement` please look at the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts) first. The complete document will be supplemented later.
 
-#### `<If>`
+### `<If>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L14).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L14) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/if.spec.tsx).
 
-#### `<Switch>`
+### `<Switch>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L95).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L95) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/switch.spec.tsx).
 
-#### `<For>`
+### `<For>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L74).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L74) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/for.spec.tsx).
 
-#### `{...show(visible)}`
+### `show`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L128).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L128) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/show.spec.tsx).
 
-#### How to expand
+### How to expand
 
-All of `Narrative elements and attributes` are extensible. The specific API documentation will be completed later.
+> All of `Narrative elements and attributes` are extensible. The specific API documentation will be completed later.
 
-<!-- ## Performance
+#### Elements
 
-- To do -->
+See the [tests](https://github.com/joe-sky/narrative/blob/master/packages/core/__tests__/element.spec.tsx).
 
-## Why?
+#### Attributes
 
-At present, there are some Babel plugins that can implement special JSX syntax, such as:
+See the [tests](https://github.com/joe-sky/narrative/blob/master/packages/core/__tests__/attribute.spec.tsx).
 
-- [jsx-control-statements](https://github.com/AlexGilleran/jsx-control-statements) (React)
-
-- [babel-plugin-react-directives](https://github.com/peakchen90/babel-plugin-react-directives) (React)
-
-- [@vue/babel-plugin-jsx](https://github.com/vuejs/jsx-next) (Vue)
-
-All of these projects only deal with JSX syntax at compile time, so the performance can be optimized to be very good without additional runtime code.
-
-### Troubled issues
-
-But there is an important fact that all the above plugins must rely on Babel to run~ 😂
-
-For example, it is difficult to run in some environments without Babel (such as TSC, [esbuild](https://github.com/evanw/esbuild), [Vite](https://github.com/vitejs/vite) and so on). Sometimes we even need to rebuild a same compiler plugin for the specific environment.
-
-### Another way of thinking
-
-At this point, we can think in a different way:
-
-**Is there any way we can accept it at runtime? It's solved without compiling.**
-
-It turns out that it is feasible to implement JSX special syntax at runtime, such as these libraries:
-
-- [react-if](https://github.com/romac/react-if)
-
-- [react-loops](https://github.com/leebyron/react-loops)
-
-These are two excellent implementations of React JSX syntax, but they can't run in other environments like preact/Vue.
-
-## Inspiration
-
-Part of `Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler environments. It can also support the development of extensibility at runtime like React/Vue! 😉
-
-However, we also developed a optional [babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler), it can provide better performance.
-
-## Usage in Vue
+### Usage in Vue
 
 - Vue(v3)
 
@@ -232,6 +225,50 @@ export default {
 </style>
 ```
 
+<!-- ## Performance
+
+- To do -->
+
+## Why
+
+At present, there are some Babel plugins that can implement special JSX syntax, such as:
+
+- [jsx-control-statements](https://github.com/AlexGilleran/jsx-control-statements) (React)
+
+- [babel-plugin-react-directives](https://github.com/peakchen90/babel-plugin-react-directives) (React)
+
+- [@vue/babel-plugin-jsx](https://github.com/vuejs/jsx-next) (Vue)
+
+All of these projects only deal with JSX syntax at compile time, so the performance can be optimized to be very good without additional runtime code.
+
+### Troubled issues
+
+But there is an important fact that all the above plugins must rely on Babel to run~ 😂
+
+For example, it is difficult to run in some environments without Babel (such as TSC, [esbuild](https://github.com/evanw/esbuild), [Vite](https://github.com/vitejs/vite) and so on). Sometimes we even need to rebuild a same compiler plugin for the specific environment.
+
+### Another way of thinking
+
+At this point, we can think in a different way:
+
+**Is there any way we can accept it at runtime? It's solved without compiling.**
+
+It turns out that it is feasible to implement JSX special syntax at runtime, such as these libraries:
+
+- [react-if](https://github.com/romac/react-if)
+
+- [react-loops](https://github.com/leebyron/react-loops)
+
+These are two excellent implementations of React JSX syntax, but they can't run in other environments like preact/Vue.
+
+## Inspiration
+
+Part of `Narrative` inspired by `react-if` and `react-loops`, it fully supports runtime, so users will no longer have to worry about JSX compiler environments. It can also support the development of extensibility at runtime like React/Vue! 😉
+
+However, we also developed a optional [babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler), it can provide better performance.
+
+In addition, part of its inspiration comes from another project [NornJ](https://github.com/joe-sky/nornj) of the same author.
+
 ## Roadmap
 
 - [ ] Support JSX automatic runtime
@@ -240,9 +277,9 @@ export default {
 
 The author `Joe_Sky` and his front-end team in jd.com.
 
-## The origin of library name
+## The Origin of Name
 
-🤖 `Narrative Gundam`, ready to launch!
+🤖 `RX-9 Narrative Gundam`, ready to launch!
 
 <img src="public/images/narrative-gundam.jpg" alt="Narrative">
 

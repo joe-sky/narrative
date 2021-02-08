@@ -118,10 +118,3 @@ export const For = defineElement<typeof ForFunc>((props, children) => {
 
   return ret;
 });
-
-/**
- * Narrative Element `Each`, example:
- *
- * `<Each of={[1, 2, 3]}><i key={index}>{item}</i></Each>`
- */
-export const Each = For;
