@@ -28,8 +28,9 @@ function IfFunc<T>(props: { condition: T } & Childrenable): JSX.Element {
 
 /**
  * Narrative Element `If`, example:
- *
- * `<If condition={false}><input /></If>`
+ * ```tsx
+ * <If condition={false}><input /></If>
+ * ```
  */
 export const If = defineElement<typeof IfFunc>((props, children, option) => {
   const _children = parseChildren(children);
@@ -56,8 +57,12 @@ export const If = defineElement<typeof IfFunc>((props, children, option) => {
 
 /**
  * Narrative Element `Else`, example:
- *
- * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
+ * ```tsx
+ * <If condition={foo > 10}>
+ *   <input />
+ *   <Else><input type="button" /></Else>
+ * </If>
+ * ```
  */
 export const Else = defineElement((props, children, option) => {
   return {
@@ -69,22 +74,35 @@ export const Else = defineElement((props, children, option) => {
 
 /**
  * Narrative Element `Empty`, example:
- *
- * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<Empty>nothing</Empty></For>`
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ *   <Empty>nothing</Empty>
+ * </For>
+ * ```
  */
 export const Empty = Else;
 
 /**
  * Narrative Element `Default`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 export const Default = Else;
 
 /**
  * Narrative Element `ElseIf`, example:
- *
- * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
+ * ```tsx
+ * <If condition={foo > 10}>
+ *   <input />
+ *   <ElseIf condition={foo > 5}><input type="button" /></ElseIf>
+ * </If>
+ * ```
  */
 export const ElseIf = defineElement<typeof IfFunc>((props, children, option) => {
   return {

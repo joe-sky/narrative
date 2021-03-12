@@ -6,7 +6,7 @@
     "packages/control-statement",
     "packages/babel-plugin-compiler"
   ],
-  "version": "0.3.8",
+  "version": "0.4.0",
   "description": "A tiny tool(<1kb minimum) for create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
   "scripts": {
     "build": "lerna run build",

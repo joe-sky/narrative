@@ -8,15 +8,36 @@
 
 `Narrative`(abbreviated as `nt`) is a tiny tool(<1kb minimum) for create a kind of **light weight JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
-> Currently it is in the experimental stage, but the main syntax of v1.0 should not change. JSX automatic runtime is currently being processed.
+> Currently it is in the experimental stage, the main syntax of v1.0 should not change, but there may be minor adjustments to the APIs. JSX automatic runtime is currently being processed.
 
 <!-- ## JSX !== React JSX
 
 There are many frameworks using JSX at present, such as React/Vue/[Omi](https://github.com/Tencent/omi)/etc. **So this library is just created for JSX, not just for React JSX**. But it can also adapt to various frameworks that use JSX, and follow the JSX pattern. 😉 -->
 
-## Demo
-
 [Live demo is here.](https://codesandbox.io/s/green-resonance-3fz52)
+
+## Table of Contents
+
+- [Features](#features)
+- [Packages](#packages)
+- [Installation](#installation)
+  - [Using with Babel](#using-with-babel)
+- [Basic Overview](#basic-overview)
+- [Usage](#usage)
+  - [`<If>`](#if)
+  - [`<Switch>`](#switch)
+  - [`<For>`](#for)
+  - [`{...show}`](#show)
+  - [`{...visible}`](#visible)
+  - [How to expand](#how-to-expand)
+    - [Elements](#elements)
+    - [Attributes](#attributes)
+  - [Usage in Vue](#usage-in-vue)
+- [Why](#why)
+- [Inspiration](#inspiration)
+- [Roadmap](#roadmap)
+- [Who is using](#who-is-using)
+- [The Origin of Name](#the-origin-of-name)
 
 ## Features
 
@@ -36,29 +57,6 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 | [@narrative/core](https://github.com/joe-sky/narrative/tree/master/packages/core)                                   | <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/v/@narrative/core.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/core"><img src="https://img.shields.io/npm/dm/@narrative/core.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/core"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/core.svg?style=flat" alt="Minzipped Size"></a>                                                                               |
 | [@narrative/control-statement](https://github.com/joe-sky/narrative/tree/master/packages/control-statement)         | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
 | [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a>                                                                                                                                                                                      |
-
-## Table of Contents
-
-- [Demo](#demo)
-- [Features](#features)
-- [Packages](#packages)
-- [Installation](#installation)
-  - [Using with Babel](#using-with-babel)
-- [Basic Overview](#basic-overview)
-- [Usage](#usage)
-  - [`<If>`](#if)
-  - [`<Switch>`](#switch)
-  - [`<For>`](#for)
-  - [`show`](#show)
-  - [How to expand](#how-to-expand)
-    - [Elements](#elements)
-    - [Attributes](#attributes)
-  - [Usage in Vue](#usage-in-vue)
-- [Why](#why)
-- [Inspiration](#inspiration)
-- [Roadmap](#roadmap)
-- [Who is using](#who-is-using)
-- [The Origin of Name](#the-origin-of-name)
 
 ## Installation
 
@@ -142,19 +140,23 @@ The feature of above example:
 
 ### `<If>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L14) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/if.spec.tsx).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L23) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/if.spec.tsx).
 
 ### `<Switch>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L95) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/switch.spec.tsx).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L121) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/switch.spec.tsx).
 
 ### `<For>`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L74) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/for.spec.tsx).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L106) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/for.spec.tsx).
 
-### `show`
+### `{...show}`
 
-See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L128) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/show.spec.tsx).
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L146) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/show.spec.tsx).
+
+### `{...visible}`
+
+See the [type definition](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/types/narrative-control-statement.d.ts#L154) and [tests](https://github.com/joe-sky/narrative/blob/master/packages/control-statement/__tests__/visible.spec.tsx).
 
 ### How to expand
 

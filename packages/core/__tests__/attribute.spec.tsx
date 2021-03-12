@@ -6,7 +6,7 @@ import * as nt from '../src/index';
 /** @jsx jsx */
 const jsx = nt.bind(React.createElement, { Fragment });
 
-const visible = nt.defineAttribute<boolean>((props, children, option) => {
+const visibility = nt.defineAttribute<boolean>((props, children, option) => {
   const { args } = option;
   if (!args?.[0]) {
     if (!props.style) {
@@ -23,20 +23,20 @@ const visible = nt.defineAttribute<boolean>((props, children, option) => {
   return nt.renderPrevAttr(props, children, option);
 });
 
-const TestVisible: React.FC<{ visible: boolean }> = props => {
-  return <i {...visible(props.visible)}>test</i>;
+const TestVisible: React.FC<{ visibility: boolean }> = props => {
+  return <i {...visibility(props.visibility)}>test</i>;
 };
 
-describe('visible attribute', function() {
-  const app = mount(<TestVisible visible={false} />);
+describe('visibility attribute', function() {
+  const app = mount(<TestVisible visibility={false} />);
 
-  it('visible false', () => {
+  it('visibility false', () => {
     expect(app.html()).toContain('<i style="visibility: hidden;">test</i>');
   });
 
-  const app2 = mount(<TestVisible visible />);
+  const app2 = mount(<TestVisible visibility />);
 
-  it('visible true', () => {
+  it('visibility true', () => {
     expect(app2.html()).toContain('<i>test</i>');
   });
 });
@@ -51,7 +51,7 @@ const wrapDiv = nt.defineAttribute<boolean>((props, children, option) => {
 
 const TestWrapSpanFirst: React.FC<{ visible: boolean }> = props => {
   return (
-    <i {...wrapSpan()} {...wrapDiv()} {...visible(props.visible)}>
+    <i {...wrapSpan()} {...wrapDiv()} {...visibility(props.visible)}>
       test
     </i>
   );
@@ -59,7 +59,7 @@ const TestWrapSpanFirst: React.FC<{ visible: boolean }> = props => {
 
 const TestWrapDivFirst: React.FC<{ visible: boolean }> = props => {
   return (
-    <i {...wrapDiv()} {...visible(props.visible)} {...wrapSpan()}>
+    <i {...wrapDiv()} {...visibility(props.visible)} {...wrapSpan()}>
       test
     </i>
   );

@@ -59,8 +59,11 @@ function ForFunc() {
 
 /**
  * Narrative Element `For`, example:
- *
- * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</For>`
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ * </For>
+ * ```
  */
 export const For = defineElement<typeof ForFunc>((props, children) => {
   const _children = parseChildren(children);

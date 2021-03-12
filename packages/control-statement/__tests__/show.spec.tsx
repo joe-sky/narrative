@@ -7,14 +7,18 @@ const jsx = nt.bind(React.createElement, { Fragment });
 import { show } from '../src/index';
 
 const TestShow: React.FC<{ show: boolean }> = props => {
-  return <i {...show(props.show)}>test</i>;
+  return (
+    <span>
+      <i {...show(props.show)}>test</i>
+    </span>
+  );
 };
 
 describe('show attribute', function() {
   const app = mount(<TestShow show={false} />);
 
   it('show false', () => {
-    expect(app.html()).toContain('<i style="display: none;">test</i>');
+    expect(app.html()).not.toContain('test');
   });
 
   const app2 = mount(<TestShow show />);

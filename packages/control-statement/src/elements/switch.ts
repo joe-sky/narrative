@@ -25,8 +25,13 @@ function SwitchFunc<T>(props: { expression: T } & Childrenable): JSX.Element {
 
 /**
  * Narrative Element `Switch`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 export const Switch = defineElement<typeof SwitchFunc>((props, children) => {
   const _children = parseChildren(children);
@@ -54,8 +59,13 @@ function CaseFunc() {
 
 /**
  * Narrative Element `Case`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 export const Case = defineElement<typeof CaseFunc>((props, children, option) => {
   const ret: { value?: any; values?: any; ntCase: Function } = {

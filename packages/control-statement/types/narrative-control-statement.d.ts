@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-statement v0.3.8
+ * @narrative/control-statement v0.4.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
@@ -18,32 +18,50 @@ declare function IfFunc<T>(
 ): JSX.Element;
 /**
  * Narrative Element `If`, example:
- *
- * `<If condition={false}><input /></If>`
+ * ```tsx
+ * <If condition={false}><input /></If>
+ * ```
  */
 declare const If: typeof IfFunc;
 /**
  * Narrative Element `Else`, example:
- *
- * `<If condition={foo > 10}><input /><Else><input type="button" /></Else></If>`
+ * ```tsx
+ * <If condition={foo > 10}>
+ *   <input />
+ *   <Else><input type="button" /></Else>
+ * </If>
+ * ```
  */
 declare const Else: (props: Childrenable) => JSX.Element;
 /**
  * Narrative Element `Empty`, example:
- *
- * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}<Empty>nothing</Empty></For>`
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ *   <Empty>nothing</Empty>
+ * </For>
+ * ```
  */
 declare const Empty: (props: Childrenable) => JSX.Element;
 /**
  * Narrative Element `Default`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 declare const Default: (props: Childrenable) => JSX.Element;
 /**
  * Narrative Element `ElseIf`, example:
- *
- * `<If condition={foo > 10}><input /><ElseIf condition={foo > 5}><input type="button" /></ElseIf></If>`
+ * ```tsx
+ * <If condition={foo > 10}>
+ *   <input />
+ *   <ElseIf condition={foo > 5}><input type="button" /></ElseIf>
+ * </If>
+ * ```
  */
 declare const ElseIf: typeof IfFunc;
 
@@ -81,8 +99,11 @@ declare function ForFunc<O extends {}, K extends keyof O>(props: {
 }): JSX.Element;
 /**
  * Narrative Element `For`, example:
- *
- * `<For of={[1, 2, 3]}>{(item, { index }) => <i key={index}>{item}</i>}</For>`
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ * </For>
+ * ```
  */
 declare const For: typeof ForFunc;
 
@@ -93,8 +114,13 @@ declare function SwitchFunc<T>(
 ): JSX.Element;
 /**
  * Narrative Element `Switch`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 declare const Switch: typeof SwitchFunc;
 declare function CaseFunc<T>(
@@ -109,16 +135,45 @@ declare function CaseFunc<T>(
 ): JSX.Element;
 /**
  * Narrative Element `Case`, example:
- *
- * `<Switch expression={foo}><Case value={1}><input /></Case><Case value={2}><input type="button" /></Case><Default>nothing</Default></Switch>`
+ * ```tsx
+ * <Switch expression={foo}>
+ *   <Case value={1}><input /></Case>
+ *   <Case value={2}><input type="button" /></Case>
+ *   <Default>nothing</Default>
+ * </Switch>
+ * ```
  */
 declare const Case: typeof CaseFunc;
 
 /**
  * Narrative Attribute `show`, example:
- *
- * `<input {...show(false)} />`
+ * ```tsx
+ * <input {...show(false)} />
+ * ```
  */
 declare const show: AttributeResult<boolean, any, any, any, any>;
 
-export { Case, Default, EachType, Else, ElseIf, Empty, For, ForCallback, ForCallbackMeta, If, Switch, each, show };
+/**
+ * Narrative Attribute `visible`, example:
+ * ```tsx
+ * <input {...visible(false)} />
+ * ```
+ */
+declare const visible: AttributeResult<boolean, any, any, any, any>;
+
+export {
+  Case,
+  Default,
+  EachType,
+  Else,
+  ElseIf,
+  Empty,
+  For,
+  ForCallback,
+  ForCallbackMeta,
+  If,
+  Switch,
+  each,
+  show,
+  visible
+};

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.4.0] 2021.03.12
+
+- 💥 The `show` attribute has been changed to control whether to render.
+- 🌟 Add `visible` attribute(control `style.display`).
+
 ## [v0.3.6] 2021.02.07
 
 - 🐞 Fix a compile syntax bug for `<Case value="1">`.
@@ -40,7 +45,7 @@
 ## [v0.2.3] 2020.08.19
 
 - 🌟 Support custom attributes.
-- 🌟 Add show attribute.
+- 🌟 Add `show` attribute.
 
 ## [v0.2.1] 2020.08.07
 
