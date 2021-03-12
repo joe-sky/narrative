@@ -1,6 +1,6 @@
 {
   "name": "@narrative/core",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "A tiny tool(<1kb minimum) for create runtime JSX custom elements and attributes, type safe and cross environment(React/Vue/Preact/htm/vanilla js).",
   "main": "dist/narrative-core.common.js",
   "module": "dist/narrative-core.esm.js",

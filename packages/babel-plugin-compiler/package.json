@@ -1,6 +1,6 @@
 {
   "name": "@narrative/babel-plugin-compiler",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "Performance enhancement compiler for Narrative.",
   "main": "lib/index.js",
   "files": [
@@ -23,8 +23,8 @@
   "dependencies": {
     "@babel/core": "^7.7.5",
     "@babel/plugin-syntax-jsx": "^7.7.5",
-    "@narrative/control-statement": "^0.3.7",
-    "@narrative/core": "^0.3.7"
+    "@narrative/control-statement": "^0.4.0",
+    "@narrative/core": "^0.4.0"
   },
   "publishConfig": {
     "access": "public"
