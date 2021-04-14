@@ -6,9 +6,9 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny library(<1kb minimum) for create **a utility-first pattern to use JSX in custom functional elements and attributes way**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny library(<1kb minimum) that **create a utility-first pattern to use JSX anywhere in custom functional elements and attributes way**. It's type safe and can cross frameworks(React/Vue/Preact/Vanilla JS).
 
-> Currently it is in the experimental stage, the main syntax of v1.0 should not change, but there may be minor adjustments to the APIs. JSX automatic runtime is currently being processed.
+> Currently it's in the experimental stage, I will continue to complete the documentation. The main syntax of v1.0 should not change, but there may be minor adjustments to the APIs. JSX automatic runtime(for React like) is currently being processed.
 
 <!-- ## JSX !== React JSX
 
@@ -41,14 +41,14 @@ There are many frameworks using JSX at present, such as React/Vue/[Omi](https://
 
 ## Features
 
-- 🌟 **Goal:** A fun idea that run JSX at any expressions or statements.
+- 🌟 **Goal:** A utility-first idea that run JSX at any expressions or statements.
 - ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
-- 💫 **Simple:** No new syntax, just like native JSX.
-- ⭐ **Type safe:** Fully developed by TypeScript, fully supports type inference.
-- 🔥 **Cross environments:** One write, run in multiple environments(React/Vue/etc).
+- 💫 **Simple:** No new syntax, just like regular JSX.
+- ⭐ **Type safe:** Developed by TypeScript, supports type inference.
+- 🔥 **Cross frameworks:** One write, run in multiple frameworks(React/Vue/Vanilla JS/etc).
 - ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
 - 🔧 **Extensible:** Everything is extensible.
-- 🚀 **No dependencies**
+- 🚀 **No dependencies** No any dependencies(except compiler).
 
 ## Packages
 
