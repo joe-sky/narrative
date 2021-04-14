@@ -6,7 +6,7 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny tool(<1kb minimum) for create a kind of **light weight JSX Functional Elements and Attributes**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
+`Narrative`(abbreviated as `nt`) is a tiny library(<1kb minimum) for create **a utility-first pattern to use JSX in custom functional elements and attributes way**. It's type safe and can cross environments(React/Vue/Preact/htm/vanilla js/etc).
 
 > Currently it is in the experimental stage, the main syntax of v1.0 should not change, but there may be minor adjustments to the APIs. JSX automatic runtime is currently being processed.
 
