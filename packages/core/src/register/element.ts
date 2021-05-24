@@ -1,7 +1,7 @@
 import { ElementDelegate, Childrenable, Fragment } from '../interface';
 
 export function isEl(type: any): type is ElementDelegate {
-  return (type as ElementDelegate)?.__nt__;
+  return (type as ElementDelegate)?.__nt__ || false;
 }
 
 export function defineElement<ElFunc extends (props: Childrenable) => JSX.Element, HResult = any, HFragment = Fragment>(
