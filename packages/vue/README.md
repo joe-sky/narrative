@@ -1,3 +1,3 @@
 # @narrative/vue
 
-Vue bindings for @narrative/core.
+Vue integration for @narrative/core.

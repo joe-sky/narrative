@@ -8,7 +8,9 @@
 
 `Narrative`(abbreviated as `nt`) is a tiny library(<1kb minimum) that **create a utility-first pattern to use JSX anywhere in custom functional elements and attributes way**. It's type safe and can cross frameworks(React/Vue/Preact/Vanilla JS).
 
-> Currently it's in the experimental stage, I will continue to complete the documentation. The main syntax of v1.0 should not change, but there may be minor adjustments to the APIs. JSX automatic runtime(for React like) is currently being processed.
+> Currently it's in the experimental stage, I will continue to complete the documentation. The main syntax of v1.0 should not change, but there may be minor adjustments to the APIs.
+
+<!-- JSX automatic runtime(for React like) is currently being processed. -->
 
 <!-- ## JSX !== React JSX
 
@@ -273,7 +275,9 @@ In addition, part of its inspiration comes from another project [NornJ](https://
 
 ## Roadmap
 
-- [ ] Support JSX automatic runtime
+<!-- - [ ] Support JSX automatic runtime -->
+
+- [ ] Add React/Vue integration library
 
 ## Who is using
 

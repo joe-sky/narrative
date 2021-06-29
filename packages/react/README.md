@@ -1,3 +1,3 @@
 # @narrative/react
 
-React bindings for @narrative/core.
+React integration for @narrative/core.
