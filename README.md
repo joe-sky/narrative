@@ -6,9 +6,9 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a tiny library(<1kb minimum) that **create a utility-first pattern to use JSX anywhere in custom functional elements and attributes way**. It's type safe and can cross frameworks(React/Vue/Preact/Vanilla JS).
+`Narrative`(abbreviated as `nt`) is a compiler tool for create neater If/For/Switch for React/Vue/etc. JSX.
 
-> Currently it's in the experimental stage, I will continue to complete the documentation. The main syntax of v1.0 should not change, but there may be minor adjustments to the APIs.
+> This project is about to be completely revised, the goal is to release v1.0. Please look forward to it.
 
 <!-- JSX automatic runtime(for React like) is currently being processed. -->
 
