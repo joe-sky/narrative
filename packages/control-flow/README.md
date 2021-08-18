@@ -1,3 +1,3 @@
-# @narrative/control-statement
+# @narrative/control-flow
 
-JSX control statement syntax collection based on @narrative/core.
+A compiler tool for create neater control flow tags such as `<If>`/`<For>`/`<Switch>` for JSX/TSX.

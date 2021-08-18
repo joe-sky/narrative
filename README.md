@@ -48,7 +48,7 @@
 ### Using with Babel
 
 ```bash
-npm i @narrative/babel-plugin-compiler
+npm i @narrative/control-flow @narrative/babel-plugin-compiler
 ```
 
 .babelrc:

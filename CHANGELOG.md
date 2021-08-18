@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.5.0-alpha.2] 2021.08.18
+
+- 🌟 Add `@narrative/control-flow` package.
+
 ## [v0.4.0] 2021.03.12
 
 - 💥 The `show` attribute has been changed to control whether to render.

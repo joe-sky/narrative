@@ -1,5 +1,5 @@
 import jsx from '@babel/plugin-syntax-jsx';
-import traverse, { Visitor, NodePath } from '@babel/traverse';
+import { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import * as astUtil from './utils/ast';
 import { transformIf, SUB_TAGS_IF } from './tags/if';
@@ -38,29 +38,29 @@ export default function NtCompiler() {
           }
         }
       },
-      Program(path, state: State) {
-        traverse(path.node, {
+      Program(_path, state: State) {
+        _path.traverse({
           JSXElement: {
-            enter(_path) {
-              if (!types.isJSXElement(_path.parent)) {
+            enter(path) {
+              if (!types.isJSXElement(path.parent)) {
                 return;
               }
 
-              const elName = _path.node.openingElement.name;
+              const elName = path.node.openingElement.name;
               if (!types.isJSXIdentifier(elName)) {
                 return;
               }
 
               const nodeName = elName.name;
               if (
-                !astUtil.isImportedByLib(nodeName, _path, state?.opts?.importedLib) ||
+                !astUtil.isImportedByLib(nodeName, path, state?.opts?.importedLib) ||
                 SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
                 SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH]
               ) {
                 return;
               }
 
-              _path.replaceWith(types.jsxExpressionContainer(_path.node));
+              path.replaceWith(types.jsxExpressionContainer(path.node));
             }
           }
         });

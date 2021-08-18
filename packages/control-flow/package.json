@@ -7,7 +7,6 @@
   "files": [
     "dist/",
     "lib/",
-    "src/",
     "types/",
     "index.d.ts",
     "README.md"

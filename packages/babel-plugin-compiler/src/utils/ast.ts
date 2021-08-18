@@ -18,7 +18,7 @@ export function isImportedByLib(
     libName.push(NT_CONTROL_FLOW);
   }
 
-  const bindingPath = path.scope.getBinding(identifier)?.path;
+  const bindingPath = path.scope?.getBinding(identifier)?.path;
   if (types.isImportDeclaration(bindingPath?.parent)) {
     return libName.includes(as(bindingPath?.parent.source.value));
   }
