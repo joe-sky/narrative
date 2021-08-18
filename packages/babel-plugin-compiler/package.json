@@ -1,6 +1,6 @@
 {
   "name": "@narrative/babel-plugin-compiler",
-  "version": "0.5.0-alpha.1",
+  "version": "0.5.0-alpha.2",
   "description": "Performance enhancement compiler for Narrative.",
   "main": "lib/index.js",
   "files": [
