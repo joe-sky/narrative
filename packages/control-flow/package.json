@@ -1,6 +1,6 @@
 {
   "name": "@narrative/control-flow",
-  "version": "0.4.0",
+  "version": "0.5.0-alpha.1",
   "description": "A compiler tool for create neater control flow tags such as <If>/<For>/<Switch> for JSX/TSX.",
   "main": "index.js",
   "module": "index.js",
