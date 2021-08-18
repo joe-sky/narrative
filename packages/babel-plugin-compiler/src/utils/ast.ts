@@ -1,22 +1,26 @@
 import * as types from '@babel/types';
 import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
 import { NodePath } from '@babel/traverse';
+import { NT_CONTROL_FLOW, as } from './';
 
-const NT_CONTROL_STATEMENT = '@narrative/control-statement';
+export interface Attrs {
+  condition: types.Expression;
+  children: types.Expression[];
+}
 
 export function isImportedByLib(
   identifier: string,
   path: NodePath<JSXElement>,
-  libName: string | string[] = [NT_CONTROL_STATEMENT]
+  libName: string | string[] = [NT_CONTROL_FLOW]
 ) {
   if (!Array.isArray(libName)) {
     libName = [libName];
-    libName.push(NT_CONTROL_STATEMENT);
+    libName.push(NT_CONTROL_FLOW);
   }
 
   const bindingPath = path.scope.getBinding(identifier)?.path;
   if (types.isImportDeclaration(bindingPath?.parent)) {
-    return libName.includes(bindingPath.parent.source.value);
+    return libName.includes(as(bindingPath?.parent.source.value));
   }
 }
 
@@ -54,8 +58,8 @@ export function getExpression(attribute: JSXAttribute) {
  * @returns {object} Map of all attributes with their name as key
  */
 export function getAttributeMap(node: Node): Record<string, any> {
-  return (node as JSXElement).openingElement.attributes.reduce(function(result, attr: JSXAttribute) {
-    result[(attr.name as JSXIdentifier).name] = attr;
+  return (node as JSXElement).openingElement.attributes.reduce((result: any, attr) => {
+    result[((attr as JSXAttribute).name as JSXIdentifier).name] = attr;
     return result;
   }, {});
 }

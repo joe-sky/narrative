@@ -6,11 +6,32 @@
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
 
-`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags `<If>`/`<For>`/`<Switch>` for JSX/TSX.
+## Packages
+
+| Package                                                                                                             | Badges                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [@narrative/control-flow](https://github.com/joe-sky/narrative/tree/master/packages/control-flow)                   | <a href="https://www.npmjs.org/package/@narrative/control-flow"><img src="https://img.shields.io/npm/v/@narrative/control-flow.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-flow"><img src="https://img.shields.io/npm/dm/@narrative/control-flow.svg" alt="NPM Downloads"></a>                                     |
+| [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a> |
+
+## Introduction
+
+`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags such as `<If>`/`<For>`/`<Switch>` for JSX/TSX.
 
 > Current status: WIP.
 
 [Live demo is here.](https://codesandbox.io/s/green-resonance-3fz52)
+
+## Features
+
+- ⚡ No runtime code, 0kb size.
+
+<!-- - 🌟 **Goal:** A utility-first idea that run JSX at any expressions or statements.
+- ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
+- 💫 **Simple:** No new syntax, just like regular JSX.
+- ⭐ **Type safe:** Developed by TypeScript, supports type inference.
+- 🔥 **Cross frameworks:** One write, run in multiple frameworks(React/Vue/Vanilla JS/etc).
+- 🔧 **Extensible:** Everything is extensible.
+- 🚀 **No dependencies** No any dependencies(except compiler). -->
 
 ## Table of Contents
 
@@ -21,24 +42,6 @@
   - [Using with Babel](#using-with-babel)
 - [Basic Overview](#basic-overview)
 - [The Origin of Name](#the-origin-of-name)
-
-<!-- ## Features
-
-- 🌟 **Goal:** A utility-first idea that run JSX at any expressions or statements.
-- ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
-- 💫 **Simple:** No new syntax, just like regular JSX.
-- ⭐ **Type safe:** Developed by TypeScript, supports type inference.
-- 🔥 **Cross frameworks:** One write, run in multiple frameworks(React/Vue/Vanilla JS/etc).
-- ⚡ **Fast:** Be as fast as possible at runtime. Optional compiler optimizations are also supported.
-- 🔧 **Extensible:** Everything is extensible.
-- 🚀 **No dependencies** No any dependencies(except compiler). -->
-
-## Packages
-
-| Package                                                                                                             | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@narrative/control-flow](https://github.com/joe-sky/narrative/tree/master/packages/control-statement)              | <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/v/@narrative/control-statement.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-statement"><img src="https://img.shields.io/npm/dm/@narrative/control-statement.svg" alt="NPM Downloads"></a> <a href="https://bundlephobia.com/result?p=@narrative/control-statement"><img src="https://img.shields.io/bundlephobia/minzip/@narrative/control-statement.svg?style=flat" alt="Minzipped Size"></a> |
-| [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a>                                                                                                                                                                                      |
 
 ## Installation
 
@@ -93,14 +96,17 @@ const App: FC = () => {
         <button onClick={addTodo}>Add Todo</button>
       </Show>
       <Switch expr={todos.length}>
-        <Case when={1}>1</Case>
-        <Case when={2}>2</Case>
+        <Case value={1}>1</Case>
+        <Case value={2}>2</Case>
+        <Case values={[3, 4, 5]}>3/4/5</Case>
         <Default>More than 2</Default>
       </Switch>
     </div>
   );
 };
 ```
+
+> At present, only `If tag` and `Switch tag` are implemented. Please look forward to more other tags.
 
 ## The Origin of Name
 

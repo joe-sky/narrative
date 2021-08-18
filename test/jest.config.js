@@ -6,10 +6,7 @@ module.exports = {
   ],
   setupFiles: ['<rootDir>/test/setup.js'],
   setupFilesAfterEnv: ['<rootDir>/node_modules/jest-enzyme/lib/index.js'],
-  testMatch: [
-    '<rootDir>/packages/core/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
-    '<rootDir>/packages/control-statement/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
-  ],
+  testMatch: ['<rootDir>/packages/control-flow/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['<rootDir>/node_modules/babel-jest', { configFile: './test/jest.babelrc' }],
     '^.+\\.m\\.(less|scss)$': '<rootDir>/node_modules/jest-css-modules-transform',

@@ -2,8 +2,8 @@ import jsx from '@babel/plugin-syntax-jsx';
 import traverse, { Visitor, NodePath } from '@babel/traverse';
 import * as types from '@babel/types';
 import * as astUtil from './utils/ast';
-import { transformIf, SUB_ELEMENTS_IF } from './elements/if';
-import { transformSwitch, SUB_ELEMENTS_SWITCH } from './elements/switch';
+import { transformIf, SUB_TAGS_IF } from './tags/if';
+import { transformSwitch, SUB_TAGS_SWITCH } from './tags/switch';
 
 const nodeTransforms = {
   If: transformIf,
@@ -32,7 +32,7 @@ export default function NtCompiler() {
             return;
           }
 
-          const transform = nodeTransforms[nodeName];
+          const transform = nodeTransforms[nodeName as keyof typeof nodeTransforms];
           if (transform) {
             path.replaceWith(transform(path.node));
           }
@@ -54,8 +54,8 @@ export default function NtCompiler() {
               const nodeName = elName.name;
               if (
                 !astUtil.isImportedByLib(nodeName, _path, state?.opts?.importedLib) ||
-                SUB_ELEMENTS_IF[nodeName] ||
-                SUB_ELEMENTS_SWITCH[nodeName]
+                SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
+                SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH]
               ) {
                 return;
               }
