@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-flow v0.5.0-alpha.2
+ * @narrative/control-flow v1.0.0-alpha.1
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */
@@ -86,4 +86,47 @@ declare function Case<T>(props: {
  */
 declare function Default(props: Childrenable): JSX.Element;
 
-export { Case, Childrenable, Default, Else, ElseIf, If, JSXChild, JSXNode, Switch };
+interface ForCallbackMeta<K = number> {
+    index: number;
+    length: number;
+    key: K;
+    isFirst: boolean;
+    isLast: boolean;
+}
+declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
+/**
+ * Narrative Element `For`, example:
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ * </For>
+ * ```
+ */
+declare function For<T>(props: {
+    of: Iterable<T> | ArrayLike<T> | null | undefined;
+    children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
+}): JSX.Element;
+/**
+ * Narrative Element `For`, example:
+ * ```tsx
+ * <For in={{ a: 1, b: 2, c: 3 }}>
+ *   {(item, { key }) => <i key={key}>{item}</i>}
+ * </For>
+ * ```
+ */
+declare function For<O extends {}, K extends keyof O>(props: {
+    in: O | null | undefined;
+    children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
+}): JSX.Element;
+/**
+ * Narrative Element `Empty`, example:
+ * ```tsx
+ * <For of={[1, 2, 3]}>
+ *   {(item, { index }) => <i key={index}>{item}</i>}
+ *   <Empty>nothing</Empty>
+ * </For>
+ * ```
+ */
+declare function Empty(props: Childrenable): JSX.Element;
+
+export { Case, Childrenable, Default, Else, ElseIf, Empty, For, ForCallback, ForCallbackMeta, If, JSXChild, JSXNode, Switch };

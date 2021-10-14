@@ -65,7 +65,7 @@ npm i @narrative/control-flow @narrative/babel-plugin-compiler
 
 ```js
 import { useState, FC } from 'react';
-import { If, ElseIf, Else, For, Empty, Show, Switch, Case, Default } from '@narrative/control-flow';
+import { If, ElseIf, Else, For, Empty, Switch, Case, Default } from '@narrative/control-flow';
 
 const App: FC = () => {
   const [todos, setTodos] = useState([]);
@@ -80,21 +80,28 @@ const App: FC = () => {
         <For of={todos}>
           {(todo, { index }) => (
             <If when={index > 5}>
-              <li>{todo * 3}</li>
+              <li key={index}>{todo * 3}</li>
               <ElseIf when={index > 10}>
-                <li>{todo * 4}</li>
+                <li key={index}>{todo * 4}</li>
               </ElseIf>
               <Else>
-                <li>{todo * 5}</li>
+                <li key={index}>{todo * 5}</li>
               </Else>
             </If>
           )}
-          <Empty>No data</Empty>
+          <Empty>
+            <li>No data</li>
+          </Empty>
         </For>
       </ul>
-      <Show when={todos.length < 10}>
-        <button onClick={addTodo}>Add Todo</button>
-      </Show>
+      <ul>
+        <For in={{ a: 1, b: 2, c: 3 }}>
+          {(item, { key }) => <li key={key}>{item}</li>}
+          <Empty>
+            <li>No data</li>
+          </Empty>
+        </For>
+      </ul>
       <Switch expr={todos.length}>
         <Case value={1}>1</Case>
         <Case value={2}>2</Case>
