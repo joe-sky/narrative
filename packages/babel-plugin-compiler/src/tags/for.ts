@@ -1,20 +1,37 @@
 import * as types from '@babel/types';
 import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
 import * as astUtil from '../utils/ast';
-import { as } from '../utils';
 
-export const SUB_TAGS_IF = {
-  ElseIf: 'ElseIf',
-  Else: 'Else'
+/*
+ <div> 
+   <For of={[1, 2, 3]}>
+     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+   </For>
+ <div>
+
+ ↓ ↓ ↓ ↓ ↓ ↓
+
+ <div>
+   {[1, 2, 3].map((item, index, arr) => {
+     const isFirst = index === 0;
+     const isLast = index === arr.length - 1;
+     return <i key={index}>{item}</i>;
+   })}
+ </div>
+ */
+
+export const SUB_TAGS_FOR = {
+  EMPTY: 'Empty'
 };
 
-export const ATTRS_IF = {
-  when: 'when'
+export const ATTRS_FOR = {
+  OF: 'of',
+  IN: 'in'
 };
 
 function getBlocks(condition: any, children: any[], key: string) {
   const ret = {
-    then: { condition: astUtil.getExpression(condition), children: [] } as astUtil.Attrs,
+    loop: { condition: astUtil.getExpression(condition), children: [] } as astUtil.Attrs,
     elseifs: [] as astUtil.Attrs[],
     else: types.nullLiteral()
   };
@@ -32,20 +49,20 @@ function getBlocks(condition: any, children: any[], key: string) {
       const childNodes = astUtil.getChildren(child);
       ret.else = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
     } else {
-      if (!ret.then.children) {
-        ret.then.children = [];
+      if (!ret.loop.children) {
+        ret.loop.children = [];
       }
 
-      ret.then.children.push(child);
+      ret.loop.children.push(child);
     }
   });
 
-  ret.then.children = astUtil.getSanitizedExpressionForContent(ret.then.children, key, true);
+  ret.loop.children = astUtil.getSanitizedExpressionForContent(ret.loop.children, key, true);
 
   return ret;
 }
 
-export function transformIf(node: JSXElement) {
+export function transformFor(node: JSXElement) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);

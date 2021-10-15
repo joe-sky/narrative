@@ -12,7 +12,7 @@
     "test": "yarn run jest:clear && jest --config=test/jest.config.js",
     "jest:clear": "jest --clearCache",
     "cover": "jest --coverage --config=test/jest.config.js",
-    "ci": "yarn run build && yarn run cover && yarn run test:compile && codecov",
+    "ci": "yarn run build && yarn run cover && yarn run test && codecov",
     "release": "lerna publish",
     "release:next": "lerna publish --dist-tag next"
   },

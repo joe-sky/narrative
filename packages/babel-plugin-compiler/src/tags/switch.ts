@@ -1,40 +1,39 @@
 import * as types from '@babel/types';
 import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
 import * as astUtil from '../utils/ast';
-import { as } from '../utils';
 
 export const SUB_TAGS_SWITCH = {
-  Case: 'Case',
-  Default: 'Default'
+  CASE: 'Case',
+  DEFAULT: 'Default'
 };
 
 export const ATTRS_SWITCH = {
-  expr: 'expr',
-  value: 'value',
-  values: 'values'
+  EXPR: 'expr',
+  VALUE: 'value',
+  VALUES: 'values'
 };
 
-function getBlocks(expression: any, children: any[], key: string) {
+function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], key?: string) {
   const ret = {
     cases: [] as astUtil.Attrs[],
-    default: types.nullLiteral()
+    default: types.nullLiteral() as types.Expression
   };
 
   children.forEach(child => {
-    if (astUtil.isTag(child, SUB_TAGS_SWITCH.Case)) {
+    if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_SWITCH.CASE)) {
       const attrs = astUtil.getAttributeMap(child);
       const childNodes = astUtil.getChildren(child);
 
       ret.cases.push({
-        condition: attrs?.[ATTRS_SWITCH.values]
+        condition: attrs?.[ATTRS_SWITCH.VALUES]
           ? types.callExpression(
-              types.memberExpression(astUtil.getExpression(attrs[ATTRS_SWITCH.values]), types.identifier('includes')),
+              types.memberExpression(astUtil.getExpression(attrs[ATTRS_SWITCH.VALUES]), types.identifier('includes')),
               [expression]
             )
-          : types.binaryExpression('===', astUtil.getExpression(attrs?.[ATTRS_SWITCH.value]), expression),
+          : types.binaryExpression('===', astUtil.getExpression(attrs?.[ATTRS_SWITCH.VALUE]), expression),
         children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
       });
-    } else if (astUtil.isTag(child, SUB_TAGS_SWITCH.Default)) {
+    } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_SWITCH.DEFAULT)) {
       const childNodes = astUtil.getChildren(child);
       ret.default = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
     }
@@ -47,11 +46,11 @@ export function transformSwitch(node: JSXElement) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);
-  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_SWITCH.expr]), children, key);
-  let ternaryExpression: types.Expression = blocks.default;
+  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_SWITCH.EXPR]), children, key);
+  let ternaryExpression = blocks.default;
 
   blocks.cases?.reverse().forEach(caseBlock => {
-    ternaryExpression = types.conditionalExpression(caseBlock.condition, as(caseBlock.children), ternaryExpression);
+    ternaryExpression = types.conditionalExpression(caseBlock.condition, caseBlock.children, ternaryExpression);
   });
 
   return ternaryExpression;

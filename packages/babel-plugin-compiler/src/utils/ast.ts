@@ -1,11 +1,30 @@
 import * as types from '@babel/types';
-import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
+import {
+  JSXElement,
+  JSXIdentifier,
+  JSXAttribute,
+  JSXExpressionContainer,
+  Node,
+  buildChildren,
+  JSXText,
+  JSXSpreadChild,
+  JSXFragment,
+  JSXEmptyExpression
+} from '@babel/types';
 import { NodePath } from '@babel/traverse';
-import { NT_CONTROL_FLOW, as } from './';
+import { NT_CONTROL_FLOW } from './';
+
+export type JSXChild =
+  | JSXText
+  | JSXExpressionContainer
+  | JSXSpreadChild
+  | JSXElement
+  | JSXFragment
+  | JSXEmptyExpression;
 
 export interface Attrs {
   condition: types.Expression;
-  children: types.Expression[];
+  children: types.Expression;
 }
 
 export function isImportedByLib(
@@ -20,28 +39,29 @@ export function isImportedByLib(
 
   const bindingPath = path.scope?.getBinding(identifier)?.path;
   if (types.isImportDeclaration(bindingPath?.parent)) {
-    return libName.includes(as(bindingPath?.parent.source.value));
+    const value = bindingPath?.parent.source.value;
+    return value && libName.includes(value);
   }
 }
 
-function getTagName(node: Node) {
-  return ((node as JSXElement).openingElement.name as JSXIdentifier).name;
+function getTagName(node: JSXElement) {
+  return (node.openingElement.name as JSXIdentifier).name;
 }
 
 /**
  * Test if this is a custom JSX element with the given name.
  *
- * @param {object} node - Current node to test
- * @param {string} tagName - Name of element
+ * @param node - Current node to test
+ * @param tagName - Name of element
  */
-export function isTag(node: Node, tagName: string) {
-  return types.isJSXElement(node) && getTagName(node) === tagName;
+export function isTag(node: JSXElement, tagName: string) {
+  return getTagName(node) === tagName;
 }
 
 /**
  * Get expression from given attribute.
  *
- * @param {JSXAttribute} attribute
+ * @param attribute
  */
 export function getExpression(attribute: JSXAttribute) {
   if (types.isJSXExpressionContainer(attribute.value)) {
@@ -54,42 +74,44 @@ export function getExpression(attribute: JSXAttribute) {
 /**
  * Get all attributes from given element.
  *
- * @param {JSXElement} node - Current node from which attributes are gathered
- * @returns {object} Map of all attributes with their name as key
+ * @param node - Current node from which attributes are gathered
+ * @returns Map of all attributes with their name as key
  */
-export function getAttributeMap(node: Node): Record<string, any> {
-  return (node as JSXElement).openingElement.attributes.reduce((result: any, attr) => {
-    result[((attr as JSXAttribute).name as JSXIdentifier).name] = attr;
+export function getAttributeMap(node: JSXElement) {
+  return node.openingElement.attributes.reduce((result, attr) => {
+    if (types.isJSXAttribute(attr)) {
+      result[((attr as JSXAttribute).name as JSXIdentifier).name] = attr;
+    }
     return result;
-  }, {});
+  }, {} as Record<string, types.JSXAttribute>);
 }
 
 /**
  * Get the string value of a node's key attribute if present.
  *
- * @param {JSXElement} node - Node to get attributes from
- * @returns {string} The string value of the key attribute of this node if present, otherwise undefined.
+ * @param node - Node to get attributes from
+ * @returns The string value of the key attribute of this node if present, otherwise undefined.
  */
-export function getKey(node: Node): string {
+export function getKey(node: JSXElement): string | undefined {
   const key = getAttributeMap(node).key;
-  return key ? key.value.value : undefined;
+  return key ? (key.value as types.StringLiteral).value : undefined;
 }
 
 /**
  * Get all children from given element. Normalizes JSXText and JSXExpressionContainer to expressions.
  *
- * @param {JSXElement} node - Current node from which children are gathered
- * @returns {array} List of all children
+ * @param node - Current node from which children are gathered
+ * @returns List of all children
  */
-export function getChildren(node: JSXElement): any {
-  return (types as any).react.buildChildren(node);
+export function getChildren(node: JSXElement) {
+  return ((types as any).react.buildChildren as typeof buildChildren)(node);
 }
 
 /**
  * Adds attribute "key" to given node, if not already preesent.
  *
- * @param {JSXElement} node - Current node to which the new attribute is added
- * @param {string} keyValue - Value of the key
+ * @param node - Current node to which the new attribute is added
+ * @param keyValue - Value of the key
  */
 export function addKeyAttribute(node: JSXElement, keyValue: string | number) {
   let keyFound = false;
@@ -113,15 +135,14 @@ export function addKeyAttribute(node: JSXElement, keyValue: string | number) {
  *
  * @param blocks - the content blocks
  * @param keyPrefix - a prefix to use when automatically generating keys
- * @returns {NullLiteral|Expression|ArrayExpression}
  */
-export function getSanitizedExpressionForContent(blocks: any[], keyPrefix?: string, callFunc?: boolean) {
+export function getSanitizedExpressionForContent(blocks: JSXChild[], keyPrefix?: string, callFunc?: boolean) {
   if (!blocks.length) {
     return types.nullLiteral();
   } else if (blocks.length === 1) {
     const firstBlock = blocks[0];
 
-    if (keyPrefix && firstBlock.openingElement) {
+    if (keyPrefix && types.isJSXElement(firstBlock) && firstBlock.openingElement) {
       addKeyAttribute(firstBlock, keyPrefix);
     }
 
@@ -129,7 +150,7 @@ export function getSanitizedExpressionForContent(blocks: any[], keyPrefix?: stri
       return types.callExpression(firstBlock, []);
     }
 
-    return firstBlock;
+    return firstBlock as types.Expression;
   }
 
   for (let i = 0; i < blocks.length; i++) {
@@ -140,5 +161,5 @@ export function getSanitizedExpressionForContent(blocks: any[], keyPrefix?: stri
     }
   }
 
-  return types.arrayExpression(blocks);
+  return types.arrayExpression(blocks as types.Expression[]);
 }
