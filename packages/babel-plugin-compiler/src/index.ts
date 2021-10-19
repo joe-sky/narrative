@@ -4,10 +4,12 @@ import * as types from '@babel/types';
 import * as astUtil from './utils/ast';
 import { transformIf, SUB_TAGS_IF } from './tags/if';
 import { transformSwitch, SUB_TAGS_SWITCH } from './tags/switch';
+import { transformFor, SUB_TAGS_FOR } from './tags/for';
 
 const nodeTransforms = {
   If: transformIf,
-  Switch: transformSwitch
+  Switch: transformSwitch,
+  For: transformFor
 };
 
 interface State {
@@ -55,7 +57,8 @@ export default function NtCompiler() {
               if (
                 !astUtil.isImportedByLib(nodeName, path, state?.opts?.importedLib) ||
                 SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
-                SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH]
+                SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH] ||
+                SUB_TAGS_FOR[nodeName as keyof typeof SUB_TAGS_FOR]
               ) {
                 return;
               }

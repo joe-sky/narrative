@@ -27,6 +27,13 @@ export interface Attrs {
   children: types.Expression;
 }
 
+export interface ForAttrs {
+  source: types.Expression;
+  func: types.ArrowFunctionExpression;
+}
+
+export type FuncParam = types.Identifier | types.Pattern | types.RestElement | types.TSParameterProperty;
+
 export function isImportedByLib(
   identifier: string,
   path: NodePath<JSXElement>,
