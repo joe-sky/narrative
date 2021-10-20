@@ -42,8 +42,8 @@ function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?:
     if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_FOR.EMPTY)) {
       const childNodes = astUtil.getChildren(child);
       ret.empty = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
-    } else if (types.isJSXExpressionContainer(child) && types.isArrowFunctionExpression(child.expression)) {
-      ret.callback.func = child.expression;
+    } else if (types.isArrowFunctionExpression(child)) {
+      ret.callback.func = child;
     }
   });
 
@@ -94,7 +94,7 @@ export function transformFor(node: JSXElement) {
   ]);
 
   /* You can use @babel/generator here when debugging */
-  console.log(generate(ret).code);
+  // console.log(generate(ret).code);
 
   return ret;
 }

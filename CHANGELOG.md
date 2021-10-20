@@ -1,8 +1,13 @@
 # CHANGELOG
 
+## [v1.0.0-alpha.1] 2021.10.20
+
+- 🌟 Add `For` tag compiler.
+
 ## [v0.5.0-alpha.2] 2021.08.18
 
-- 🌟 Add `@narrative/control-flow` package.
+- 🌟 Add `@narrative/control-flow` package to replace `@narrative/control-statement`.
+- 💥 Remove `show` and `visible`.
 
 ## [v0.4.0] 2021.03.12
 

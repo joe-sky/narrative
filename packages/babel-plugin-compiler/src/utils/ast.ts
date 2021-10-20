@@ -20,7 +20,8 @@ export type JSXChild =
   | JSXSpreadChild
   | JSXElement
   | JSXFragment
-  | JSXEmptyExpression;
+  | JSXEmptyExpression
+  | types.Expression;
 
 export interface Attrs {
   condition: types.Expression;
