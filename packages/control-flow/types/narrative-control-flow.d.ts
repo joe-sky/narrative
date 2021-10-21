@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-flow v1.0.0-alpha.1
+ * @narrative/control-flow v1.0.0-alpha.2
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */
@@ -95,7 +95,7 @@ interface ForCallbackMeta<K = number> {
 }
 declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
 /**
- * Narrative Element `For`, example:
+ * Narrative tag `For`, example:
  * ```tsx
  * <For of={[1, 2, 3]}>
  *   {(item, { index }) => <i key={index}>{item}</i>}
@@ -115,7 +115,7 @@ declare function For<O extends {}, K extends keyof O>(props: {
     children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;
 /**
- * Narrative Element `Empty`, example:
+ * Narrative tag `Empty`, example:
  * ```tsx
  * <For of={[1, 2, 3]}>
  *   {(item, { index }) => <i key={index}>{item}</i>}
