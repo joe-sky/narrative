@@ -7,7 +7,7 @@ export const SUB_TAGS_FOR = {
   /**
    * ```tsx
    * <div>
-   *   <For of={arr}>
+   *   <For of={[1, 2, 3]}>
    *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
    *     <Empty>No Data</Empty>
    *   </For>
@@ -16,11 +16,17 @@ export const SUB_TAGS_FOR = {
    * ↓ ↓ ↓ ↓ ↓ ↓
    *
    * <div>
-   *   {arr?.length ? arr.map((item, index, arr) => {
-   *     const isFirst = index === 0;
-   *     const isLast = index === arr.length - 1;
-   *     return <i key={index}>{item}</i>;
-   *   }) : 'No Data'}
+   *   {(__arr => {
+   *     if (__arr && __arr.length) {
+   *       return __arr.map((item, index, arr) => {
+   *         const isFirst = index === 0;
+   *         const isLast = index === arr.length - 1;
+   *         return <i key={index}>{item}</i>;
+   *       });
+   *     }
+   *
+   *     return 'No Data';
+   *   })([1, 2, 3])}
    * </div>
    * ```
    */
@@ -28,7 +34,53 @@ export const SUB_TAGS_FOR = {
 };
 
 export const ATTRS_FOR = {
+  /**
+   * ```tsx
+   * <div>
+   *   <For of={[1, 2, 3]}>
+   *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+   *   </For>
+   * </div>
+   *
+   * ↓ ↓ ↓ ↓ ↓ ↓
+   *
+   * <div>
+   *   {[1, 2, 3].map((item, index, arr) => {
+   *     const isFirst = index === 0;
+   *     const isLast = index === arr.length - 1;
+   *     return <i key={index}>{item}</i>;
+   *   })}
+   * </div>
+   * ```
+   */
   OF: 'of',
+
+  /**
+   * ```tsx
+   * <div>
+   *   <For in={{ a: 1, b: 2, c: 3 }}>
+   *     {(item, { key }) => <i key={key}>{item}</i>}
+   *     <Empty>No Data</Empty>
+   *   </For>
+   * </div>
+   *
+   * ↓ ↓ ↓ ↓ ↓ ↓
+   *
+   * <div>
+   *   {(__obj => {
+   *     const __keys = Object.keys(__obj);
+   *
+   *     if (__keys && __keys.length) {
+   *       return __keys.map((key, index, arr) => {
+   *         return <i key={key}>{__obj[key]}</i>;
+   *       });
+   *     }
+   *
+   *     return 'No Data';
+   *   })({ a: 1, b: 2, c: 3 })}
+   * </div>
+   * ```
+   */
   IN: 'in'
 };
 
@@ -50,25 +102,6 @@ function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?:
   return ret;
 }
 
-/**
- * ```tsx
- * <div>
- *   <For of={[1, 2, 3]}>
- *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
- *   </For>
- * </div>
- *
- * ↓ ↓ ↓ ↓ ↓ ↓
- *
- * <div>
- *   {[1, 2, 3].map((item, index, arr) => {
- *     const isFirst = index === 0;
- *     const isLast = index === arr.length - 1;
- *     return <i key={index}>{item}</i>;
- *   })}
- * </div>
- * ```
- */
 export function transformFor(node: JSXElement) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);

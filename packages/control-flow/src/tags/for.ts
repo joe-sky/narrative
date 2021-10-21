@@ -11,7 +11,7 @@ export interface ForCallbackMeta<K = number> {
 export type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
 
 /**
- * Narrative Element `For`, example:
+ * Narrative tag `For`, example:
  * ```tsx
  * <For of={[1, 2, 3]}>
  *   {(item, { index }) => <i key={index}>{item}</i>}
@@ -32,7 +32,7 @@ export declare function For<O extends {}, K extends keyof O>(props: {
 }): JSX.Element;
 
 /**
- * Narrative Element `Empty`, example:
+ * Narrative tag `Empty`, example:
  * ```tsx
  * <For of={[1, 2, 3]}>
  *   {(item, { index }) => <i key={index}>{item}</i>}

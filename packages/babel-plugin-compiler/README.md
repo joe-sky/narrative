@@ -1,6 +1,6 @@
 # @narrative/babel-plugin-compiler
 
-Performance enhancement compiler for `Narrative`.
+The compiler for `@narrative/control-flow`.
 
 ## Usage
 
@@ -19,9 +19,9 @@ npm install @narrative/babel-plugin-compiler
 ## How it works
 
 ```tsx
-<If condition={index > 5}>
+<If when={index > 5}>
   <li>{todo * 2}</li>
-  <ElseIf condition={index > 10}>
+  <ElseIf when={index > 10}>
     <li>{todo * 3}</li>
   </ElseIf>
 </If>
