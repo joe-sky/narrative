@@ -6,8 +6,17 @@ import { For, Empty } from '../src/index';
 const TestFor = (props: { list: number[] }) => {
   return (
     <For of={props.list}>
+      {(item, { index }) => <i key={index}>{item}</i>}
+      {/* <Empty>empty</Empty> */}
+    </For>
+  );
+};
+
+const TestForFuncEmpty = (props: { list: number[] }) => {
+  return (
+    <For of={props.list}>
+      {(item, { index }) => <i key={index}>{item}</i>}
       {/* <Empty>{() => 'empty'}</Empty> */}
-      {(item, { index, key }) => <i key={index}>{item}</i>}
     </For>
   );
 };
@@ -15,8 +24,8 @@ const TestFor = (props: { list: number[] }) => {
 // const TestForObject = (props: { obj: Record<string, number> }) => {
 //   return (
 //     <For in={props.obj}>
-//       <Empty>empty</Empty>
 //       {(item, { key }) => <i key={key}>{item}</i>}
+//       <Empty>empty</Empty>
 //     </For>
 //   );
 // };
@@ -28,15 +37,21 @@ describe('for element', function() {
     expect(app.html()).toEqual('<i>1</i><i>2</i><i>3</i>');
   });
 
-  // const app2 = mount(<TestFor list={[]} />);
+  // const appWithEmpty = mount(<TestFor list={[]} />);
 
   // it('for with empty', () => {
-  //   expect(app2.html()).toEqual('empty');
+  //   expect(appWithEmpty.html()).toEqual('empty');
   // });
 
-  // const app3 = mount(<TestForObject obj={{ a: 1, b: 2, c: 3 }} />);
+  // const appWithFuncEmpty = mount(<TestForFuncEmpty list={[]} />);
+
+  // it('for with function empty', () => {
+  //   expect(appWithFuncEmpty.html()).toEqual('empty');
+  // });
+
+  // const appObject = mount(<TestForObject obj={{ a: 1, b: 2, c: 3 }} />);
 
   // it('for object', () => {
-  //   expect(app3.html()).toEqual('<i>1</i><i>2</i><i>3</i>');
+  //   expect(appObject.html()).toEqual('<i>1</i><i>2</i><i>3</i>');
   // });
 });
