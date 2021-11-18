@@ -45,7 +45,7 @@ export const ATTRS_FOR = {
    * ↓ ↓ ↓ ↓ ↓ ↓
    *
    * <div>
-   *   {[1, 2, 3].map((item, index, arr) => {
+   *   {[1, 2, 3]?.map((item, index, arr) => {
    *     const isFirst = index === 0;
    *     const isLast = index === arr.length - 1;
    *     return <i key={index}>{item}</i>;
@@ -121,10 +121,15 @@ export function transformFor(node: JSXElement) {
     }
   }
 
-  const ret = types.callExpression(types.memberExpression(blocks.callback.source, types.identifier('map')), [
-    types.arrowFunctionExpression(generatedParams, blocks.callback.func.body),
-    types.identifier('this')
-  ]);
+  const ret = types.logicalExpression(
+    '||',
+    types.optionalCallExpression(
+      types.optionalMemberExpression(blocks.callback.source, types.identifier('map'), false, true),
+      [types.arrowFunctionExpression(generatedParams, blocks.callback.func.body), types.identifier('this')],
+      false
+    ),
+    types.nullLiteral()
+  );
 
   /* You can use @babel/generator here when debugging */
   // console.log(generate(ret).code);
