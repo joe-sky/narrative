@@ -3,12 +3,14 @@ import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import { For, Empty } from '../src/index';
 
-const TestFor = (props: { list: any }) => {
+const TestFor = (props: { list: number[] | null }) => {
   return (
-    <For of={props.list}>
-      {(item, { index }) => <i key={index}>{item}</i>}
-      {/* <Empty>empty</Empty> */}
-    </For>
+    <div>
+      <For of={props.list}>
+        {(item, { index }) => <i key={index}>{item}</i>}
+        {/* <Empty>empty</Empty> */}
+      </For>
+    </div>
   );
 };
 
@@ -33,11 +35,21 @@ const TestForFuncEmpty = (props: { list: number[] }) => {
 describe('for element', function() {
   const app = mount(<TestFor list={[1, 2, 3]} />);
 
-  console.log(app.html());
+  it('for', () => {
+    expect(app.html()).toEqual('<div><i>1</i><i>2</i><i>3</i></div>');
+  });
 
-  // it('for', () => {
-  //   expect(app.html()).toEqual('<i>1</i><i>2</i><i>3</i>');
-  // });
+  const appDataEmpty = mount(<TestFor list={[]} />);
+
+  it('for of data empty', () => {
+    expect(appDataEmpty.html()).toEqual('<div></div>');
+  });
+
+  const appDataNull = mount(<TestFor list={null} />);
+
+  it('for of data null', () => {
+    expect(appDataNull.html()).toEqual('<div></div>');
+  });
 
   // const appWithEmpty = mount(<TestFor list={[]} />);
 
