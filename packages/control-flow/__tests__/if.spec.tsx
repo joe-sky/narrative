@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { act } from 'react-dom/test-utils';
-import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { If, Else, ElseIf } from '../src/index';
 
 interface Props {
@@ -22,17 +22,17 @@ const TestIf: React.FC<Props> = props => {
   );
 };
 
-describe('if element', function() {
-  const app = mount(<TestIf condition={2} />);
-  console.log(
-    <If when={false}>
-      test111
-      <ElseIf when={true}>{() => 'test3'}</ElseIf>
-      <Else>test2</Else>
-    </If>
-  );
+test('if tag', function() {
+  const { container, getByText } = render(<TestIf condition={2} />);
 
-  it('if', () => {
-    expect(app.html()).toEqual('<i>test2</i>');
-  });
+  // console.log(
+  //   <If when={false}>
+  //     test111
+  //     <ElseIf when={true}>{() => 'test3'}</ElseIf>
+  //     <Else>test2</Else>
+  //   </If>
+  // );
+
+  expect(getByText('test2')).toBeInTheDocument();
+  expect(container.firstChild).toMatchSnapshot(`<i>test2</i>`);
 });

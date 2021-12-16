@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`if tag: <i>test2</i> 1`] = `
+<i>
+  test2
+</i>
+`;

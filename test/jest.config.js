@@ -1,9 +1,8 @@
 module.exports = {
   rootDir: '../',
-  collectCoverageFrom: ['packages/control-flow/src/**/*.{js,jsx,ts,tsx}'],
-  setupFiles: ['<rootDir>/test/setup.js'],
-  setupFilesAfterEnv: ['<rootDir>/node_modules/jest-enzyme/lib/index.js'],
-  testMatch: ['<rootDir>/packages/control-flow/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'],
+  collectCoverageFrom: ['packages/babel-plugin-compiler/src/**/*.{js,jsx,ts,tsx}'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
+  testMatch: ['<rootDir>/packages/control-flow/**/__tests__/**/if.(spec|test).{js,jsx,ts,tsx}'],
   // testMatch: [
   //   '<rootDir>/packages/control-flow/**/__tests__/**/for.(spec|test).{js,jsx,ts,tsx}'
   //   // '<rootDir>/packages/control-flow/**/__tests__/**/if.(spec|test).{js,jsx,ts,tsx}'

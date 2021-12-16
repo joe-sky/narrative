@@ -49,7 +49,7 @@ export const ATTRS_FOR = {
    *     const isFirst = index === 0;
    *     const isLast = index === arr.length - 1;
    *     return <i key={index}>{item}</i>;
-   *   })}
+   *   }) || null}
    * </div>
    * ```
    */
