@@ -113,7 +113,7 @@ const App: FC = () => {
 };
 ```
 
-> At present, only `If tag` and `Switch tag` are implemented. Please look forward to more other tags.
+> At present, the features of for tag has not been fully implemented.
 
 ## The Origin of Name
 

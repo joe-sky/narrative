@@ -1,7 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`if tag: <i>test2</i> 1`] = `
+exports[`all if tags: <i>else</i> 1`] = `
 <i>
-  test2
+  else
+</i>
+`;
+
+exports[`all if tags: <i>test1</i> 1`] = `
+<i>
+  test1
+</i>
+`;
+
+exports[`all if tags: <i>test3</i> 1`] = `
+<i>
+  test3
+</i>
+`;
+
+exports[`if and else: <i>else</i> 1`] = `
+<i>
+  else
+</i>
+`;
+
+exports[`if and else: <i>test1</i> 1`] = `
+<i>
+  test1
+</i>
+`;
+
+exports[`if and else: <i>test1</i> 2`] = `
+<i>
+  test1
+</i>
+`;
+
+exports[`if and else: <i>test3</i> 1`] = `
+<i>
+  test3
+</i>
+`;
+
+exports[`only if: <i>test1</i> 1`] = `
+<i>
+  test1
 </i>
 `;

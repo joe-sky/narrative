@@ -5,18 +5,15 @@ import * as astUtil from './utils/ast';
 import { transformIf, SUB_TAGS_IF } from './tags/if';
 import { transformSwitch, SUB_TAGS_SWITCH } from './tags/switch';
 import { transformFor, SUB_TAGS_FOR } from './tags/for';
+import { State, NtCompilerOptions } from './utils';
+
+export { NtCompilerOptions };
 
 const nodeTransforms = {
   If: transformIf,
   Switch: transformSwitch,
   For: transformFor
 };
-
-interface State {
-  opts?: {
-    importedLib?: string[];
-  };
-}
 
 export default function NtCompiler() {
   return {
@@ -30,7 +27,8 @@ export default function NtCompiler() {
           }
 
           const nodeName = elName.name;
-          if (!astUtil.isImportedByLib(nodeName, path, state?.opts?.importedLib)) {
+          const { importedLib } = state?.opts;
+          if (importedLib !== 'none' && !astUtil.isImportedByLib(nodeName, path, importedLib)) {
             return;
           }
 
@@ -55,7 +53,7 @@ export default function NtCompiler() {
 
               const nodeName = elName.name;
               if (
-                !astUtil.isImportedByLib(nodeName, path, state?.opts?.importedLib) ||
+                !astUtil.isImportedByLib(nodeName, path, state?.opts.importedLib) ||
                 SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
                 SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH] ||
                 SUB_TAGS_FOR[nodeName as keyof typeof SUB_TAGS_FOR]
