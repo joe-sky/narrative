@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-flow v1.0.0-alpha.3
+ * @narrative/control-flow v1.0.0-rc.1
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */

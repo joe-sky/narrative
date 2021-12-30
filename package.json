@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/control-flow",
-    "packages/babel-plugin-compiler"
+    "packages/babel-plugin-compiler",
+    "packages/vite-plugin-compiler"
   ],
   "version": "1.0.0-rc.1",
   "description": "A compiler tool for create neater control flow tags such as <If>/<For>/<Switch> for JSX/TSX.",

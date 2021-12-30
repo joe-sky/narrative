@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-rc.1] 2021.12.30
+
+- 🌟 Add `@narrative/vite-plugin-compiler`.
+
 ## [v1.0.0-alpha.1] 2021.10.20
 
 - 🌟 Add `For` tag compiler.

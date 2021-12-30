@@ -1,7 +1,7 @@
 {
-  "name": "@narrative/babel-plugin-compiler",
-  "version": "1.0.0-alpha.3",
-  "description": "Babel plugin for compile and enhance the limitation of Narrative runtime code.",
+  "name": "@narrative/vite-plugin-compiler",
+  "version": "1.0.0-rc.1",
+  "description": "Vite plugin for compile and enhance the limitation of Narrative runtime code.",
   "main": "lib/index.js",
   "files": [
     "lib/",
@@ -10,7 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "lib": "babel src --out-dir lib --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
+    "lib": "babel src/index.ts --out-dir lib/index.js --extensions \".js,.jsx,.ts,.tsx\" --config-file \"../../.babelrc\"",
     "dts": "rollup -c -o index.d.ts",
     "build": "yarn run lib && yarn run dts"
   },
@@ -24,8 +24,13 @@
   "author": "Joe_Sky <hitomi_doax@sina.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/plugin-syntax-jsx": "^7.7.5"
+    "@narrative/babel-plugin-compiler": "^1.0.0-alpha.3"
+  },
+  "devDependencies": {
+    "vite": "^2.7.10"
+  },
+  "peerDependencies": {
+    "vite": "*"
   },
   "publishConfig": {
     "access": "public"

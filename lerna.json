@@ -1,8 +1,5 @@
 {
-  "packages": [
-    "packages/control-flow",
-    "packages/babel-plugin-compiler"
-  ],
+  "packages": ["packages/control-flow", "packages/babel-plugin-compiler", "packages/vite-plugin-compiler"],
   "command": {
     "publish": {
       "message": "chore(release): :bookmark: publish %s"

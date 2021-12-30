@@ -18,6 +18,7 @@ const nodeTransforms = {
 export default function NtCompiler() {
   return {
     inherits: jsx,
+    name: '@narrative/babel-plugin-compiler',
     visitor: {
       JSXElement: {
         enter(path, state: State) {
