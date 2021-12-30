@@ -24,7 +24,7 @@
   "author": "Joe_Sky <hitomi_doax@sina.com>",
   "license": "MIT",
   "dependencies": {
-    "@narrative/babel-plugin-compiler": "^1.0.0-alpha.3"
+    "@narrative/babel-plugin-compiler": "^1.0.0-rc.1"
   },
   "devDependencies": {
     "vite": "^2.7.10"
