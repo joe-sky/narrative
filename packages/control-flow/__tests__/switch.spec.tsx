@@ -1,6 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { act } from 'react-dom/test-utils';
-import { shallow, mount } from 'enzyme';
+import React, { useState, useEffect } from 'react';
+import { render } from '@testing-library/react';
 import { Switch, Case, Default } from '../src/index';
 
 interface Props {
@@ -24,7 +23,13 @@ const TestSwitch: React.FC<Props> = props => {
   );
 };
 
-const TestSwitchComponent: React.FC<Props> = props => {
+test('switch-case with value', function() {
+  const el = render(<TestSwitch expression={2} />);
+
+  expect(el.container.firstChild).toMatchSnapshot(`<i>test2</i>`);
+});
+
+const TestSwitchValues: React.FC<Props> = props => {
   return (
     <Switch expr={props.expressionStr}>
       <Case value="1">
@@ -40,16 +45,8 @@ const TestSwitchComponent: React.FC<Props> = props => {
   );
 };
 
-describe('switch element', function() {
-  const app = mount(<TestSwitch expression={2} />);
+test('switch-case with values', function() {
+  const el = render(<TestSwitchValues expressionStr="2" />);
 
-  it('switch', () => {
-    expect(app.html()).toEqual('<i>test2</i>');
-  });
-
-  const app2 = mount(<TestSwitchComponent expressionStr="2" />);
-
-  it('switch component', () => {
-    expect(app2.html()).toEqual('<i>test2</i>');
-  });
+  expect(el.container.firstChild).toMatchSnapshot(`<i>test2</i>`);
 });

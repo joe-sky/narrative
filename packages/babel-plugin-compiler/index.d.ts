@@ -1,11 +1,11 @@
 /*!
- * @narrative/babel-plugin-compiler v1.0.0-rc.1
+ * @narrative/babel-plugin-compiler v1.0.0-rc.2
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */
 import { Visitor } from '@babel/traverse';
 
-interface NtCompilerOptions {
+interface CompilerOptions {
     importedLib?: string[] | 'none';
 }
 
@@ -16,4 +16,4 @@ declare function NtCompiler(): {
 };
 
 export default NtCompiler;
-export { NtCompilerOptions };
+export { CompilerOptions };

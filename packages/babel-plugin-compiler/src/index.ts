@@ -5,9 +5,9 @@ import * as astUtil from './utils/ast';
 import { transformIf, SUB_TAGS_IF } from './tags/if';
 import { transformSwitch, SUB_TAGS_SWITCH } from './tags/switch';
 import { transformFor, SUB_TAGS_FOR } from './tags/for';
-import { State, NtCompilerOptions } from './utils';
+import { State, CompilerOptions } from './utils';
 
-export { NtCompilerOptions };
+export { CompilerOptions };
 
 const nodeTransforms = {
   If: transformIf,

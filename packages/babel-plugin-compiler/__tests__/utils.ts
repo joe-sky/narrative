@@ -1,12 +1,12 @@
 import { transform } from '@babel/core';
-import NtCompiler, { NtCompilerOptions } from '../src';
+import NtCompiler, { CompilerOptions } from '../src';
 
 export interface Test {
   name: string;
   from: string;
 }
 
-export const transpile = (source: string, options: NtCompilerOptions = { importedLib: 'none' }) =>
+export const transpile = (source: string, options: CompilerOptions = { importedLib: 'none' }) =>
   new Promise((resolve, reject) =>
     transform(
       source,

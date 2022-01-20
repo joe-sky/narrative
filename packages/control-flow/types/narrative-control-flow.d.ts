@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-flow v1.0.0-rc.1
+ * @narrative/control-flow v1.0.0-rc.2
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */
@@ -101,6 +101,7 @@ declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<
  *   {(item, { index }) => <i key={index}>{item}</i>}
  * </For>
  *
+ * // Not implemented yet, will come soon
  * <For in={{ a: 1, b: 2, c: 3 }}>
  *   {(item, { key }) => <i key={key}>{item}</i>}
  * </For>

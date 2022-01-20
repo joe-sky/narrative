@@ -5,10 +5,10 @@ export const NT_CONTROL_FLOW = '@narrative/control-flow';
 export type State = {
   get: (name: string) => any;
   set: (name: string, value: any) => any;
-  opts: NtCompilerOptions;
+  opts: CompilerOptions;
   file: BabelCore.BabelFile;
 };
 
-export interface NtCompilerOptions {
+export interface CompilerOptions {
   importedLib?: string[] | 'none';
 }

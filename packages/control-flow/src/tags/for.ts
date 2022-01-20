@@ -17,6 +17,7 @@ export type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K
  *   {(item, { index }) => <i key={index}>{item}</i>}
  * </For>
  *
+ * // Not implemented yet, will come soon
  * <For in={{ a: 1, b: 2, c: 3 }}>
  *   {(item, { key }) => <i key={key}>{item}</i>}
  * </For>

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-rc.2] 2022.01.20
+
+- 🌟 Add `Empty` tag compiler.
+
 ## [v1.0.0-rc.1] 2021.12.30
 
 - 🌟 Add `@narrative/vite-plugin-compiler`.

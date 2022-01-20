@@ -3,7 +3,7 @@ module.exports = {
   collectCoverageFrom: ['packages/babel-plugin-compiler/src/**/*.{js,jsx,ts,tsx}'],
   setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
   testMatch: [
-    '<rootDir>/packages/control-flow/**/__tests__/**/if.(spec|test).{js,jsx,ts,tsx}',
+    '<rootDir>/packages/control-flow/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}',
     '<rootDir>/packages/babel-plugin-compiler/**/__tests__/**/*.(spec|test).{js,jsx,ts,tsx}'
   ],
   transform: {

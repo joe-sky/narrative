@@ -17,7 +17,7 @@ export const SUB_TAGS_FOR = {
    *
    * <div>
    *   {(__arr => {
-   *     if (__arr && __arr.length) {
+   *     if (__arr?.length) {
    *       return __arr.map((item, index, arr) => {
    *         const isFirst = index === 0;
    *         const isLast = index === arr.length - 1;
@@ -49,7 +49,7 @@ export const ATTRS_FOR = {
    *     const isFirst = index === 0;
    *     const isLast = index === arr.length - 1;
    *     return <i key={index}>{item}</i>;
-   *   }) || null}
+   *   }, this) || null}
    * </div>
    * ```
    */
@@ -102,6 +102,8 @@ function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?:
   return ret;
 }
 
+const ARR_NAME = '__arr';
+
 export function transformFor(node: JSXElement) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
@@ -121,15 +123,36 @@ export function transformFor(node: JSXElement) {
     }
   }
 
-  const ret = types.logicalExpression(
-    '||',
-    types.optionalCallExpression(
-      types.optionalMemberExpression(blocks.callback.source, types.identifier('map'), false, true),
-      [types.arrowFunctionExpression(generatedParams, blocks.callback.func.body), types.identifier('this')],
-      false
-    ),
-    types.nullLiteral()
-  );
+  const ret = !blocks.empty
+    ? types.logicalExpression(
+        '||',
+        types.optionalCallExpression(
+          types.optionalMemberExpression(blocks.callback.source, types.identifier('map'), false, true),
+          [types.arrowFunctionExpression(generatedParams, blocks.callback.func.body), types.identifier('this')],
+          false
+        ),
+        types.nullLiteral()
+      )
+    : types.callExpression(
+        types.arrowFunctionExpression(
+          [types.identifier(ARR_NAME)],
+          types.blockStatement([
+            types.ifStatement(
+              types.optionalMemberExpression(types.identifier(ARR_NAME), types.identifier('length'), false, true),
+              types.blockStatement([
+                types.returnStatement(
+                  types.callExpression(types.memberExpression(types.identifier(ARR_NAME), types.identifier('map')), [
+                    types.arrowFunctionExpression(generatedParams, blocks.callback.func.body),
+                    types.identifier('this')
+                  ])
+                )
+              ])
+            ),
+            types.returnStatement(blocks.empty)
+          ])
+        ),
+        [blocks.callback.source]
+      );
 
   /* You can use @babel/generator here when debugging */
   // console.log(generate(ret).code);
