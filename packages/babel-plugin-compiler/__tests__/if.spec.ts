@@ -23,7 +23,7 @@ const onlyIfTests: Test[] = [
 ];
 
 onlyIfTests.forEach(({ name, from }) => {
-  test(`only if ${name}`, async () => {
+  test(name, async () => {
     expect(await transpile(from)).toMatchSnapshot(name);
   });
 });

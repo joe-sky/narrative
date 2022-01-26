@@ -12,7 +12,7 @@
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [@narrative/control-flow](https://github.com/joe-sky/narrative/tree/master/packages/control-flow)                   | <a href="https://www.npmjs.org/package/@narrative/control-flow"><img src="https://img.shields.io/npm/v/@narrative/control-flow.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/control-flow"><img src="https://img.shields.io/npm/dm/@narrative/control-flow.svg" alt="NPM Downloads"></a>                                     |
 | [@narrative/babel-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/babel-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/babel-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/babel-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/babel-plugin-compiler.svg" alt="NPM Downloads"></a> |
-| [@narrative/vite-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/vite-plugin-compiler) | <a href="https://www.npmjs.org/package/@narrative/vite-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/vite-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/vite-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/vite-plugin-compiler.svg" alt="NPM Downloads"></a> |
+| [@narrative/vite-plugin-compiler](https://github.com/joe-sky/narrative/tree/master/packages/vite-plugin-compiler)   | <a href="https://www.npmjs.org/package/@narrative/vite-plugin-compiler"><img src="https://img.shields.io/npm/v/@narrative/vite-plugin-compiler.svg" alt="NPM Version"></a> <a href="https://www.npmjs.org/package/@narrative/vite-plugin-compiler"><img src="https://img.shields.io/npm/dm/@narrative/vite-plugin-compiler.svg" alt="NPM Downloads"></a>     |
 
 ## Introduction
 
@@ -61,8 +61,6 @@ npm i @narrative/control-flow @narrative/babel-plugin-compiler
 ```
 
 ## Basic Overview
-
-> The following has not yet been fully implemented.
 
 ```js
 import { useState, FC } from 'react';
@@ -114,7 +112,7 @@ const App: FC = () => {
 };
 ```
 
-> At present, the features of for tag has not been fully implemented.
+> At present, the features of above tags has been fully implemented, and next the documentation needs to be completed.
 
 ## The Origin of Name
 

@@ -35,7 +35,8 @@ export default function NtCompiler() {
 
           const transform = nodeTransforms[nodeName as keyof typeof nodeTransforms];
           if (transform) {
-            path.replaceWith(transform(path.node));
+            const compiledAst = transform(path.node);
+            compiledAst && path.replaceWith(compiledAst);
           }
         }
       },

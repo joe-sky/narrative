@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`only if nesting: nesting 1`] = `"props.condition == 1 ? [<i key=\\"0\\">test1</i>, props.condition == 2 ? <i key=\\"1\\">test2</i> : null] : null;"`;
+exports[`nesting: nesting 1`] = `"props.condition == 1 ? [<i key=\\"0\\">test1</i>, props.condition == 2 ? <i key=\\"1\\">test2</i> : null] : null;"`;
 
-exports[`only if simple: simple 1`] = `"props.condition == 1 ? <i>test1</i> : null;"`;
+exports[`simple: simple 1`] = `"props.condition == 1 ? <i>test1</i> : null;"`;

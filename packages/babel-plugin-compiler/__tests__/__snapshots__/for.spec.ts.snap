@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`in with func block: in with func block 1`] = `
+"(__obj => {
+  const __keys = __obj ? Object.keys(__obj) : [];
+
+  if (__keys.length) {
+    return __keys.map(key => {
+      const item = __obj[key];
+      console.log(item);
+      return <i key={key}>{item}</i>;
+    }, this);
+  }
+})({
+  a: 1,
+  b: 2,
+  c: 3
+});"
+`;
+
+exports[`in: in 1`] = `
+"(__obj => {
+  const __keys = __obj ? Object.keys(__obj) : [];
+
+  if (__keys.length) {
+    return __keys.map(key => {
+      const item = __obj[key];
+      return <i key={key}>{item}</i>;
+    }, this);
+  }
+})({
+  a: 1,
+  b: 2,
+  c: 3
+});"
+`;
+
+exports[`of: of 1`] = `"[1, 2, 3]?.map(item => <i>{item}</i>, this) || null;"`;

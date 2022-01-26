@@ -52,7 +52,7 @@ export function isImportedByLib(
   }
 }
 
-function getTagName(node: JSXElement) {
+export function getTagName(node: JSXElement) {
   return (node.openingElement.name as JSXIdentifier).name;
 }
 
@@ -170,4 +170,10 @@ export function getSanitizedExpressionForContent(blocks: JSXChild[], keyPrefix?:
   }
 
   return types.arrayExpression(blocks as types.Expression[]);
+}
+
+export function findPropByName(obj: types.ObjectPattern, name: string) {
+  return obj.properties.find(
+    prop => types.isObjectProperty(prop) && types.isIdentifier(prop.key) && prop.key.name === name
+  ) as types.ObjectProperty;
 }
