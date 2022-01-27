@@ -3,13 +3,13 @@
 exports[`for object: <i>1</i><i>2</i><i>3</i> 1`] = `
 <div>
   <i>
-    1a
+    1
   </i>
   <i>
-    2b
+    2
   </i>
   <i>
-    3c
+    3
   </i>
 </div>
 `;

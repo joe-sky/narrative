@@ -1,7 +1,7 @@
 # Narrative
 
 <p>
-  <a href="https://travis-ci.org/joe-sky/narrative"><img src="https://travis-ci.org/joe-sky/narrative.svg?branch=master" alt="Travis CI Status"></a>
+  <a href="https://app.travis-ci.com/joe-sky/narrative"><img src="https://app.travis-ci.com/joe-sky/narrative.svg?branch=master" alt="Travis CI Status"></a>
   <a href="https://codecov.io/gh/joe-sky/narrative"><img src="https://codecov.io/gh/joe-sky/narrative/branch/master/graph/badge.svg" alt="Codecov"></a>
   <a href="https://www.npmjs.com/package/@narrative/core"><img src="https://img.shields.io/npm/l/@narrative/core.svg" alt="License"></a>
 </p>
