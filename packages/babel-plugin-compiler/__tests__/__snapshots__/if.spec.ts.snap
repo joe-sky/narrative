@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`nesting: nesting 1`] = `"props.condition == 1 ? [<i key=\\"0\\">test1</i>, props.condition == 2 ? <i key=\\"1\\">test2</i> : null] : null;"`;
+exports[`else if: else if 1`] = `"props.condition == 1 ? <i>test1</i> : props.condition == 2 ? <i>test2</i> : null;"`;
 
-exports[`simple: simple 1`] = `"props.condition == 1 ? <i>test1</i> : null;"`;
+exports[`else: else 1`] = `"props.condition == 1 ? <i>test1</i> : props.condition == 2 ? <i>test2</i> : <i>test3</i>;"`;
+
+exports[`function children: function children 1`] = `"props.condition == 1 ? (() => <i>test1</i>)() : (() => <i>test2</i>)();"`;
+
+exports[`nesting if: nesting if 1`] = `"props.condition == 1 ? [<i key=\\"0\\">test1</i>, props.condition == 2 ? <i key=\\"1\\">test2</i> : null] : null;"`;
+
+exports[`simple if: simple if 1`] = `"props.condition == 1 ? <i>test1</i> : null;"`;

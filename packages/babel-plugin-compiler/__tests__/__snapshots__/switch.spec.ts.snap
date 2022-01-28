@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`function children: function children 1`] = `"1 === props.value ? (() => 'test1')() : 2 === props.value ? (() => 'test2')() : 3 === props.value ? (() => 'test3')() : (() => 'test')();"`;
+
+exports[`has default: has default 1`] = `"1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : 3 === props.value ? \\"test3\\" : \\"test\\";"`;
+
+exports[`has values: has values 1`] = `"1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : [3, 4, 5].includes(props.value) ? \\"test3\\" : null;"`;
+
+exports[`nesting switch: nesting switch 1`] = `"1 === props.value ? 1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : 3 === props.value ? \\"test3\\" : null : 2 === props.value ? 1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : 3 === props.value ? \\"test3\\" : null : 3 === props.value ? 1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : 3 === props.value ? \\"test3\\" : null : null;"`;
+
+exports[`simple switch: simple switch 1`] = `"1 === props.value ? \\"test1\\" : 2 === props.value ? \\"test2\\" : 3 === props.value ? \\"test3\\" : null;"`;

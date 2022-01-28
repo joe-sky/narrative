@@ -1,8 +1,8 @@
 import { Test, transpile } from './utils';
 
-const onlyForTests: Test[] = [
+const forTests: Test[] = [
   {
-    name: 'of',
+    name: 'for of',
     from: `
       <For of={[1, 2, 3]}>
         {item => <i>{item}</i>}
@@ -10,7 +10,7 @@ const onlyForTests: Test[] = [
     `
   },
   {
-    name: 'in',
+    name: 'for in',
     from: `
       <For in={{ a: 1, b: 2, c: 3 }}>
         {(item, { key }) => <i key={key}>{item}</i>}
@@ -18,7 +18,7 @@ const onlyForTests: Test[] = [
     `
   },
   {
-    name: 'in with func block',
+    name: 'for in with function block',
     from: `
       <For in={{ a: 1, b: 2, c: 3 }}>
         {(item, { key }) => {
@@ -27,10 +27,45 @@ const onlyForTests: Test[] = [
         }}
       </For>
     `
+  },
+  {
+    name: 'has index',
+    from: `
+      <For of={[1, 2, 3]}>
+        {(item, { index }) => <i key={index}>{item}</i>}
+      </For>
+    `
+  },
+  {
+    name: 'for of with empty',
+    from: `
+      <For of={[1, 2, 3]}>
+        {item => <i>{item}</i>}
+        <Empty>no data</Empty>
+      </For>
+    `
+  },
+  {
+    name: 'for in with empty',
+    from: `
+      <For in={{ a: 1, b: 2, c: 3 }}>
+        {(item, { key }) => <i key={key}>{item}</i>}
+        <Empty>no data</Empty>
+      </For>
+    `
+  },
+  {
+    name: 'for of with function children empty',
+    from: `
+      <For of={[1, 2, 3]}>
+        {item => <i>{item}</i>}
+        <Empty>{() => 'no data'}</Empty>
+      </For>
+    `
   }
 ];
 
-onlyForTests.forEach(({ name, from }) => {
+forTests.forEach(({ name, from }) => {
   test(name, async () => {
     expect(await transpile(from)).toMatchSnapshot(name);
   });
