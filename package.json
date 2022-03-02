@@ -6,7 +6,7 @@
     "packages/babel-plugin-compiler",
     "packages/vite-plugin-compiler"
   ],
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc2.1",
   "description": "A compiler tool for create neater control flow tags such as <If>/<For>/<Switch> for JSX/TSX.",
   "scripts": {
     "build": "lerna run build",
@@ -48,16 +48,16 @@
     "@types/lodash": "^4.14.148",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
     "babel-jest": "^26.0.1",
     "codecov": "^3.7.0",
     "commitlint": "^8.2.0",
     "cross-env": "^5.1.0",
     "esbuild": "^0.7.7",
-    "eslint": "^6.5.1",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint": "^8.10.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.2",
     "gh-pages": "^2.2.0",
     "husky": "^3.0.9",
     "jest": "^26.0.1",
@@ -65,7 +65,7 @@
     "lerna": "^3.18.3",
     "lint-staged": "^10.2.11",
     "lodash": "^4.13.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.5.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "regenerator-runtime": "^0.13.9",
@@ -81,7 +81,7 @@
     "typescript": "^4.4.2"
   },
   "resolutions": {
-    "eslint": "^6.5.1"
+    "eslint": "^8.10.0"
   },
   "husky": {
     "hooks": {

@@ -1,4 +1,4 @@
-import * as BabelCore from '@babel/core';
+import type * as BabelCore from '@babel/core';
 
 export const NT_CONTROL_FLOW = '@narrative/control-flow';
 

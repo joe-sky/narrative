@@ -1,5 +1,6 @@
 import * as types from '@babel/types';
-import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
+import type { JSXElement } from '@babel/types';
+import type { BabelFile } from '@babel/core';
 import * as astUtil from '../utils/ast';
 
 export const SUB_TAGS_SWITCH = {
@@ -8,9 +9,9 @@ export const SUB_TAGS_SWITCH = {
 };
 
 export const ATTRS_SWITCH = {
-  EXPR: 'expr',
   VALUE: 'value',
-  VALUES: 'values'
+  IS: 'is',
+  IN: 'in'
 };
 
 function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], key?: string) {
@@ -25,12 +26,12 @@ function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], k
       const childNodes = astUtil.getChildren(child);
 
       ret.cases.push({
-        condition: attrs?.[ATTRS_SWITCH.VALUES]
+        condition: attrs?.[ATTRS_SWITCH.IN]
           ? types.callExpression(
-              types.memberExpression(astUtil.getExpression(attrs[ATTRS_SWITCH.VALUES]), types.identifier('includes')),
+              types.memberExpression(astUtil.getExpression(attrs[ATTRS_SWITCH.IN]), types.identifier('includes')),
               [expression]
             )
-          : types.binaryExpression('===', astUtil.getExpression(attrs?.[ATTRS_SWITCH.VALUE]), expression),
+          : types.binaryExpression('===', astUtil.getExpression(attrs?.[ATTRS_SWITCH.IS]), expression),
         children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
       });
     } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_SWITCH.DEFAULT)) {
@@ -42,11 +43,11 @@ function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], k
   return ret;
 }
 
-export function transformSwitch(node: JSXElement) {
+export function transformSwitch(node: JSXElement, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);
-  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_SWITCH.EXPR]), children, key);
+  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_SWITCH.VALUE]), children, key);
   let ternaryExpression = blocks.default;
 
   blocks.cases?.reverse().forEach(caseBlock => {

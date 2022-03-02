@@ -1,5 +1,5 @@
 /*!
- * @narrative/control-flow v1.0.0-rc.2
+ * @narrative/control-flow v1.0.0-rc2.1
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */
@@ -47,32 +47,32 @@ declare function ElseIf<T>(props: {
 /**
  * Narrative tag `Switch`, example:
  * ```tsx
- * <Switch expr={foo}>
- *   <Case value={1}><input /></Case>
- *   <Case value={2}><input type="button" /></Case>
+ * <Switch value={foo}>
+ *   <Case is={1}><input /></Case>
+ *   <Case is={2}><input type="button" /></Case>
  *   <Default>nothing</Default>
  * </Switch>
  * ```
  */
 declare function Switch<T>(props: {
-    expr: T;
+    value: T;
 } & Childrenable): JSX.Element;
 /**
  * Narrative tag `Case`, example:
  * ```tsx
- * <Switch expr={foo}>
- *   <Case value={1}><input /></Case>
- *   <Case value={2}><input type="button" /></Case>
- *   <Case values={[3, 4, 5]}><input type="radio" /></Case>
+ * <Switch value={foo}>
+ *   <Case is={1}><input /></Case>
+ *   <Case is={2}><input type="button" /></Case>
+ *   <Case in={[3, 4, 5]}><input type="radio" /></Case>
  *   <Default>nothing</Default>
  * </Switch>
  * ```
  */
 declare function Case<T>(props: {
-    value: T;
+    is: T;
 } & Childrenable): JSX.Element;
 declare function Case<T>(props: {
-    values: ArrayLike<T>;
+    in: ArrayLike<T>;
 } & Childrenable): JSX.Element;
 /**
  * Narrative tag `Default`, example:
@@ -111,7 +111,7 @@ declare function For<T>(props: {
     of: Iterable<T> | ArrayLike<T> | null | undefined;
     children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
 }): JSX.Element;
-declare function For<O extends {}, K extends keyof O>(props: {
+declare function For<O extends Record<string, unknown>, K extends keyof O>(props: {
     in: O | null | undefined;
     children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;

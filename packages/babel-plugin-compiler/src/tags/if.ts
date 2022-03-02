@@ -1,5 +1,6 @@
 import * as types from '@babel/types';
-import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
+import type { JSXElement } from '@babel/types';
+import type { BabelFile } from '@babel/core';
 import * as astUtil from '../utils/ast';
 
 export const SUB_TAGS_IF = {
@@ -42,7 +43,7 @@ function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], ke
   return ret;
 }
 
-export function transformIf(node: JSXElement) {
+export function transformIf(node: JSXElement, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);

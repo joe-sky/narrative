@@ -1,5 +1,5 @@
 /*!
- * @narrative/babel-plugin-compiler v1.0.0-rc.2
+ * @narrative/babel-plugin-compiler v1.0.0-rc2.1
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

@@ -101,10 +101,10 @@ const App: FC = () => {
           </Empty>
         </For>
       </ul>
-      <Switch expr={todos.length}>
-        <Case value={1}>1</Case>
-        <Case value={2}>2</Case>
-        <Case values={[3, 4, 5]}>3/4/5</Case>
+      <Switch value={todos.length}>
+        <Case is={1}>1</Case>
+        <Case is={2}>2</Case>
+        <Case in={[3, 4, 5]}>3/4/5</Case>
         <Default>More than 2</Default>
       </Switch>
     </div>

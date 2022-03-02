@@ -14,7 +14,7 @@ const OnlyIf: React.FC<Props> = props => {
   );
 };
 
-test('only if', function() {
+test('only if', () => {
   const el = render(<OnlyIf condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
   expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
@@ -35,7 +35,7 @@ const IfAndElse: React.FC<Props> = props => {
   );
 };
 
-test('if and else', function() {
+test('if and else', () => {
   const el = render(<IfAndElse condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
   expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
@@ -58,7 +58,7 @@ const IfAndElseIf: React.FC<Props> = props => {
   );
 };
 
-test('if and else', function() {
+test('if and else', () => {
   const el = render(<IfAndElseIf condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
   expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
@@ -88,7 +88,7 @@ const AllIfTags: React.FC<Props> = props => {
   );
 };
 
-test('all if tags', function() {
+test('all if tags', () => {
   const el = render(<AllIfTags condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
   expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);

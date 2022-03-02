@@ -18,7 +18,7 @@ const TestForIndexAlias = (props: { list: number[] | null }) => {
   );
 };
 
-test('for without empty', function() {
+test('for without empty', () => {
   const el = render(<TestFor list={[1, 2, 3]} />);
   expect(el.container.firstChild).toMatchSnapshot(`<div><i>1</i><i>2</i><i>3</i></div>`);
   el.unmount();
@@ -54,7 +54,7 @@ const TestForFuncEmpty = (props: { list: number[] }) => {
   );
 };
 
-test('for with empty', function() {
+test('for with empty', () => {
   const el = render(<TestForEmpty list={[]} />);
   expect(el.container.firstChild).toMatchSnapshot(`empty`);
   el.unmount();
@@ -74,7 +74,7 @@ const TestForObject = (props: { obj: Record<string, number> }) => {
   );
 };
 
-test('for object', function() {
+test('for object', () => {
   const el = render(<TestForObject obj={{ a: 1, b: 2, c: 3 }} />);
   expect(el.container.firstChild).toMatchSnapshot(`<i>1</i><i>2</i><i>3</i>`);
 });

@@ -4,14 +4,13 @@ import {
   JSXIdentifier,
   JSXAttribute,
   JSXExpressionContainer,
-  Node,
   buildChildren,
   JSXText,
   JSXSpreadChild,
   JSXFragment,
   JSXEmptyExpression
 } from '@babel/types';
-import { NodePath } from '@babel/traverse';
+import type { NodePath } from '@babel/traverse';
 import { NT_CONTROL_FLOW } from './';
 
 export type JSXChild =
@@ -124,7 +123,7 @@ export function getChildren(node: JSXElement) {
 export function addKeyAttribute(node: JSXElement, keyValue: string | number) {
   let keyFound = false;
 
-  node.openingElement.attributes.forEach(function(attrib) {
+  node.openingElement.attributes.forEach(attrib => {
     if (types.isJSXAttribute(attrib) && attrib.name.name === 'key') {
       keyFound = true;
       return false;

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0-rc2.1] 2022.03.02
+
+- 💥 The attributes of `Switch` tag have been changed to `value`, `is`, `in`.
+
 ## [v1.0.0-rc.2] 2022.01.20
 
 - 🌟 Add `Empty` tag compiler.

@@ -27,7 +27,7 @@ export declare function For<T>(props: {
   of: Iterable<T> | ArrayLike<T> | null | undefined;
   children: ForCallback<T, number> | (ForCallback<T, number> | JSXNode)[];
 }): JSX.Element;
-export declare function For<O extends {}, K extends keyof O>(props: {
+export declare function For<O extends Record<string, unknown>, K extends keyof O>(props: {
   in: O | null | undefined;
   children: ForCallback<O[K], K> | (ForCallback<O[K], K> | JSXNode)[];
 }): JSX.Element;

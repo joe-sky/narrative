@@ -1,5 +1,5 @@
 import jsx from '@babel/plugin-syntax-jsx';
-import { Visitor, NodePath } from '@babel/traverse';
+import type { Visitor } from '@babel/traverse';
 import * as types from '@babel/types';
 import * as astUtil from './utils/ast';
 import { transformIf, SUB_TAGS_IF } from './tags/if';
@@ -28,14 +28,14 @@ export default function NtCompiler() {
           }
 
           const nodeName = elName.name;
-          const { importedLib } = state?.opts;
+          const importedLib = state.opts?.importedLib;
           if (importedLib !== 'none' && !astUtil.isImportedByLib(nodeName, path, importedLib)) {
             return;
           }
 
           const transform = nodeTransforms[nodeName as keyof typeof nodeTransforms];
           if (transform) {
-            const compiledAst = transform(path.node);
+            const compiledAst = transform(path.node, state.file);
             compiledAst && path.replaceWith(compiledAst);
           }
         }
@@ -55,7 +55,7 @@ export default function NtCompiler() {
 
               const nodeName = elName.name;
               if (
-                !astUtil.isImportedByLib(nodeName, path, state?.opts.importedLib) ||
+                !astUtil.isImportedByLib(nodeName, path, state.opts?.importedLib) ||
                 SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
                 SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH] ||
                 SUB_TAGS_FOR[nodeName as keyof typeof SUB_TAGS_FOR]

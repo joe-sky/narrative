@@ -1,7 +1,8 @@
 import * as types from '@babel/types';
-import { JSXElement, JSXIdentifier, JSXAttribute, JSXExpressionContainer, Node } from '@babel/types';
+import type { JSXElement } from '@babel/types';
+import type { BabelFile } from '@babel/core';
 import * as astUtil from '../utils/ast';
-import generate from '@babel/generator';
+// import generate from '@babel/generator';
 
 export const SUB_TAGS_FOR = {
   /**
@@ -112,7 +113,7 @@ const ARR_PARAM = '__arr';
 const OBJ_PARAM = '__obj';
 const KEYS_PARAM = '__keys';
 
-export function transformFor(node: JSXElement) {
+export function transformFor(node: JSXElement, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);
