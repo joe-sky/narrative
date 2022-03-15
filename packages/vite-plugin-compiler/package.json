@@ -1,6 +1,6 @@
 {
   "name": "@narrative/vite-plugin-compiler",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc2.1",
   "description": "Vite plugin for compile and enhance the limitation of Narrative runtime code.",
   "main": "lib/index.js",
   "files": [
@@ -24,7 +24,7 @@
   "author": "Joe_Sky <hitomi_doax@sina.com>",
   "license": "MIT",
   "dependencies": {
-    "@narrative/babel-plugin-compiler": "^1.0.0-rc.2"
+    "@narrative/babel-plugin-compiler": "^1.0.0-rc2.1"
   },
   "devDependencies": {
     "vite": "^2.7.10"

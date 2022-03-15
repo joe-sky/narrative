@@ -1,6 +1,6 @@
 {
   "name": "@narrative/babel-plugin-compiler",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc2.1",
   "description": "Babel plugin for compile and enhance the limitation of Narrative runtime code.",
   "main": "lib/index.js",
   "files": [
