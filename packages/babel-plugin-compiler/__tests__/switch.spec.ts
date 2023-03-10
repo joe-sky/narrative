@@ -70,6 +70,20 @@ const switchTests: Test[] = [
         <Default>{() => 'test'}</Default>
       </Switch>
     `
+  },
+  {
+    name: 'if wrapped in Fragments',
+    from: `
+      const jsx = <>
+        <div></div>
+        <Switch value={props.value}>
+          <Case is={1}>test1</Case>
+          <Case is={2}>test2</Case>
+          <Case is={3}>test3</Case>
+        </Switch>
+        <div></div>
+      </>
+    `
   }
 ];
 

@@ -55,6 +55,18 @@ const ifTests: Test[] = [
         </Else>
       </If>
     `
+  },
+  {
+    name: 'if wrapped in Fragments',
+    from: `
+      const jsx = <>
+        <div></div>
+        <If when={props.condition == 1}>
+          <i>test1</i>
+        </If>
+        <div></div>
+      </>
+    `
   }
 ];
 

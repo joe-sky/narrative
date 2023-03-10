@@ -62,6 +62,18 @@ const forTests: Test[] = [
         <Empty>{() => 'no data'}</Empty>
       </For>
     `
+  },
+  {
+    name: 'for wrapped in Fragments',
+    from: `
+      const jsx = <>
+        <div></div>
+        <For of={[1, 2, 3]}>
+          {item => <i>{item}</i>}
+        </For>
+        <div></div>
+      </>
+    `
   }
 ];
 

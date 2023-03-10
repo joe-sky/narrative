@@ -1,12 +1,12 @@
 /*!
- * @narrative/control-flow v1.0.0-rc2.1
+ * @narrative/control-flow v1.0.0
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */
 /// <reference types="react" />
 
-declare type JSXNode = JSX.Element | string | number | boolean | null | undefined | Record<any, any>;
-declare type JSXChild = JSXNode | Array<JSXNode>;
+type JSXNode = JSX.Element | string | number | boolean | null | undefined | Record<any, any>;
+type JSXChild = JSXNode | Array<JSXNode>;
 interface Childrenable {
     children?: JSXChild;
 }
@@ -93,7 +93,7 @@ interface ForCallbackMeta<K = number> {
     isFirst: boolean;
     isLast: boolean;
 }
-declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
+type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<K>) => JSXChild | void;
 /**
  * Narrative tag `For`, example:
  * ```tsx
@@ -101,7 +101,6 @@ declare type ForCallback<T = any, K = number> = (item: T, meta: ForCallbackMeta<
  *   {(item, { index }) => <i key={index}>{item}</i>}
  * </For>
  *
- * // Not implemented yet, will come soon
  * <For in={{ a: 1, b: 2, c: 3 }}>
  *   {(item, { key }) => <i key={key}>{item}</i>}
  * </For>

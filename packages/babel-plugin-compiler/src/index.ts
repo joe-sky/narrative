@@ -34,7 +34,7 @@ export default function NtCompiler() {
           }
 
           const transform = nodeTransforms[nodeName as keyof typeof nodeTransforms];
-          if (transform) {
+          if (transform != null) {
             const compiledAst = transform(path.node, state.file);
             compiledAst && path.replaceWith(compiledAst);
           }
@@ -44,7 +44,7 @@ export default function NtCompiler() {
         _path.traverse({
           JSXElement: {
             enter(path) {
-              if (!types.isJSXElement(path.parent)) {
+              if (!(types.isJSXElement(path.parent) || types.isJSXFragment(path.parent))) {
                 return;
               }
 
@@ -54,16 +54,15 @@ export default function NtCompiler() {
               }
 
               const nodeName = elName.name;
-              if (
-                !astUtil.isImportedByLib(nodeName, path, state.opts?.importedLib) ||
-                SUB_TAGS_IF[nodeName as keyof typeof SUB_TAGS_IF] ||
-                SUB_TAGS_SWITCH[nodeName as keyof typeof SUB_TAGS_SWITCH] ||
-                SUB_TAGS_FOR[nodeName as keyof typeof SUB_TAGS_FOR]
-              ) {
+              const importedLib = state.opts?.importedLib;
+              if (importedLib !== 'none' && !astUtil.isImportedByLib(nodeName, path, importedLib)) {
                 return;
               }
 
-              path.replaceWith(types.jsxExpressionContainer(path.node));
+              const transform = nodeTransforms[nodeName as keyof typeof nodeTransforms];
+              if (transform != null) {
+                path.replaceWith(types.jsxExpressionContainer(path.node));
+              }
             }
           }
         });

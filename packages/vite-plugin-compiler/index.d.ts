@@ -1,5 +1,5 @@
 /*!
- * @narrative/vite-plugin-compiler v1.0.0-rc2.1
+ * @narrative/vite-plugin-compiler v1.0.0
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */

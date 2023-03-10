@@ -3,14 +3,12 @@
 exports[`for in with empty: for in with empty 1`] = `
 "(__obj => {
   const __keys = __obj ? Object.keys(__obj) : [];
-
   if (__keys.length) {
     return __keys.map(key => {
       const item = __obj[key];
       return <i key={key}>{item}</i>;
     }, this);
   }
-
   return \\"no data\\";
 })({
   a: 1,
@@ -22,7 +20,6 @@ exports[`for in with empty: for in with empty 1`] = `
 exports[`for in with function block: for in with function block 1`] = `
 "(__obj => {
   const __keys = __obj ? Object.keys(__obj) : [];
-
   if (__keys.length) {
     return __keys.map(key => {
       const item = __obj[key];
@@ -40,7 +37,6 @@ exports[`for in with function block: for in with function block 1`] = `
 exports[`for in: for in 1`] = `
 "(__obj => {
   const __keys = __obj ? Object.keys(__obj) : [];
-
   if (__keys.length) {
     return __keys.map(key => {
       const item = __obj[key];
@@ -59,7 +55,6 @@ exports[`for of with empty: for of with empty 1`] = `
   if (__arr?.length) {
     return __arr.map(item => <i>{item}</i>, this);
   }
-
   return \\"no data\\";
 })([1, 2, 3]);"
 `;
@@ -69,11 +64,18 @@ exports[`for of with function children empty: for of with function children empt
   if (__arr?.length) {
     return __arr.map(item => <i>{item}</i>, this);
   }
-
   return (() => 'no data')();
 })([1, 2, 3]);"
 `;
 
 exports[`for of: for of 1`] = `"[1, 2, 3]?.map(item => <i>{item}</i>, this) || null;"`;
+
+exports[`for wrapped in Fragments: for wrapped in Fragments 1`] = `
+"const jsx = <>
+        <div></div>
+        {[1, 2, 3]?.map(item => <i>{item}</i>, this) || null}
+        <div></div>
+      </>;"
+`;
 
 exports[`has index: has index 1`] = `"[1, 2, 3]?.map((item, index) => <i key={index}>{item}</i>, this) || null;"`;

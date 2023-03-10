@@ -6,6 +6,14 @@ exports[`else: else 1`] = `"props.condition == 1 ? <i>test1</i> : props.conditio
 
 exports[`function children: function children 1`] = `"props.condition == 1 ? (() => <i>test1</i>)() : (() => <i>test2</i>)();"`;
 
+exports[`if wrapped in Fragments: if wrapped in Fragments 1`] = `
+"const jsx = <>
+        <div></div>
+        {props.condition == 1 ? <i>test1</i> : null}
+        <div></div>
+      </>;"
+`;
+
 exports[`nesting if: nesting if 1`] = `"props.condition == 1 ? [<i key=\\"0\\">test1</i>, props.condition == 2 ? <i key=\\"1\\">test2</i> : null] : null;"`;
 
 exports[`simple if: simple if 1`] = `"props.condition == 1 ? <i>test1</i> : null;"`;
