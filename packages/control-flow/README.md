@@ -112,7 +112,7 @@ const App: FC = () => {
 };
 ```
 
-> At present, the features of above tags has been fully implemented, and next the documentation needs to be completed.
+<!-- > At present, the features of above tags has been fully implemented, and next the documentation needs to be completed. -->
 
 ## The Origin of Name
 
