@@ -2,9 +2,9 @@ import jsx from '@babel/plugin-syntax-jsx';
 import type { Visitor } from '@babel/traverse';
 import * as types from '@babel/types';
 import * as astUtil from './utils/ast';
-import { transformIf, SUB_TAGS_IF } from './tags/if';
-import { transformSwitch, SUB_TAGS_SWITCH } from './tags/switch';
-import { transformFor, SUB_TAGS_FOR } from './tags/for';
+import { transformIf } from './tags/if';
+import { transformSwitch } from './tags/switch';
+import { transformFor } from './tags/for';
 import { State, CompilerOptions } from './utils';
 
 export { CompilerOptions };

@@ -1,10 +1,10 @@
 import * as types from '@babel/types';
-import {
+import type {
   JSXElement,
   JSXIdentifier,
   JSXAttribute,
   JSXExpressionContainer,
-  buildChildren,
+  react,
   JSXText,
   JSXSpreadChild,
   JSXFragment,
@@ -32,7 +32,7 @@ export interface ForAttrs {
   func: types.ArrowFunctionExpression;
 }
 
-export type FuncParam = types.Identifier | types.Pattern | types.RestElement | types.TSParameterProperty;
+export type FuncParam = types.Identifier | types.Pattern | types.RestElement;
 
 export function isImportedByLib(
   identifier: string,
@@ -111,7 +111,7 @@ export function getKey(node: JSXElement): string | undefined {
  * @returns List of all children
  */
 export function getChildren(node: JSXElement) {
-  return ((types as any).react.buildChildren as typeof buildChildren)(node);
+  return ((types as any).react.buildChildren as typeof react.buildChildren)(node);
 }
 
 /**

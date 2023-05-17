@@ -1,0 +1,24 @@
+{
+  "name": "@narrative/swc-plugin-compiler",
+  "version": "0.1.0",
+  "description": "SWC plugin for compile and enhance the limitation of Narrative runtime code.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe-sky/narrative.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joe-sky/narrative/issues"
+  },
+  "main": "narrative-swc-plugin-compiler.wasm",
+  "scripts": {
+    "prepublishOnly": "cargo build-wasi --release",
+    "prepack": "cp ./target/wasm32-wasi/release/narrative-swc-plugin-compiler.wasm .",
+    "test": "cd visitor && cargo test --verbose"
+  },
+  "author": "Joe_Sky <hitomi_doax@sina.com>",
+  "license": "MIT",
+  "preferUnplugged": true,
+  "dependencies": {
+    "@narrative/control-flow": "^1.0.0"
+  }
+}

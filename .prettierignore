@@ -4,3 +4,4 @@
 /packages/control-statement/dist
 /packages/control-statement/lib
 /packages/babel-plugin-compiler/lib
+/packages/swc-plugin-compiler/visitor/tests/fixture/**/output.js

@@ -7138,6 +7138,11 @@ jest@^26.0.1:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
+jinx-rust@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/jinx-rust/-/jinx-rust-0.1.6.tgz#c7bce55d97bfbad76a9b930c01fe6a8629a170d7"
+  integrity sha512-qP+wtQL1PrDDFwtPKhNGtjWOmijCrKdfUHWTV2G/ikxfjrh+cjdvkQTmny9RAsVF0jiui9m+F0INWu4cuRcZeQ==
+
 joycon@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/joycon/-/joycon-3.1.1.tgz#bce8596d6ae808f8b68168f5fc69280996894f03"
@@ -8784,10 +8789,18 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.5.1:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.4.tgz#34dd2595629bfbb79d344ac4a91ff948694463c3"
-  integrity sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==
+prettier-plugin-rust@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-rust/-/prettier-plugin-rust-0.1.8.tgz#e90573b48bc7f6a4b7d30390e632fd70e0bf4a2a"
+  integrity sha512-ID5PXx6CQ1FUPBzowfpvTvilZtFdCEs5+VoOQezVBSVNq+LkpIl9yVQGVALDwWLkQ6P0HR36boIm8PPKFq47TQ==
+  dependencies:
+    jinx-rust "0.1.6"
+    prettier "^2.7.1"
+
+prettier@^2.7.1, prettier@^2.8.8:
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
+  integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
 pretty-format@^26.0.0, pretty-format@^26.6.2:
   version "26.6.2"

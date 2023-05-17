@@ -2,7 +2,8 @@
   "packages": [
     "packages/control-flow",
     "packages/babel-plugin-compiler",
-    "packages/vite-plugin-compiler"
+    "packages/vite-plugin-compiler",
+    "packages/swc-plugin-compiler"
   ],
   "command": {
     "publish": {

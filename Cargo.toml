@@ -1,0 +1,9 @@
+[workspace]
+members = [
+  "packages/swc-plugin-compiler/plugin",
+  "packages/swc-plugin-compiler/visitor",
+]
+
+[profile.release]
+opt-level = "s"
+strip = "symbols"

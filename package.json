@@ -4,7 +4,8 @@
   "workspaces": [
     "packages/control-flow",
     "packages/babel-plugin-compiler",
-    "packages/vite-plugin-compiler"
+    "packages/vite-plugin-compiler",
+    "packages/swc-plugin-compiler"
   ],
   "version": "1.0.0",
   "description": "A compiler tool for create neater control flow tags such as <If>/<For>/<Switch> for JSX/TSX.",
@@ -12,6 +13,7 @@
     "build": "lerna run build",
     "test": "yarn run jest:clear && jest --config=test/jest.config.js",
     "test:updateSnapshot": "yarn run jest:clear && jest --config=test/jest.config.js --updateSnapshot",
+    "test:swc": "yarn workspace @narrative/swc-plugin-compiler test",
     "jest:clear": "jest --clearCache",
     "cover": "yarn run jest:clear && jest --coverage --config=test/jest.config.js",
     "ci": "yarn run build && yarn run cover && codecov",
@@ -66,7 +68,8 @@
     "lerna": "^3.18.3",
     "lint-staged": "^10.2.11",
     "lodash": "^4.13.1",
-    "prettier": "^2.5.1",
+    "prettier": "^2.8.8",
+    "prettier-plugin-rust": "^0.1.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "regenerator-runtime": "^0.13.9",
