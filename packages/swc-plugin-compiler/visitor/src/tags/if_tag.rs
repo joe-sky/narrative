@@ -8,7 +8,7 @@ pub fn transform_if(jsx_element: &JSXElement) -> Expr {
   let (cons, alt) = parse_if(jsx_element);
 
   Expr::Cond(CondExpr {
-    test: Box::new(get_when_expression(&jsx_element)),
+    test: Box::new(get_when_expression(jsx_element)),
     cons: Box::new(cons),
     alt: Box::new(alt),
     span: DUMMY_SP,
