@@ -22,10 +22,16 @@ use swc_core::ecma::ast::{
   Str,
   BinExpr,
   op,
+  CallExpr,
+  Callee,
+  MemberExpr,
+  MemberProp,
+  ExprOrSpread,
 };
+use swc_core::ecma::atoms::JsWord;
 use tracing::error;
 
-use super::{ WHEN, IS, VALUE };
+use super::{ WHEN, IS, IN, VALUE };
 
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
@@ -139,14 +145,20 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
 }
 
 pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXElement) -> Expr {
+  let mut has_in = false;
+
   jsx_element.opening.attrs
     .iter()
     .find(|attr| {
       if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
-        if sym == IS {
+        if sym == IS || sym == IN {
+          if sym == IN {
+            has_in = true;
+          }
+
           return true;
         } else {
-          display_error(*span, format!("Only \"is\" attribute allowed, got: \"{}\".", sym).as_str());
+          display_error(*span, format!("Only \"is\" or \"in\" attribute allowed, got: \"{}\".", sym).as_str());
         }
       }
 
@@ -187,12 +199,33 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
 
                               match expr {
                                 JSXExpr::Expr(parent_expr_value) => {
-                                  Expr::Bin(BinExpr {
-                                    op: op!("==="),
-                                    left: (*parent_expr_value).clone(),
-                                    right: (*expr_value).clone(),
-                                    span: DUMMY_SP,
-                                  })
+                                  if has_in {
+                                    Expr::Call(CallExpr {
+                                      callee: Callee::Expr(
+                                        Box::new(
+                                          Expr::Member(MemberExpr {
+                                            obj: (*expr_value).clone(),
+                                            prop: MemberProp::Ident(Ident {
+                                              sym: JsWord::from("includes"),
+                                              optional: false,
+                                              span: DUMMY_SP,
+                                            }),
+                                            span: DUMMY_SP,
+                                          })
+                                        )
+                                      ),
+                                      args: vec![ExprOrSpread { expr: (*parent_expr_value).clone(), spread: None }],
+                                      type_args: None,
+                                      span: DUMMY_SP,
+                                    })
+                                  } else {
+                                    Expr::Bin(BinExpr {
+                                      op: op!("==="),
+                                      left: (*parent_expr_value).clone(),
+                                      right: (*expr_value).clone(),
+                                      span: DUMMY_SP,
+                                    })
+                                  }
                                 }
                                 _ => Expr::Lit(Lit::Bool(false.into())),
                               }
@@ -207,11 +240,11 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
                       }
                     })
                     .unwrap_or_else(|| {
-                      let element_name = get_jsx_element_name(&jsx_element.opening.name);
+                      let element_name = get_jsx_element_name(&parent_jsx_element.opening.name);
 
                       display_error(
-                        jsx_element.opening.span,
-                        format!("Attribute \"is\" is required for the <{}> tag!", element_name).as_str()
+                        parent_jsx_element.opening.span,
+                        format!("Attribute \"value\" is required for the <{}> tag!", element_name).as_str()
                       );
 
                       Expr::Lit(Lit::Bool(false.into()))
@@ -234,7 +267,7 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
 
       display_error(
         jsx_element.opening.span,
-        format!("Attribute \"is\" is required for the <{}> tag!", element_name).as_str()
+        format!("Attribute \"is\" or \"in\" is required for the <{}> tag!", element_name).as_str()
       );
 
       Expr::Lit(Lit::Bool(false.into()))
