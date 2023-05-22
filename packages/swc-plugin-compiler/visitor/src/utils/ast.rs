@@ -25,6 +25,8 @@ use swc_core::ecma::ast::{
 };
 use tracing::error;
 
+use super::{ WHEN, IS, VALUE };
+
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
 
@@ -94,7 +96,7 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
     .iter()
     .find(|attr| {
       if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
-        if sym == "when" {
+        if sym == WHEN {
           return true;
         } else {
           display_error(*span, format!("Only \"when\" attribute allowed, got: \"{}\".", sym).as_str());
@@ -141,7 +143,7 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
     .iter()
     .find(|attr| {
       if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
-        if sym == "is" {
+        if sym == IS {
           return true;
         } else {
           display_error(*span, format!("Only \"is\" attribute allowed, got: \"{}\".", sym).as_str());
@@ -167,7 +169,7 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
                           JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. },
                         ) = attr
                       {
-                        if sym == "value" {
+                        if sym == VALUE {
                           return true;
                         } else {
                           display_error(*span, format!("Only \"value\" attribute allowed, got: \"{}\".", sym).as_str());

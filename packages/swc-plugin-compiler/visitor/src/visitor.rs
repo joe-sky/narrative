@@ -4,7 +4,7 @@ use tracing::debug;
 
 use crate::tags::if_tag::transform_if;
 use crate::tags::switch_tag::transform_switch;
-use crate::utils::{ get_jsx_element_name, wrap_by_child_jsx_expr_container };
+use crate::utils::{ ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container }, IF, SWITCH };
 
 pub fn transform_narrative() -> impl Fold {
   NtCompiler
@@ -25,8 +25,8 @@ impl Fold for NtCompiler {
         debug!("fold_expr::Expr::JSXElement::tag_name = {}", tag_name);
 
         match tag_name {
-          "If" => transform_if(&jsx_element),
-          "Switch" => transform_switch(&jsx_element),
+          IF => transform_if(&jsx_element),
+          SWITCH => transform_switch(&jsx_element),
           _ => { Expr::JSXElement(jsx_element) }
         }
       }
@@ -46,8 +46,8 @@ impl Fold for NtCompiler {
         debug!("fold_jsx_element_child::JSXElementChild::JSXElement::tag_name = {}", tag_name);
 
         match tag_name {
-          "If" => wrap_by_child_jsx_expr_container(transform_if(&jsx_element)),
-          "Switch" => { wrap_by_child_jsx_expr_container(transform_switch(&jsx_element)) }
+          IF => wrap_by_child_jsx_expr_container(transform_if(&jsx_element)),
+          SWITCH => { wrap_by_child_jsx_expr_container(transform_switch(&jsx_element)) }
           _ => { JSXElementChild::JSXElement(Box::new(jsx_element)) }
         }
       }
