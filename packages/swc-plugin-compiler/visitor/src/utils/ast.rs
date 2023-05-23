@@ -64,7 +64,18 @@ pub fn convert_children_to_expression(children: Vec<JSXElementChild>) -> Expr {
 
       match sub_element {
         JSXElementChild::JSXElement(value) => Expr::JSXElement(Box::new((**value).clone())),
-        JSXElementChild::JSXExprContainer(JSXExprContainer { expr: JSXExpr::Expr(expr), .. }) => (**expr).clone(),
+        JSXElementChild::JSXExprContainer(JSXExprContainer { expr: JSXExpr::Expr(expr), .. }) => {
+          match &**expr {
+            Expr::Arrow(array_expr) =>
+              Expr::Call(CallExpr {
+                callee: Callee::Expr(Box::new(Expr::Arrow((*array_expr).clone()))),
+                args: vec![],
+                type_args: None,
+                span: DUMMY_SP,
+              }),
+            _ => (**expr).clone(),
+          }
+        }
         JSXElementChild::JSXText(JSXText { value, .. }) => {
           let mut content = value.to_string();
 
