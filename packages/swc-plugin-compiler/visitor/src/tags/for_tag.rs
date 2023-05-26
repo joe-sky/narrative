@@ -20,6 +20,9 @@ use swc_core::ecma::ast::{
   ThisExpr,
   Pat,
   ObjectPat,
+  ObjectPatProp,
+  AssignPatProp,
+  BindingIdent,
 };
 use swc_core::ecma::atoms::JsWord;
 use tracing::debug;
@@ -51,74 +54,19 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
 
     let meta_param = params.get(1);
     if let Some(Pat::Object(ObjectPat { props, .. })) = meta_param {
-      // let mut props = props.clone();
-      // let mut key = None;
-      // let mut index = None;
-
-      // for prop in props.iter() {
-      //   if let Some(Expr::Ident(Ident { sym, .. })) = &prop.key {
-      //     if sym == "key" {
-      //       key = Some(prop.value.clone());
-      //     } else if sym == "index" {
-      //       index = Some(prop.value.clone());
-      //     }
-      //   }
-      // }
-
-      // if key.is_none() {
-      //   key = Some(
-      //     Expr::Ident(Ident {
-      //       sym: JsWord::from("key"),
-      //       span: DUMMY_SP,
-      //       optional: false,
-      //     })
-      //   );
-      // }
-
-      // if index.is_none() {
-      //   index = Some(
-      //     Expr::Ident(Ident {
-      //       sym: JsWord::from("index"),
-      //       span: DUMMY_SP,
-      //       optional: false,
-      //     })
-      //   );
-      // }
-
-      // generated_params.push(
-      //   Pat::Object(ObjectPat {
-      //     props: vec![],
-      //     span: DUMMY_SP,
-      //     optional: false,
-      //     type_ann: None,
-      //   })
-      // );
-
-      // generated_params.push(
-      //   Pat::Object(ObjectPat {
-      //     props: vec![
-      //       ObjectPatProp::KeyValue(KeyValuePatProp {
-      //         key: PropName::Ident(Ident {
-      //           sym: JsWord::from("key"),
-      //           span: DUMMY_SP,
-      //           optional: false,
-      //         }),
-      //         value: key.unwrap(),
-      //       }),
-      //       ObjectPatProp::KeyValue(KeyValuePatProp {
-      //         key: PropName::Ident(Ident {
-      //           sym: JsWord::from("index"),
-      //           span: DUMMY_SP,
-      //           optional: false,
-      //         }),
-      //         value: index.unwrap(),
-      //       })
-      //     ],
-      //     span: DUMMY_SP,
-      //     optional: false,
-      //     type_ann: None,
-      //   })
-      // );
+      for prop in props.iter() {
+        if let ObjectPatProp::Assign(AssignPatProp { key, .. }) = prop {
+          let Ident { sym, .. } = key;
+          if sym == "index" {
+            generated_params.push(
+              Pat::Ident(BindingIdent {
+                id: key.clone(),
+                type_ann: None,
+              })
+            );
+          }
+        }
+      }
     }
 
     if !has_in {
@@ -181,7 +129,7 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
     }
   }
 
-  source
+  null_literal()
 }
 
 fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Expr>, bool) {
