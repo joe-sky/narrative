@@ -3,9 +3,8 @@ use swc_core::ecma::ast::Expr;
 use swc_core::ecma::ast::{ CondExpr, JSXElement, JSXElementChild, JSXText, Lit, Null };
 
 use crate::utils::{
-  ast::{ clone_children, convert_children_to_expression, display_error, get_case_expression, get_jsx_element_name },
-  CASE,
-  DEFAULT,
+  ast::{ clone_children, convert_children_to_expression, display_error, get_is_expression, get_jsx_element_name },
+  common::{ CASE, DEFAULT },
 };
 
 pub fn transform_switch(jsx_element: &JSXElement) -> Expr {
@@ -65,7 +64,7 @@ fn parse_switch(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
           }
         } else if element_name == CASE {
           cons.push((
-            get_case_expression(child_jsx_element, jsx_element),
+            get_is_expression(child_jsx_element, jsx_element),
             convert_children_to_expression(clone_children(&child_jsx_element.children)),
           ));
         } else {

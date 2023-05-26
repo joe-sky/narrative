@@ -31,7 +31,7 @@ use swc_core::ecma::ast::{
 use swc_core::ecma::atoms::JsWord;
 use tracing::error;
 
-use super::{ WHEN, IS, IN, VALUE };
+use super::common::{ WHEN, IS, IN, VALUE, OF };
 
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
@@ -155,7 +155,7 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
     })
 }
 
-pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXElement) -> Expr {
+pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXElement) -> Expr {
   let mut has_in = false;
 
   jsx_element.opening.attrs
@@ -244,7 +244,7 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
                             _ => Expr::Lit(Lit::Bool(false.into())),
                           }
                         JSXAttrOrSpread::SpreadElement(value) => {
-                          display_error(value.dot3_token.span(), "Spread is invalid for the value of is.");
+                          display_error(value.dot3_token.span(), "Spread is invalid for the value of \"value\".");
 
                           Expr::Lit(Lit::Bool(false.into()))
                         }
@@ -267,7 +267,10 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
             _ => Expr::Lit(Lit::Bool(false.into())),
           }
         JSXAttrOrSpread::SpreadElement(value) => {
-          display_error(value.dot3_token.span(), "Spread is invalid for the value of is.");
+          display_error(
+            value.dot3_token.span(),
+            format!("Spread is invalid for the value of \"{}\".", if has_in { IN } else { IS }).as_str()
+          );
 
           Expr::Lit(Lit::Bool(false.into()))
         }
@@ -285,6 +288,64 @@ pub fn get_case_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEle
     })
 }
 
+pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
+  let mut has_in = false;
+
+  let source = jsx_element.opening.attrs
+    .iter()
+    .find(|attr| {
+      if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
+        if sym == OF || sym == IN {
+          if sym == IN {
+            has_in = true;
+          }
+
+          return true;
+        } else {
+          display_error(*span, format!("Only \"of\" or \"in\" attribute allowed, got: \"{}\".", sym).as_str());
+        }
+      }
+
+      false
+    })
+    .map(|attr| {
+      match attr {
+        JSXAttrOrSpread::JSXAttr(JSXAttr { value, .. }) =>
+          match value {
+            Some(JSXAttrValue::JSXExprContainer(value)) => {
+              let JSXExprContainer { expr, .. } = value;
+
+              match expr {
+                JSXExpr::Expr(value) => (**value).clone(),
+                _ => Expr::Lit(Lit::Bool(false.into())),
+              }
+            }
+            _ => Expr::Lit(Lit::Bool(false.into())),
+          }
+        JSXAttrOrSpread::SpreadElement(value) => {
+          display_error(
+            value.dot3_token.span(),
+            format!("Spread is invalid for the value of \"{}\".", if has_in { IN } else { OF }).as_str()
+          );
+
+          Expr::Lit(Lit::Bool(false.into()))
+        }
+      }
+    })
+    .unwrap_or_else(|| {
+      let element_name = get_jsx_element_name(&jsx_element.opening.name);
+
+      display_error(
+        jsx_element.opening.span,
+        format!("Attribute \"of\" or \"in\" is required for the <{}> tag!", element_name).as_str()
+      );
+
+      Expr::Lit(Lit::Bool(false.into()))
+    });
+
+  (source, has_in)
+}
+
 pub fn get_jsx_element_name(jsx_element_name: &JSXElementName) -> &str {
   match jsx_element_name {
     JSXElementName::Ident(Ident { sym, .. }) => sym,
@@ -297,4 +358,8 @@ pub fn wrap_by_child_jsx_expr_container(expr: Expr) -> JSXElementChild {
     span: DUMMY_SP,
     expr: JSXExpr::Expr(Box::new(expr)),
   })
+}
+
+pub fn null_literal() -> Expr {
+  Expr::Lit(Lit::Null(Null { span: DUMMY_SP }))
 }

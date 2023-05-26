@@ -2,9 +2,8 @@ use swc_core::ecma::ast::JSXElementChild;
 use swc_core::ecma::{ ast::Expr, visit::{ Fold, FoldWith, VisitMut } };
 use tracing::debug;
 
-use crate::tags::if_tag::transform_if;
-use crate::tags::switch_tag::transform_switch;
-use crate::utils::{ ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container }, IF, SWITCH };
+use crate::tags::{ if_tag::transform_if, switch_tag::transform_switch, for_tag::transform_for };
+use crate::utils::{ ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container }, common::{ IF, SWITCH, FOR } };
 
 pub fn transform_narrative() -> impl Fold {
   NtCompiler
@@ -27,6 +26,7 @@ impl Fold for NtCompiler {
         match tag_name {
           IF => transform_if(&jsx_element),
           SWITCH => transform_switch(&jsx_element),
+          FOR => transform_for(&jsx_element),
           _ => { Expr::JSXElement(jsx_element) }
         }
       }
@@ -48,6 +48,7 @@ impl Fold for NtCompiler {
         match tag_name {
           IF => wrap_by_child_jsx_expr_container(transform_if(&jsx_element)),
           SWITCH => { wrap_by_child_jsx_expr_container(transform_switch(&jsx_element)) }
+          FOR => { wrap_by_child_jsx_expr_container(transform_for(&jsx_element)) }
           _ => { JSXElementChild::JSXElement(Box::new(jsx_element)) }
         }
       }
