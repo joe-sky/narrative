@@ -23,6 +23,12 @@ use swc_core::ecma::ast::{
   ObjectPatProp,
   AssignPatProp,
   BindingIdent,
+  ParenExpr,
+  BlockStmtOrExpr,
+  BlockStmt,
+  Stmt,
+  ReturnStmt,
+  IfStmt,
 };
 use swc_core::ecma::atoms::JsWord;
 use tracing::debug;
@@ -36,7 +42,7 @@ use crate::utils::{
     clone_children,
     null_literal,
   },
-  common::{ FOR, EMPTY, OF, IN },
+  common::{ EMPTY, ARR_PARAM, OBJ_PARAM, KEYS_PARAM },
 };
 
 pub fn transform_for(jsx_element: &JSXElement) -> Expr {
@@ -125,14 +131,139 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
           right: Box::new(null_literal()),
           span: DUMMY_SP,
         });
+      } else {
+        let arr_param = Ident {
+          sym: JsWord::from(ARR_PARAM),
+          span: DUMMY_SP,
+          optional: false,
+        };
+
+        return Expr::Call(CallExpr {
+          callee: Callee::Expr(
+            Box::new(
+              Expr::Paren(ParenExpr {
+                expr: Box::new(
+                  Expr::Arrow(ArrowExpr {
+                    params: vec![
+                      Pat::Ident(BindingIdent {
+                        id: arr_param.clone(),
+                        type_ann: None,
+                      })
+                    ],
+                    body: Box::new(
+                      BlockStmtOrExpr::BlockStmt(BlockStmt {
+                        stmts: vec![
+                          Stmt::If(IfStmt {
+                            test: Box::new(
+                              Expr::OptChain(OptChainExpr {
+                                base: Box::new(
+                                  OptChainBase::Member(MemberExpr {
+                                    obj: Box::new(Expr::Ident(arr_param.clone())),
+                                    prop: MemberProp::Ident(Ident {
+                                      sym: JsWord::from("length"),
+                                      optional: false,
+                                      span: DUMMY_SP,
+                                    }),
+                                    span: DUMMY_SP,
+                                  })
+                                ),
+                                question_dot_token: jsx_element.opening.span,
+                                span: DUMMY_SP,
+                              })
+                            ),
+                            cons: Box::new(
+                              Stmt::Block(BlockStmt {
+                                stmts: vec![
+                                  Stmt::Return(ReturnStmt {
+                                    arg: Some(
+                                      Box::new(
+                                        Expr::Call(CallExpr {
+                                          callee: Callee::Expr(
+                                            Box::new(
+                                              Expr::Member(MemberExpr {
+                                                obj: Box::new(Expr::Ident(arr_param.clone())),
+                                                prop: MemberProp::Ident(Ident {
+                                                  sym: JsWord::from("map"),
+                                                  optional: false,
+                                                  span: DUMMY_SP,
+                                                }),
+                                                span: DUMMY_SP,
+                                              })
+                                            )
+                                          ),
+                                          args: vec![
+                                            ExprOrSpread {
+                                              expr: Box::new(
+                                                Expr::Arrow(ArrowExpr {
+                                                  params: generated_params,
+                                                  body,
+                                                  is_async: false,
+                                                  is_generator: false,
+                                                  type_params: None,
+                                                  return_type: None,
+                                                  span: DUMMY_SP,
+                                                })
+                                              ),
+                                              spread: None,
+                                            },
+                                            ExprOrSpread {
+                                              expr: Box::new(
+                                                Expr::This(ThisExpr {
+                                                  span: DUMMY_SP,
+                                                })
+                                              ),
+                                              spread: None,
+                                            }
+                                          ],
+                                          type_args: None,
+                                          span: DUMMY_SP,
+                                        })
+                                      )
+                                    ),
+                                    span: DUMMY_SP,
+                                  })
+                                ],
+                                span: DUMMY_SP,
+                              })
+                            ),
+                            alt: None,
+                            span: DUMMY_SP,
+                          }),
+                          Stmt::Return(ReturnStmt {
+                            arg: empty,
+                            span: DUMMY_SP,
+                          })
+                        ],
+                        span: DUMMY_SP,
+                      })
+                    ),
+                    is_async: false,
+                    is_generator: false,
+                    type_params: None,
+                    return_type: None,
+                    span: DUMMY_SP,
+                  })
+                ),
+                span: DUMMY_SP,
+              })
+            )
+          ),
+          args: vec![ExprOrSpread {
+            expr: Box::new(source.clone()),
+            spread: None,
+          }],
+          type_args: None,
+          span: DUMMY_SP,
+        });
       }
+    } else {
     }
   }
 
   null_literal()
 }
 
-fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Expr>, bool) {
+fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) {
   let (source, has_in) = get_of_expression(jsx_element);
   let mut callback = None;
   let mut empty = None;
@@ -174,7 +305,7 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Expr>, bool) {
             if child_jsx_element.children.is_empty() {
               display_error(child_jsx_element.opening.span, "<Empty /> tag should contain children.");
             } else {
-              empty = Some(convert_children_to_expression(clone_children(&child_jsx_element.children)));
+              empty = Some(Box::new(convert_children_to_expression(clone_children(&child_jsx_element.children))));
             }
           }
         } else {

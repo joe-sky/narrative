@@ -31,7 +31,7 @@ use swc_core::ecma::ast::{
 use swc_core::ecma::atoms::JsWord;
 use tracing::error;
 
-use super::common::{ WHEN, IS, IN, VALUE, OF };
+use super::common::{ WHEN, IS, IN, VALUE, OF, FOR_IN };
 
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
@@ -295,8 +295,8 @@ pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
     .iter()
     .find(|attr| {
       if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
-        if sym == OF || sym == IN {
-          if sym == IN {
+        if sym == OF || sym == FOR_IN {
+          if sym == FOR_IN {
             has_in = true;
           }
 
@@ -325,7 +325,7 @@ pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
         JSXAttrOrSpread::SpreadElement(value) => {
           display_error(
             value.dot3_token.span(),
-            format!("Spread is invalid for the value of \"{}\".", if has_in { IN } else { OF }).as_str()
+            format!("Spread is invalid for the value of \"{}\".", if has_in { FOR_IN } else { OF }).as_str()
           );
 
           Expr::Lit(Lit::Bool(false.into()))
