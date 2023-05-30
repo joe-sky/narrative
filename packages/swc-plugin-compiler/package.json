@@ -17,9 +17,9 @@
   ],
   "main": "narrative_swc_plugin_compiler.wasm",
   "scripts": {
-    "build": "cargo build-wasi --release",
+    "build:wasm": "cargo build-wasi --release",
     "cp": "cp ../../target/wasm32-wasi/release/narrative_swc_plugin_compiler.wasm .",
-    "release": "build && cp",
+    "release": "npm run build:wasm && npm run cp",
     "test": "cd visitor && cargo test --verbose"
   },
   "author": "Joe_Sky <hitomi_doax@sina.com>",

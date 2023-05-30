@@ -4,8 +4,12 @@ import { For, Empty } from '@narrative/control-flow';
 export default props => {
   return (
     <div>
-      <For of={props.list}>
-        {(item, { index }) => <i key={index}>{item}</i>}
+      <For in={props.params}>
+        {(item, { key, index }) => (
+          <i key={key}>
+            {key}:{item}-{index}
+          </i>
+        )}
         <Empty>No Data</Empty>
       </For>
     </div>
