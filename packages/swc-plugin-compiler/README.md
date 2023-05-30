@@ -1,18 +1,22 @@
-# @narrative/babel-plugin-compiler
+# @narrative/swc-plugin-compiler
 
 The compiler for `@narrative/control-flow`.
 
 ## Usage
 
 ```bash
-npm install @narrative/babel-plugin-compiler
+npm install @narrative/swc-plugin-compiler
 ```
 
-.babelrc:
+Configure `swc`
 
 ```json
 {
-  "plugins": ["@narrative/compiler"]
+  "jsc": {
+    "experimental": {
+      "plugins": [["@narrative/swc-plugin-compiler", {}]]
+    }
+  }
 }
 ```
 

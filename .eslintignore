@@ -1,6 +1,5 @@
 /node_modules
-/packages/core/dist
-/packages/core/lib
-/packages/control-statement/dist
-/packages/control-statement/lib
+/packages/control-flow/dist
+/packages/control-flow/lib
 /packages/babel-plugin-compiler/lib
+/packages/swc-plugin-compiler/visitor/tests/fixture/**/output.js

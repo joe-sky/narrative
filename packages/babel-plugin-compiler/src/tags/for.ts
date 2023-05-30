@@ -24,7 +24,7 @@ export const SUB_TAGS_FOR = {
    *         const isFirst = index === 0;
    *         const isLast = index === length - 1;
    *         return <i key={index}>{item}</i>;
-   *       });
+   *       }, this);
    *     }
    *
    *     return 'No Data';
@@ -80,7 +80,7 @@ export const ATTRS_FOR = {
    *         const isFirst = index === 0;
    *         const isLast = index === length - 1;
    *         return <i key={key}>{item}</i>;
-   *       });
+   *       }, this);
    *     }
    *
    *     return 'No Data';

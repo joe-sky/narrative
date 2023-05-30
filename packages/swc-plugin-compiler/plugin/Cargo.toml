@@ -1,0 +1,17 @@
+[package]
+name = "narrative-swc-plugin-compiler"
+version = "0.1.0"
+authors = ["Joe_Sky <hitomi_doax@sina.com>"]
+description = "SWC plugin for compile and enhance the limitation of Narrative runtime code."
+license = "MIT"
+publish = false
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+easy-error = "1.0.0"
+serde = "1"
+swc_core = { version = "0.76.0", features = ["ecma_plugin_transform"] }
+narrative-swc-compiler-visitor = { path = "../visitor", version = "*" }
