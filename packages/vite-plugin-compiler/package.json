@@ -1,7 +1,7 @@
 {
   "name": "@narrative/vite-plugin-compiler",
   "version": "1.0.0",
-  "description": "Vite plugin for compile and enhance the limitation of Narrative runtime code.",
+  "description": "Vite plugin for compiling Narrative tags to runtime code.",
   "main": "lib/index.js",
   "files": [
     "lib/",

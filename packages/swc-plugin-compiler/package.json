@@ -1,7 +1,7 @@
 {
   "name": "@narrative/swc-plugin-compiler",
-  "version": "0.1.0",
-  "description": "SWC plugin for compile and enhance the limitation of Narrative runtime code.",
+  "version": "0.1.1",
+  "description": "SWC plugin for compiling Narrative tags to runtime code.",
   "keywords": [
     "swc-plugin"
   ],
@@ -13,12 +13,14 @@
     "url": "https://github.com/joe-sky/narrative/issues"
   },
   "files": [
-    "narrative_swc_plugin_compiler.wasm"
+    "narrative_swc_plugin_compiler.wasm",
+    "LICENSE",
+    "README.md"
   ],
   "main": "narrative_swc_plugin_compiler.wasm",
   "scripts": {
-    "build:wasm": "cargo build-wasi --release",
-    "cp": "cp ../../target/wasm32-wasi/release/narrative_swc_plugin_compiler.wasm .",
+    "build:wasm": "cargo build -p narrative-swc-plugin-compiler --target wasm32-unknown-unknown --release",
+    "cp": "cp ../../target/wasm32-unknown-unknown/release/narrative_swc_plugin_compiler.wasm .",
     "release": "npm run build:wasm && npm run cp",
     "test": "cd visitor && cargo test --verbose"
   },

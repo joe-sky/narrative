@@ -1,3 +1,13 @@
+use swc_core::plugin::errors::HANDLER;
+use swc_core::common::Span;
+use tracing::error;
+
+pub fn display_error(span: Span, message: &str) {
+  error!(message);
+
+  HANDLER.with(|handler| handler.span_err(span, message));
+}
+
 pub const IF: &str = "If";
 
 pub const ELSE_IF: &str = "ElseIf";

@@ -5,5 +5,12 @@ members = [
 ]
 
 [profile.release]
+codegen-units = 1
+# debug = true
+# lto = true
+
+# Optimize for size
 opt-level = "s"
+
+# Strip debug symbols
 strip = "symbols"

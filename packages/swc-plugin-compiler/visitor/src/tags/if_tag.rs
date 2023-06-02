@@ -3,8 +3,8 @@ use swc_core::ecma::ast::Expr;
 use swc_core::ecma::ast::{ CondExpr, JSXElement, JSXElementChild, JSXText };
 
 use crate::utils::{
-  ast::{ convert_children_to_expression, display_error, get_when_expression, get_jsx_element_name, clone_children },
-  common::{ ELSE, ELSE_IF },
+  ast::{ convert_children_to_expression, get_when_expression, get_jsx_element_name, clone_children },
+  common::{ display_error, ELSE, ELSE_IF },
 };
 
 pub fn transform_if(jsx_element: &JSXElement) -> Expr {

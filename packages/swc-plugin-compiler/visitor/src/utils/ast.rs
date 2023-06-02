@@ -1,6 +1,4 @@
-use swc_core::common::errors::HANDLER;
-use swc_core::common::DUMMY_SP;
-use swc_core::common::{ Span, Spanned };
+use swc_core::common::{ DUMMY_SP, Spanned };
 use swc_core::ecma::ast::{
   Expr,
   Ident,
@@ -29,9 +27,8 @@ use swc_core::ecma::ast::{
   ExprOrSpread,
 };
 use swc_core::ecma::atoms::JsWord;
-use tracing::error;
 
-use super::common::{ WHEN, IS, IN, VALUE, OF, FOR_IN };
+use super::common::{ display_error, WHEN, IS, IN, VALUE, OF, FOR_IN };
 
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
@@ -102,12 +99,6 @@ pub fn convert_children_to_expression(children: Vec<JSXElementChild>) -> Expr {
   }
 }
 
-pub fn display_error(span: Span, message: &str) {
-  HANDLER.with(|handler| handler.struct_span_err(span, message).emit());
-
-  error!(message);
-}
-
 pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
   jsx_element.opening.attrs
     .iter()
@@ -148,7 +139,7 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
 
       display_error(
         jsx_element.opening.span,
-        format!("Attribute \"when\" is required for the <{}> tag!", element_name).as_str()
+        format!("Attribute \"when\" is required for the <{}> tag.", element_name).as_str()
       );
 
       Expr::Lit(Lit::Bool(false.into()))
@@ -255,7 +246,7 @@ pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEleme
 
                       display_error(
                         parent_jsx_element.opening.span,
-                        format!("Attribute \"value\" is required for the <{}> tag!", element_name).as_str()
+                        format!("Attribute \"value\" is required for the <{}> tag.", element_name).as_str()
                       );
 
                       Expr::Lit(Lit::Bool(false.into()))
@@ -281,7 +272,7 @@ pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEleme
 
       display_error(
         jsx_element.opening.span,
-        format!("Attribute \"is\" or \"in\" is required for the <{}> tag!", element_name).as_str()
+        format!("Attribute \"is\" or \"in\" is required for the <{}> tag.", element_name).as_str()
       );
 
       Expr::Lit(Lit::Bool(false.into()))
@@ -337,7 +328,7 @@ pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
 
       display_error(
         jsx_element.opening.span,
-        format!("Attribute \"of\" or \"in\" is required for the <{}> tag!", element_name).as_str()
+        format!("Attribute \"of\" or \"in\" is required for the <{}> tag.", element_name).as_str()
       );
 
       Expr::Lit(Lit::Bool(false.into()))

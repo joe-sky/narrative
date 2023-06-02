@@ -3,8 +3,8 @@ use swc_core::ecma::ast::Expr;
 use swc_core::ecma::ast::{ CondExpr, JSXElement, JSXElementChild, JSXText, Lit, Null };
 
 use crate::utils::{
-  ast::{ clone_children, convert_children_to_expression, display_error, get_is_expression, get_jsx_element_name },
-  common::{ CASE, DEFAULT },
+  ast::{ clone_children, convert_children_to_expression, get_is_expression, get_jsx_element_name },
+  common::{ display_error, CASE, DEFAULT },
 };
 
 pub fn transform_switch(jsx_element: &JSXElement) -> Expr {
@@ -81,7 +81,7 @@ fn parse_switch(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
   }
 
   if cons.is_empty() {
-    display_error(jsx_element.opening.span, "<Switch /> tag should contain at least one <When /> tag.");
+    display_error(jsx_element.opening.span, "<Switch /> tag should contain at least one <Case /> or <Default /> tag.");
   }
 
   (cons, alt)

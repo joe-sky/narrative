@@ -40,15 +40,8 @@ use swc_core::ecma::ast::{
 use swc_core::ecma::atoms::JsWord;
 
 use crate::utils::{
-  ast::{
-    convert_children_to_expression,
-    display_error,
-    get_of_expression,
-    get_jsx_element_name,
-    clone_children,
-    null_literal,
-  },
-  common::{ EMPTY, ARR_PARAM, OBJ_PARAM, KEYS_PARAM },
+  ast::{ convert_children_to_expression, get_of_expression, get_jsx_element_name, clone_children, null_literal },
+  common::{ display_error, EMPTY, ARR_PARAM, OBJ_PARAM, KEYS_PARAM },
 };
 
 pub fn transform_for(jsx_element: &JSXElement) -> Expr {
