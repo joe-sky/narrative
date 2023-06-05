@@ -8,6 +8,8 @@ pub fn display_error(span: Span, message: &str) {
   HANDLER.with(|handler| handler.span_err(span, message));
 }
 
+pub const NT_CONTROL_FLOW: &str = "@narrative/control-flow";
+
 pub const IF: &str = "If";
 
 pub const ELSE_IF: &str = "ElseIf";

@@ -1,11 +1,16 @@
-use swc_core::ecma::ast::JSXElementChild;
+use swc_core::ecma::ast::{ ImportDecl, ImportSpecifier, ImportNamedSpecifier, Ident, JSXElementChild };
 use swc_core::ecma::{ ast::Expr, visit::{ Fold, FoldWith, VisitMut } };
 use swc_core::common::{ comments::Comments, Mark };
 use tracing::debug;
 
 use crate::tags::{ if_tag::transform_if, switch_tag::transform_switch, for_tag::transform_for };
-use crate::utils::{ ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container }, common::{ IF, SWITCH, FOR } };
+use crate::utils::{
+  ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container },
+  common::{ NT_CONTROL_FLOW, IF, SWITCH, FOR },
+};
 use crate::options::Options;
+
+const NT_TAGS: [&str; 3] = [IF, SWITCH, FOR];
 
 pub fn transform_narrative<C: Comments>(options: Options, unresolved_mark: Mark, comments: Option<C>) -> impl Fold {
   NtCompiler::new(options, unresolved_mark, comments)
@@ -15,6 +20,7 @@ pub struct NtCompiler<C: Comments> {
   options: Options,
   unresolved_mark: Mark,
   comments: Option<C>,
+  imported_tags: Vec<String>,
 }
 
 impl<C: Comments> NtCompiler<C> {
@@ -23,6 +29,7 @@ impl<C: Comments> NtCompiler<C> {
       options,
       unresolved_mark,
       comments,
+      imported_tags: vec![],
     }
   }
 }
@@ -30,12 +37,49 @@ impl<C: Comments> NtCompiler<C> {
 impl<C: Comments> VisitMut for NtCompiler<C> {}
 
 impl<C: Comments> Fold for NtCompiler<C> {
+  fn fold_import_decl(&mut self, import_decl: ImportDecl) -> ImportDecl {
+    let import_decl = import_decl.fold_children_with(self);
+
+    match &import_decl {
+      ImportDecl { specifiers, src, .. } => {
+        if src.value.to_string() == NT_CONTROL_FLOW {
+          for specifier in specifiers {
+            match specifier {
+              ImportSpecifier::Named(ImportNamedSpecifier { local, .. }) => {
+                match local {
+                  Ident { sym, .. } => {
+                    self.imported_tags.push(sym.to_string());
+                  }
+                }
+              }
+              _ => {}
+            }
+          }
+
+          return ImportDecl {
+            specifiers: vec![],
+            src: src.clone(),
+            span: import_decl.span,
+            type_only: false,
+            asserts: None,
+          };
+        }
+      }
+    }
+
+    import_decl
+  }
+
   fn fold_expr(&mut self, expr: Expr) -> Expr {
     let expr = expr.fold_children_with(self);
 
     match expr {
       Expr::JSXElement(jsx_element) => {
         let tag_name = get_jsx_element_name(&jsx_element.opening.name);
+
+        if NT_TAGS.contains(&tag_name) && !self.imported_tags.contains(&tag_name.to_string()) {
+          return Expr::JSXElement(jsx_element);
+        }
 
         debug!("fold_expr::Expr::JSXElement::tag_name = {}", tag_name);
 
@@ -57,6 +101,10 @@ impl<C: Comments> Fold for NtCompiler<C> {
       JSXElementChild::JSXElement(value) => {
         let jsx_element = *value;
         let tag_name = get_jsx_element_name(&jsx_element.opening.name);
+
+        if NT_TAGS.contains(&tag_name) && !self.imported_tags.contains(&tag_name.to_string()) {
+          return JSXElementChild::JSXElement(Box::new(jsx_element));
+        }
 
         debug!("fold_jsx_element_child::JSXElementChild::JSXElement::tag_name = {}", tag_name);
 
