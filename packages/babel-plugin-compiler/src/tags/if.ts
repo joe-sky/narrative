@@ -1,18 +1,10 @@
 import * as types from '@babel/types';
 import type { JSXElement } from '@babel/types';
-import type { BabelFile } from '@babel/core';
+import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
+import { displayError, IF, SUB_TAGS_IF, ATTRS_IF } from '../utils/common';
 
-export const SUB_TAGS_IF = {
-  ELSE_IF: 'ElseIf',
-  ELSE: 'Else'
-};
-
-export const ATTRS_IF = {
-  WHEN: 'when'
-};
-
-function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], key?: string) {
+function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], path: NodePath, key?: string) {
   const ret = {
     then: { condition, children: types.nullLiteral() } as astUtil.Attrs,
     elseifs: [] as astUtil.Attrs[],
@@ -21,9 +13,17 @@ function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], ke
 
   const thenChildren: astUtil.JSXChild[] = [];
 
-  children.forEach(child => {
+  children.forEach((child, index) => {
     if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_IF.ELSE_IF)) {
       const attrs = astUtil.getAttributeMap(child);
+      const whenAttr = attrs?.[ATTRS_IF.WHEN];
+      if (!whenAttr) {
+        displayError(
+          path.get(`children.${index}`) as NodePath,
+          `Attribute "when" is required for the <${SUB_TAGS_IF.ELSE_IF}> tag.`
+        );
+      }
+
       const childNodes = astUtil.getChildren(child);
 
       ret.elseifs.push({
@@ -31,6 +31,10 @@ function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], ke
         children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
       });
     } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_IF.ELSE)) {
+      if (!child.closingElement) {
+        displayError(path.get(`children.${index}`) as NodePath, `<${SUB_TAGS_IF.ELSE}> should have a closing tag.`);
+      }
+
       const childNodes = astUtil.getChildren(child);
       ret.else = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
     } else {
@@ -43,11 +47,16 @@ function getBlocks(condition: types.Expression, children: astUtil.JSXChild[], ke
   return ret;
 }
 
-export function transformIf(node: JSXElement, file: BabelFile) {
+export function transformIf(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
+  const whenAttr = attrs?.[ATTRS_IF.WHEN];
+  if (!whenAttr) {
+    throw displayError(path, `Attribute "when" is required for the <${IF}> tag.`);
+  }
+
   const children = astUtil.getChildren(node);
-  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_IF.WHEN]), children, key);
+  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_IF.WHEN]), children, path, key);
   let ternaryExpression = blocks.else;
 
   blocks.elseifs?.reverse().forEach(elseifBlock => {

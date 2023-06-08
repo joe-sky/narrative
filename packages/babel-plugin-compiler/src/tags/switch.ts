@@ -1,18 +1,8 @@
 import * as types from '@babel/types';
 import type { JSXElement } from '@babel/types';
-import type { BabelFile } from '@babel/core';
+import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
-
-export const SUB_TAGS_SWITCH = {
-  CASE: 'Case',
-  DEFAULT: 'Default'
-};
-
-export const ATTRS_SWITCH = {
-  VALUE: 'value',
-  IS: 'is',
-  IN: 'in'
-};
+import { SUB_TAGS_SWITCH, ATTRS_SWITCH } from '../utils/common';
 
 function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], key?: string) {
   const ret = {
@@ -43,7 +33,7 @@ function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], k
   return ret;
 }
 
-export function transformSwitch(node: JSXElement, file: BabelFile) {
+export function transformSwitch(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);

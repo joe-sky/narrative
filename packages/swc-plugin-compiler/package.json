@@ -19,7 +19,7 @@
   ],
   "main": "narrative_swc_plugin_compiler.wasm",
   "scripts": {
-    "build:wasm": "cargo build -p narrative-swc-plugin-compiler --target wasm32-unknown-unknown --release",
+    "build": "cargo build -p narrative-swc-plugin-compiler --target wasm32-unknown-unknown --release",
     "cp": "cp ../../target/wasm32-unknown-unknown/release/narrative_swc_plugin_compiler.wasm .",
     "release": "npm run build:wasm && npm run cp",
     "test": "cd visitor && cargo test --verbose"

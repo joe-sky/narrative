@@ -1,12 +1,10 @@
-import type * as BabelCore from '@babel/core';
-
-export const NT_CONTROL_FLOW = '@narrative/control-flow';
+import type { BabelFile } from '@babel/core';
 
 export type State = {
   get: (name: string) => any;
   set: (name: string, value: any) => any;
   opts: CompilerOptions;
-  file: BabelCore.BabelFile;
+  file: BabelFile;
 };
 
 export interface CompilerOptions {

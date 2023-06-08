@@ -1,95 +1,9 @@
 import * as types from '@babel/types';
 import type { JSXElement } from '@babel/types';
-import type { BabelFile } from '@babel/core';
+import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
+import { SUB_TAGS_FOR, ATTRS_FOR, ARR_PARAM, OBJ_PARAM, KEYS_PARAM } from '../utils/common';
 // import generate from '@babel/generator';
-
-export const SUB_TAGS_FOR = {
-  /**
-   * ```tsx
-   * <div>
-   *   <For of={[1, 2, 3]}>
-   *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
-   *     <Empty>No Data</Empty>
-   *   </For>
-   * </div>
-   *
-   * ↓ ↓ ↓ ↓ ↓ ↓
-   *
-   * <div>
-   *   {(__arr => {
-   *     if (__arr?.length) {
-   *       return __arr.map((item, index, arr) => {
-   *         const length = arr.length;
-   *         const isFirst = index === 0;
-   *         const isLast = index === length - 1;
-   *         return <i key={index}>{item}</i>;
-   *       }, this);
-   *     }
-   *
-   *     return 'No Data';
-   *   })([1, 2, 3])}
-   * </div>
-   * ```
-   */
-  EMPTY: 'Empty'
-};
-
-export const ATTRS_FOR = {
-  /**
-   * ```tsx
-   * <div>
-   *   <For of={[1, 2, 3]}>
-   *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
-   *   </For>
-   * </div>
-   *
-   * ↓ ↓ ↓ ↓ ↓ ↓
-   *
-   * <div>
-   *   {[1, 2, 3]?.map((item, index, arr) => {
-   *     const length = arr.length;
-   *     const isFirst = index === 0;
-   *     const isLast = index === length - 1;
-   *     return <i key={index}>{item}</i>;
-   *   }, this) || null}
-   * </div>
-   * ```
-   */
-  OF: 'of',
-
-  /**
-   * ```tsx
-   * <div>
-   *   <For in={{ a: 1, b: 2, c: 3 }}>
-   *     {(item, { key }) => <i key={key}>{item}</i>}
-   *     <Empty>No Data</Empty>
-   *   </For>
-   * </div>
-   *
-   * ↓ ↓ ↓ ↓ ↓ ↓
-   *
-   * <div>
-   *   {(__obj => {
-   *     const __keys = __obj ? Object.keys(__obj) : [];
-   *
-   *     if (__keys.length) {
-   *       return __keys.map((key, index, arr) => {
-   *         const item = __obj[key];
-   *         const length = arr.length;
-   *         const isFirst = index === 0;
-   *         const isLast = index === length - 1;
-   *         return <i key={key}>{item}</i>;
-   *       }, this);
-   *     }
-   *
-   *     return 'No Data';
-   *   })({ a: 1, b: 2, c: 3 })}
-   * </div>
-   * ```
-   */
-  IN: 'in'
-};
 
 function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?: string) {
   const ret = {
@@ -109,11 +23,7 @@ function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?:
   return ret;
 }
 
-const ARR_PARAM = '__arr';
-const OBJ_PARAM = '__obj';
-const KEYS_PARAM = '__keys';
-
-export function transformFor(node: JSXElement, file: BabelFile) {
+export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);

@@ -4,14 +4,13 @@ import type {
   JSXIdentifier,
   JSXAttribute,
   JSXExpressionContainer,
-  react,
   JSXText,
   JSXSpreadChild,
   JSXFragment,
   JSXEmptyExpression
 } from '@babel/types';
 import type { NodePath } from '@babel/traverse';
-import { NT_CONTROL_FLOW } from './';
+import { NT_CONTROL_FLOW } from './common';
 
 export type JSXChild =
   | JSXText
@@ -111,7 +110,7 @@ export function getKey(node: JSXElement): string | undefined {
  * @returns List of all children
  */
 export function getChildren(node: JSXElement) {
-  return ((types as any).react.buildChildren as typeof react.buildChildren)(node);
+  return types.react.buildChildren(node);
 }
 
 /**
