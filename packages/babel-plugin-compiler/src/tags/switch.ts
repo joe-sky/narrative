@@ -4,7 +4,21 @@ import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
 import { SUB_TAGS_SWITCH, ATTRS_SWITCH } from '../utils/common';
 
-function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], key?: string) {
+export function transformSwitch(node: JSXElement, path: NodePath, file: BabelFile) {
+  const key = astUtil.getKey(node);
+  const attrs = astUtil.getAttributeMap(node);
+  const children = astUtil.getChildren(node);
+  const blocks = parseSwitch(astUtil.getExpression(attrs?.[ATTRS_SWITCH.VALUE]), children, key);
+  let ternaryExpression = blocks.default;
+
+  blocks.cases?.reverse().forEach(caseBlock => {
+    ternaryExpression = types.conditionalExpression(caseBlock.condition, caseBlock.children, ternaryExpression);
+  });
+
+  return ternaryExpression;
+}
+
+function parseSwitch(expression: types.Expression, children: astUtil.JSXChild[], key?: string) {
   const ret = {
     cases: [] as astUtil.Attrs[],
     default: types.nullLiteral() as types.Expression
@@ -22,27 +36,13 @@ function getBlocks(expression: types.Expression, children: astUtil.JSXChild[], k
               [expression]
             )
           : types.binaryExpression('===', astUtil.getExpression(attrs?.[ATTRS_SWITCH.IS]), expression),
-        children: astUtil.getSanitizedExpressionForContent(childNodes, key, true)
+        children: astUtil.convertChildrenToExpression(childNodes, key, true)
       });
     } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_SWITCH.DEFAULT)) {
       const childNodes = astUtil.getChildren(child);
-      ret.default = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
+      ret.default = astUtil.convertChildrenToExpression(childNodes, key, true);
     }
   });
 
   return ret;
-}
-
-export function transformSwitch(node: JSXElement, path: NodePath, file: BabelFile) {
-  const key = astUtil.getKey(node);
-  const attrs = astUtil.getAttributeMap(node);
-  const children = astUtil.getChildren(node);
-  const blocks = getBlocks(astUtil.getExpression(attrs?.[ATTRS_SWITCH.VALUE]), children, key);
-  let ternaryExpression = blocks.default;
-
-  blocks.cases?.reverse().forEach(caseBlock => {
-    ternaryExpression = types.conditionalExpression(caseBlock.condition, caseBlock.children, ternaryExpression);
-  });
-
-  return ternaryExpression;
 }

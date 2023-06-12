@@ -5,29 +5,11 @@ import * as astUtil from '../utils/ast';
 import { SUB_TAGS_FOR, ATTRS_FOR, ARR_PARAM, OBJ_PARAM, KEYS_PARAM } from '../utils/common';
 // import generate from '@babel/generator';
 
-function getBlocks(source: types.Expression, children: astUtil.JSXChild[], key?: string) {
-  const ret = {
-    callback: { source } as astUtil.ForAttrs,
-    empty: null as types.Expression | null
-  };
-
-  children.forEach(child => {
-    if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_FOR.EMPTY)) {
-      const childNodes = astUtil.getChildren(child);
-      ret.empty = astUtil.getSanitizedExpressionForContent(childNodes, key, true);
-    } else if (types.isArrowFunctionExpression(child)) {
-      ret.callback.func = child;
-    }
-  });
-
-  return ret;
-}
-
 export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);
-  const blocks = getBlocks(astUtil.getExpression(attrs[ATTRS_FOR.OF] || attrs[ATTRS_FOR.IN]), children, key);
+  const blocks = parseFor(astUtil.getExpression(attrs[ATTRS_FOR.OF] || attrs[ATTRS_FOR.IN]), children, key);
   const funcParams = blocks.callback.func.params;
   const itemParam = funcParams[0];
   const metaParam = funcParams[1] as types.ObjectPattern;
@@ -137,6 +119,24 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
 
   /* You can use @babel/generator here when debugging */
   // ret && console.log(generate(ret).code);
+
+  return ret;
+}
+
+function parseFor(source: types.Expression, children: astUtil.JSXChild[], key?: string) {
+  const ret = {
+    callback: { source } as astUtil.ForAttrs,
+    empty: null as types.Expression | null
+  };
+
+  children.forEach(child => {
+    if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_FOR.EMPTY)) {
+      const childNodes = astUtil.getChildren(child);
+      ret.empty = astUtil.convertChildrenToExpression(childNodes, key, true);
+    } else if (types.isArrowFunctionExpression(child)) {
+      ret.callback.func = child;
+    }
+  });
 
   return ret;
 }

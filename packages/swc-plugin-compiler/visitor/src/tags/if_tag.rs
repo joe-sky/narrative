@@ -43,6 +43,14 @@ fn parse_if(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
           let tag_name = get_jsx_element_name(&child_jsx_element.opening.name);
 
           if tag_name == ELSE {
+            if !else_found {
+              else_found = true;
+            } else {
+              display_error(
+                child_jsx_element.opening.span,
+                "<Else> can be used one per <If>, if you want multiple choises use <ElseIf> or <Switch>."
+              );
+            }
             if child_jsx_element.closing.is_none() {
               display_error(child_jsx_element.opening.span, "<Else> should have a closing tag.");
             }
@@ -62,15 +70,6 @@ fn parse_if(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
                   alts.push((*item).clone());
                 }
               }
-            }
-
-            if !else_found {
-              else_found = true;
-            } else {
-              display_error(
-                child_jsx_element.opening.span,
-                "<Else> can be used one per <If>, if you want multiple choises use <ElseIf> or <Switch>."
-              );
             }
 
             return (cons, alts, elseif_cons);
