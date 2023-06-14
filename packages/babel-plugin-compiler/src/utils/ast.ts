@@ -28,7 +28,8 @@ export interface Attrs {
 
 export interface ForAttrs {
   source: types.Expression;
-  func: types.ArrowFunctionExpression;
+  callback: types.ArrowFunctionExpression;
+  empty?: types.Expression;
 }
 
 export type FuncParam = types.Identifier | types.Pattern | types.RestElement;
@@ -132,4 +133,8 @@ export function findPropByName(obj: types.ObjectPattern, name: string) {
   return obj.properties.find(
     prop => types.isObjectProperty(prop) && types.isIdentifier(prop.key) && prop.key.name === name
   ) as types.ObjectProperty;
+}
+
+export function noopArrowFunctionExpression() {
+  return types.arrowFunctionExpression([], types.blockStatement([]));
 }

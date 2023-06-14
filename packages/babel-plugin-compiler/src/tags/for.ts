@@ -2,7 +2,7 @@ import * as types from '@babel/types';
 import type { JSXElement } from '@babel/types';
 import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
-import { SUB_TAGS_FOR, ATTRS_FOR, ARR_PARAM, OBJ_PARAM, KEYS_PARAM } from '../utils/common';
+import { displayError, SUB_TAGS_FOR, ATTRS_FOR, ARR_PARAM, OBJ_PARAM, KEYS_PARAM } from '../utils/common';
 // import generate from '@babel/generator';
 
 export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) {
@@ -10,9 +10,9 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
   const attrs = astUtil.getAttributeMap(node);
   const children = astUtil.getChildren(node);
   const blocks = parseFor(astUtil.getExpression(attrs[ATTRS_FOR.OF] || attrs[ATTRS_FOR.IN]), children, key);
-  const funcParams = blocks.callback.func.params;
-  const itemParam = funcParams[0];
-  const metaParam = funcParams[1] as types.ObjectPattern;
+  const cbParams = blocks.callback.params;
+  const itemParam = cbParams[0];
+  const metaParam = cbParams[1] as types.ObjectPattern;
   const generatedParams: astUtil.FuncParam[] = [];
   let keyProp: types.ObjectProperty | null = null;
 
@@ -41,8 +41,8 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
       ? types.logicalExpression(
           '||',
           types.optionalCallExpression(
-            types.optionalMemberExpression(blocks.callback.source, types.identifier('map'), false, true),
-            [types.arrowFunctionExpression(generatedParams, blocks.callback.func.body), types.identifier('this')],
+            types.optionalMemberExpression(blocks.source, types.identifier('map'), false, true),
+            [types.arrowFunctionExpression(generatedParams, blocks.callback.body), types.identifier('this')],
             false
           ),
           types.nullLiteral()
@@ -56,7 +56,7 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
                 types.blockStatement([
                   types.returnStatement(
                     types.callExpression(types.memberExpression(types.identifier(ARR_PARAM), types.identifier('map')), [
-                      types.arrowFunctionExpression(generatedParams, blocks.callback.func.body),
+                      types.arrowFunctionExpression(generatedParams, blocks.callback.body),
                       types.identifier('this')
                     ])
                   )
@@ -65,7 +65,7 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
               types.returnStatement(blocks.empty)
             ])
           ),
-          [blocks.callback.source]
+          [blocks.source]
         );
   } else if (attrs[ATTRS_FOR.IN]) {
     const funcBody: types.Statement[] = [
@@ -95,9 +95,9 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
                       types.memberExpression(types.identifier(OBJ_PARAM), keyProp?.value as types.Identifier, true)
                     )
                   ]),
-                  ...(types.isBlockStatement(blocks.callback.func.body)
-                    ? blocks.callback.func.body.body
-                    : [types.returnStatement(blocks.callback.func.body)])
+                  ...(types.isBlockStatement(blocks.callback.body)
+                    ? blocks.callback.body.body
+                    : [types.returnStatement(blocks.callback.body)])
                 ])
               ),
               types.identifier('this')
@@ -113,7 +113,7 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
 
     ret = types.callExpression(
       types.arrowFunctionExpression([types.identifier(OBJ_PARAM)], types.blockStatement(funcBody)),
-      [blocks.callback.source]
+      [blocks.source]
     );
   }
 
@@ -124,9 +124,9 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
 }
 
 function parseFor(source: types.Expression, children: astUtil.JSXChild[], key?: string) {
-  const ret = {
-    callback: { source } as astUtil.ForAttrs,
-    empty: null as types.Expression | null
+  const ret: astUtil.ForAttrs = {
+    source,
+    callback: astUtil.noopArrowFunctionExpression()
   };
 
   children.forEach(child => {
@@ -134,7 +134,7 @@ function parseFor(source: types.Expression, children: astUtil.JSXChild[], key?: 
       const childNodes = astUtil.getChildren(child);
       ret.empty = astUtil.convertChildrenToExpression(childNodes, key, true);
     } else if (types.isArrowFunctionExpression(child)) {
-      ret.callback.func = child;
+      ret.callback = child;
     }
   });
 

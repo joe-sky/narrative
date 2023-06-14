@@ -5,7 +5,7 @@ use tracing::debug;
 
 use crate::tags::{ if_tag::transform_if, switch_tag::transform_switch, for_tag::transform_for };
 use crate::utils::{
-  ast::{ get_jsx_element_name, wrap_by_child_jsx_expr_container },
+  ast::{ get_tag_name, wrap_by_child_jsx_expr_container },
   common::{ NT_CONTROL_FLOW, IF, SWITCH, FOR },
 };
 use crate::options::Options;
@@ -75,7 +75,7 @@ impl<C: Comments> Fold for NtCompiler<C> {
 
     match expr {
       Expr::JSXElement(jsx_element) => {
-        let tag_name = get_jsx_element_name(&jsx_element.opening.name);
+        let tag_name = get_tag_name(&jsx_element.opening.name);
 
         if NT_TAGS.contains(&tag_name) && !self.imported_tags.contains(&tag_name.to_string()) {
           return Expr::JSXElement(jsx_element);
@@ -100,7 +100,7 @@ impl<C: Comments> Fold for NtCompiler<C> {
     match element {
       JSXElementChild::JSXElement(value) => {
         let jsx_element = *value;
-        let tag_name = get_jsx_element_name(&jsx_element.opening.name);
+        let tag_name = get_tag_name(&jsx_element.opening.name);
 
         if NT_TAGS.contains(&tag_name) && !self.imported_tags.contains(&tag_name.to_string()) {
           return JSXElementChild::JSXElement(Box::new(jsx_element));

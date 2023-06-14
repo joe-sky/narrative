@@ -2,7 +2,7 @@ import * as types from '@babel/types';
 import type { JSXElement } from '@babel/types';
 import type { BabelFile, NodePath } from '@babel/core';
 import * as astUtil from '../utils/ast';
-import { displayError, IF, SUB_TAGS_IF, ATTRS_IF } from '../utils/common';
+import { displayError, SUB_TAGS_IF, ATTRS_IF } from '../utils/common';
 
 export function transformIf(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
@@ -13,7 +13,7 @@ export function transformIf(node: JSXElement, path: NodePath, file: BabelFile) {
   }
 
   const children = astUtil.getChildren(node);
-  const blocks = parseIf(astUtil.getExpression(attrs?.[ATTRS_IF.WHEN]), children, path, key);
+  const blocks = parseIf(astUtil.getExpression(whenAttr), children, path, key);
   let ternaryExpression = blocks.else;
 
   blocks.elseifs?.reverse().forEach(elseifBlock => {
@@ -43,7 +43,7 @@ function parseIf(condition: types.Expression, children: astUtil.JSXChild[], path
       const childNodes = astUtil.getChildren(child);
 
       ret.elseifs.push({
-        condition: astUtil.getExpression(attrs?.[ATTRS_IF.WHEN]),
+        condition: astUtil.getExpression(whenAttr),
         children: astUtil.convertChildrenToExpression(childNodes, key, true)
       });
     } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_IF.ELSE)) {

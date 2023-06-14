@@ -30,6 +30,13 @@ use swc_core::ecma::atoms::JsWord;
 
 use super::common::{ display_error, WHEN, IS, IN, VALUE, OF, FOR_IN };
 
+pub fn get_tag_name(tag_name: &JSXElementName) -> &str {
+  match tag_name {
+    JSXElementName::Ident(Ident { sym, .. }) => sym,
+    _ => "unknown",
+  }
+}
+
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
 
@@ -135,7 +142,7 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
       }
     })
     .unwrap_or_else(|| {
-      let element_name = get_jsx_element_name(&jsx_element.opening.name);
+      let element_name = get_tag_name(&jsx_element.opening.name);
 
       display_error(
         jsx_element.opening.span,
@@ -242,7 +249,7 @@ pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEleme
                       }
                     })
                     .unwrap_or_else(|| {
-                      let element_name = get_jsx_element_name(&parent_jsx_element.opening.name);
+                      let element_name = get_tag_name(&parent_jsx_element.opening.name);
 
                       display_error(
                         parent_jsx_element.opening.span,
@@ -268,7 +275,7 @@ pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEleme
       }
     })
     .unwrap_or_else(|| {
-      let element_name = get_jsx_element_name(&jsx_element.opening.name);
+      let element_name = get_tag_name(&jsx_element.opening.name);
 
       display_error(
         jsx_element.opening.span,
@@ -324,7 +331,7 @@ pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
       }
     })
     .unwrap_or_else(|| {
-      let element_name = get_jsx_element_name(&jsx_element.opening.name);
+      let element_name = get_tag_name(&jsx_element.opening.name);
 
       display_error(
         jsx_element.opening.span,
@@ -335,13 +342,6 @@ pub fn get_of_expression(jsx_element: &JSXElement) -> (Expr, bool) {
     });
 
   (source, has_in)
-}
-
-pub fn get_jsx_element_name(jsx_element_name: &JSXElementName) -> &str {
-  match jsx_element_name {
-    JSXElementName::Ident(Ident { sym, .. }) => sym,
-    _ => "unknown",
-  }
 }
 
 pub fn wrap_by_child_jsx_expr_container(expr: Expr) -> JSXElementChild {

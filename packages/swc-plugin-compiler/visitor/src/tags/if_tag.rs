@@ -3,7 +3,7 @@ use swc_core::ecma::ast::Expr;
 use swc_core::ecma::ast::{ CondExpr, JSXElement, JSXElementChild, JSXText };
 
 use crate::utils::{
-  ast::{ convert_children_to_expression, get_when_expression, get_jsx_element_name, clone_children },
+  ast::{ convert_children_to_expression, get_when_expression, get_tag_name, clone_children },
   common::{ display_error, ELSE, ELSE_IF },
 };
 
@@ -40,7 +40,7 @@ fn parse_if(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
           }
         }
         JSXElementChild::JSXElement(child_jsx_element) => {
-          let tag_name = get_jsx_element_name(&child_jsx_element.opening.name);
+          let tag_name = get_tag_name(&child_jsx_element.opening.name);
 
           if tag_name == ELSE {
             if !else_found {

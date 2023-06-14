@@ -40,7 +40,7 @@ use swc_core::ecma::ast::{
 use swc_core::ecma::atoms::JsWord;
 
 use crate::utils::{
-  ast::{ convert_children_to_expression, get_of_expression, get_jsx_element_name, clone_children, null_literal },
+  ast::{ convert_children_to_expression, get_of_expression, get_tag_name, clone_children, null_literal },
   common::{ display_error, EMPTY, ARR_PARAM, OBJ_PARAM, KEYS_PARAM },
 };
 
@@ -532,7 +532,7 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
         if value.trim() != "" {
           display_error(
             jsx_element.opening.span,
-            "<For /> tag can contain only a <Empty> tag and a callback function."
+            "<For> tag can contain only one <Empty> tag and one callback function."
           );
         }
       }
@@ -542,21 +542,21 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
             callback = Some(Expr::Arrow((*array_expr).clone()));
           }
           _ => {
-            display_error(jsx_element.opening.span, "<For /> tag can contain only one callback function.");
+            display_error(jsx_element.opening.span, "<For> tag can contain only one callback function.");
           }
         }
       }
       JSXElementChild::JSXElement(child_jsx_element) => {
-        let element_name = get_jsx_element_name(&child_jsx_element.opening.name);
+        let element_name = get_tag_name(&child_jsx_element.opening.name);
 
         if element_name == EMPTY {
           if empty_found {
-            display_error(child_jsx_element.opening.span, "<For /> can contain only one <Empty /> tag.");
+            display_error(child_jsx_element.opening.span, "<For> can contain only one <Empty> tag.");
           } else {
             empty_found = true;
 
             if child_jsx_element.children.is_empty() {
-              display_error(child_jsx_element.opening.span, "<Empty /> tag should contain children.");
+              display_error(child_jsx_element.opening.span, "<Empty> tag should contain children.");
             } else {
               empty = Some(Box::new(convert_children_to_expression(clone_children(&child_jsx_element.children))));
             }
@@ -564,18 +564,21 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
         } else {
           display_error(
             child_jsx_element.opening.span,
-            format!("<For /> tag can contain only <Empty /> tags, got: <{}>.", element_name).as_str()
+            format!("<For> tag can contain only <Empty> tags, got: <{}>.", element_name).as_str()
           );
         }
       }
       _ => {
-        display_error(jsx_element.opening.span, "<For /> tag can contain only a <Empty> tag and a callback function.");
+        display_error(
+          jsx_element.opening.span,
+          "<For> tag can contain only one <Empty> tag and one callback function."
+        );
       }
     }
   }
 
   if callback.is_none() {
-    display_error(jsx_element.opening.span, "<For /> tag should contain at least one callback function.");
+    display_error(jsx_element.opening.span, "<For> tag should contain at least one callback function.");
   }
 
   (source, callback.unwrap(), empty, has_in)

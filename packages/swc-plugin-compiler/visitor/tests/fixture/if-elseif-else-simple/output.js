@@ -1,5 +1,5 @@
 import React from 'react';
-import { If, Else, ElseIf } from '@narrative/control-flow';
+import '@narrative/control-flow';
 export default ((props)=>{
     return <div>
 

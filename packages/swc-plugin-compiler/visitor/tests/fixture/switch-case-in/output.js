@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Case } from '@narrative/control-flow';
+import '@narrative/control-flow';
 export default ((props)=>{
     return <div>
 

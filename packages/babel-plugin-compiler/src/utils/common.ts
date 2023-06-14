@@ -1,11 +1,14 @@
 import type { NodePath } from '@babel/core';
 
 export function displayError(path: NodePath, message: string) {
+  let error: Error;
   try {
-    throw path.buildCodeFrameError(message);
+    error = path.buildCodeFrameError(message);
   } catch {
-    throw new Error(message);
+    error = new Error(message);
   }
+
+  throw error;
 }
 
 export const NT_CONTROL_FLOW = '@narrative/control-flow';
