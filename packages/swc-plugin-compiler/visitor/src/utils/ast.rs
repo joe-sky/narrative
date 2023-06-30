@@ -153,6 +153,81 @@ pub fn get_when_expression(jsx_element: &JSXElement) -> Expr {
     })
 }
 
+fn match_is_attr(parent_jsx_element: &JSXElement, expr_value: &Box<Expr>, has_in: bool) -> Expr {
+  parent_jsx_element.opening.attrs
+    .iter()
+    .find(|attr| {
+      if let JSXAttrOrSpread::JSXAttr(JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. }) = attr {
+        if sym == VALUE {
+          return true;
+        } else {
+          display_error(*span, format!("Only \"value\" attribute allowed, got: \"{}\".", sym).as_str());
+        }
+      }
+
+      false
+    })
+    .map(|attr| {
+      match attr {
+        JSXAttrOrSpread::JSXAttr(JSXAttr { value, .. }) =>
+          match value {
+            Some(JSXAttrValue::JSXExprContainer(value)) => {
+              let JSXExprContainer { expr, .. } = value;
+
+              match expr {
+                JSXExpr::Expr(parent_expr_value) => {
+                  if has_in {
+                    Expr::Call(CallExpr {
+                      callee: Callee::Expr(
+                        Box::new(
+                          Expr::Member(MemberExpr {
+                            obj: (*expr_value).clone(),
+                            prop: MemberProp::Ident(Ident {
+                              sym: JsWord::from("includes"),
+                              optional: false,
+                              span: DUMMY_SP,
+                            }),
+                            span: DUMMY_SP,
+                          })
+                        )
+                      ),
+                      args: vec![ExprOrSpread { expr: (*parent_expr_value).clone(), spread: None }],
+                      type_args: None,
+                      span: DUMMY_SP,
+                    })
+                  } else {
+                    Expr::Bin(BinExpr {
+                      op: op!("==="),
+                      left: (*parent_expr_value).clone(),
+                      right: (*expr_value).clone(),
+                      span: DUMMY_SP,
+                    })
+                  }
+                }
+                _ => Expr::Lit(Lit::Bool(false.into())),
+              }
+            }
+            _ => Expr::Lit(Lit::Bool(false.into())),
+          }
+        JSXAttrOrSpread::SpreadElement(value) => {
+          display_error(value.dot3_token.span(), "Spread is invalid for the value of \"value\".");
+
+          Expr::Lit(Lit::Bool(false.into()))
+        }
+      }
+    })
+    .unwrap_or_else(|| {
+      let element_name = get_tag_name(&parent_jsx_element.opening.name);
+
+      display_error(
+        parent_jsx_element.opening.span,
+        format!("Attribute \"value\" is required for the <{}> tag.", element_name).as_str()
+      );
+
+      Expr::Lit(Lit::Bool(false.into()))
+    })
+}
+
 pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXElement) -> Expr {
   let mut has_in = false;
 
@@ -181,86 +256,14 @@ pub fn get_is_expression(jsx_element: &JSXElement, parent_jsx_element: &JSXEleme
               let JSXExprContainer { expr, .. } = value;
 
               match expr {
-                JSXExpr::Expr(expr_value) => {
-                  parent_jsx_element.opening.attrs
-                    .iter()
-                    .find(|attr| {
-                      if
-                        let JSXAttrOrSpread::JSXAttr(
-                          JSXAttr { name: JSXAttrName::Ident(Ident { sym, span, .. }), .. },
-                        ) = attr
-                      {
-                        if sym == VALUE {
-                          return true;
-                        } else {
-                          display_error(*span, format!("Only \"value\" attribute allowed, got: \"{}\".", sym).as_str());
-                        }
-                      }
-
-                      false
-                    })
-                    .map(|attr| {
-                      match attr {
-                        JSXAttrOrSpread::JSXAttr(JSXAttr { value, .. }) =>
-                          match value {
-                            Some(JSXAttrValue::JSXExprContainer(value)) => {
-                              let JSXExprContainer { expr, .. } = value;
-
-                              match expr {
-                                JSXExpr::Expr(parent_expr_value) => {
-                                  if has_in {
-                                    Expr::Call(CallExpr {
-                                      callee: Callee::Expr(
-                                        Box::new(
-                                          Expr::Member(MemberExpr {
-                                            obj: (*expr_value).clone(),
-                                            prop: MemberProp::Ident(Ident {
-                                              sym: JsWord::from("includes"),
-                                              optional: false,
-                                              span: DUMMY_SP,
-                                            }),
-                                            span: DUMMY_SP,
-                                          })
-                                        )
-                                      ),
-                                      args: vec![ExprOrSpread { expr: (*parent_expr_value).clone(), spread: None }],
-                                      type_args: None,
-                                      span: DUMMY_SP,
-                                    })
-                                  } else {
-                                    Expr::Bin(BinExpr {
-                                      op: op!("==="),
-                                      left: (*parent_expr_value).clone(),
-                                      right: (*expr_value).clone(),
-                                      span: DUMMY_SP,
-                                    })
-                                  }
-                                }
-                                _ => Expr::Lit(Lit::Bool(false.into())),
-                              }
-                            }
-                            _ => Expr::Lit(Lit::Bool(false.into())),
-                          }
-                        JSXAttrOrSpread::SpreadElement(value) => {
-                          display_error(value.dot3_token.span(), "Spread is invalid for the value of \"value\".");
-
-                          Expr::Lit(Lit::Bool(false.into()))
-                        }
-                      }
-                    })
-                    .unwrap_or_else(|| {
-                      let element_name = get_tag_name(&parent_jsx_element.opening.name);
-
-                      display_error(
-                        parent_jsx_element.opening.span,
-                        format!("Attribute \"value\" is required for the <{}> tag.", element_name).as_str()
-                      );
-
-                      Expr::Lit(Lit::Bool(false.into()))
-                    })
-                }
+                JSXExpr::Expr(expr_value) => { match_is_attr(parent_jsx_element, expr_value, has_in) }
                 _ => Expr::Lit(Lit::Bool(false.into())),
               }
+            }
+            Some(JSXAttrValue::Lit(Lit::Str(value))) => {
+              let expr_value = Box::new(Expr::Lit(Lit::Str(value.clone())));
+
+              match_is_attr(parent_jsx_element, &expr_value, has_in)
             }
             _ => Expr::Lit(Lit::Bool(false.into())),
           }

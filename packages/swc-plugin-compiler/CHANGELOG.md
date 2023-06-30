@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v0.1.3] 2023.06.30
+
+- 🐞 Support `StringLiteral JSXAttribute` for `is` attribute of `<Case>`.
+
 ## [v0.1.2] 2023.06.05
 
 - 🌟 Fix import declarations.
