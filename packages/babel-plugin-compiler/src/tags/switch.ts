@@ -54,7 +54,7 @@ function parseSwitch(expression: types.Expression, children: astUtil.JSXChild[],
       });
     } else if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_SWITCH.DEFAULT)) {
       if (defaultFound) {
-        displayError(path.get(`children.${index}`) as NodePath, '<Switch> tag should contain only one <Default> tag.');
+        displayError(path.get(`children.${index}`) as NodePath, '<Switch> tag should only contain one <Default> tag.');
       } else if (ret.cases.length === 0) {
         defaultFound = true;
 
@@ -69,7 +69,7 @@ function parseSwitch(expression: types.Expression, children: astUtil.JSXChild[],
     } else {
       displayError(
         path.get(`children.${index}`) as NodePath,
-        '<Switch> tag should contain only <Case> or <Default> tags.'
+        '<Switch> tag should only contain <Case> or <Default> tags.'
       );
     }
   });

@@ -532,7 +532,7 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
         if value.trim() != "" {
           display_error(
             jsx_element.opening.span,
-            "<For> tag can contain only one <Empty> tag and one callback function."
+            "<For> tag should only contain one <Empty> tag and one callback function."
           );
         }
       }
@@ -542,7 +542,7 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
             callback = Some(Expr::Arrow((*array_expr).clone()));
           }
           _ => {
-            display_error(jsx_element.opening.span, "<For> tag can contain only one callback function.");
+            display_error(jsx_element.opening.span, "<For> tag should only contain one callback function.");
           }
         }
       }
@@ -551,7 +551,7 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
 
         if element_name == EMPTY {
           if empty_found {
-            display_error(child_jsx_element.opening.span, "<For> can contain only one <Empty> tag.");
+            display_error(child_jsx_element.opening.span, "<For> tag should only contain one <Empty> tag.");
           } else {
             empty_found = true;
 
@@ -564,14 +564,14 @@ fn parse_for(jsx_element: &JSXElement) -> (Expr, Expr, Option<Box<Expr>>, bool) 
         } else {
           display_error(
             child_jsx_element.opening.span,
-            format!("<For> tag can contain only <Empty> tags, got: <{}>.", element_name).as_str()
+            format!("<For> tag should only contain <Empty> tags, got: <{}>.", element_name).as_str()
           );
         }
       }
       _ => {
         display_error(
           jsx_element.opening.span,
-          "<For> tag can contain only one <Empty> tag and one callback function."
+          "<For> tag should only contain one <Empty> tag and one callback function."
         );
       }
     }

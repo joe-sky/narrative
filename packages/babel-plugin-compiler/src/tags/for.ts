@@ -8,8 +8,14 @@ import { displayError, SUB_TAGS_FOR, ATTRS_FOR, ARR_PARAM, OBJ_PARAM, KEYS_PARAM
 export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) {
   const key = astUtil.getKey(node);
   const attrs = astUtil.getAttributeMap(node);
+  const ofAttr = attrs?.[ATTRS_FOR.OF];
+  const inAttr = attrs?.[ATTRS_FOR.IN];
+  if (!ofAttr && !inAttr) {
+    displayError(path, 'Attribute "of" or "in" is required for the <For> tag.');
+  }
+
   const children = astUtil.getChildren(node);
-  const blocks = parseFor(astUtil.getExpression(attrs[ATTRS_FOR.OF] || attrs[ATTRS_FOR.IN]), children, key);
+  const blocks = parseFor(astUtil.getExpression(ofAttr || inAttr), children, path, key);
   const cbParams = blocks.callback.params;
   const itemParam = cbParams[0];
   const metaParam = cbParams[1] as types.ObjectPattern;
@@ -123,18 +129,47 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
   return ret;
 }
 
-function parseFor(source: types.Expression, children: astUtil.JSXChild[], key?: string) {
+function parseFor(source: types.Expression, children: astUtil.JSXChild[], path: NodePath, key?: string) {
   const ret: astUtil.ForAttrs = {
     source,
     callback: astUtil.noopArrowFunctionExpression()
   };
+  let emptyFound = false;
+  let callbackFound = false;
 
-  children.forEach(child => {
-    if (types.isJSXElement(child) && astUtil.isTag(child, SUB_TAGS_FOR.EMPTY)) {
-      const childNodes = astUtil.getChildren(child);
-      ret.empty = astUtil.convertChildrenToExpression(childNodes, key, true);
+  children.forEach((child, index) => {
+    if (types.isJSXElement(child)) {
+      if (astUtil.isTag(child, SUB_TAGS_FOR.EMPTY)) {
+        if (emptyFound) {
+          displayError(path.get(`children.${index}`) as NodePath, '<For> tag should only contain one <Empty> tag.');
+        } else {
+          emptyFound = true;
+          const childNodes = astUtil.getChildren(child);
+
+          if (childNodes.length > 0) {
+            ret.empty = astUtil.convertChildrenToExpression(childNodes, key, true);
+          } else {
+            displayError(path.get(`children.${index}`) as NodePath, '<Empty> tag should contain children.');
+          }
+        }
+      } else {
+        displayError(
+          path.get(`children.${index}`) as NodePath,
+          `<For> tag should only contain <Empty> tags, got: <${astUtil.getTagName(child)}>.`
+        );
+      }
     } else if (types.isArrowFunctionExpression(child)) {
-      ret.callback = child;
+      if (callbackFound) {
+        displayError(path.get(`children.${index}`) as NodePath, '<For> tag should only contain one callback function.');
+      } else {
+        callbackFound = true;
+        ret.callback = child;
+      }
+    } else {
+      displayError(
+        path.get(`children.${index}`) as NodePath,
+        '<For> tag should only contain one <Empty> tag and one callback function.'
+      );
     }
   });
 

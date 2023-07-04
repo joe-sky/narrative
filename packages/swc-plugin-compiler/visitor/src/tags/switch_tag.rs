@@ -36,7 +36,7 @@ fn parse_switch(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
         value = value.replace('\n', "");
 
         if value.trim() != "" {
-          display_error(jsx_element.opening.span, "<Switch> tag should contain only <Case> or <Default> tags.");
+          display_error(jsx_element.opening.span, "<Switch> tag should only contain <Case> or <Default> tags.");
         }
       }
       JSXElementChild::JSXElement(child_jsx_element) => {
@@ -44,7 +44,7 @@ fn parse_switch(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
 
         if element_name == DEFAULT {
           if default_found {
-            display_error(child_jsx_element.opening.span, "<Switch> tag should contain only one <Default> tag.");
+            display_error(child_jsx_element.opening.span, "<Switch> tag should only contain one <Default> tag.");
           } else if cons.is_empty() {
             default_found = true;
 
@@ -63,12 +63,12 @@ fn parse_switch(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
         } else {
           display_error(
             child_jsx_element.opening.span,
-            format!("<Switch> tag should contain only <Case> and <Default> tags, got: <{}>.", element_name).as_str()
+            format!("<Switch> tag should only contain <Case> and <Default> tags, got: <{}>.", element_name).as_str()
           );
         }
       }
       _ => {
-        display_error(jsx_element.opening.span, "<Switch> tag should contain only <Case> and <Default> tags.");
+        display_error(jsx_element.opening.span, "<Switch> tag should only contain <Case> and <Default> tags.");
       }
     }
   }
