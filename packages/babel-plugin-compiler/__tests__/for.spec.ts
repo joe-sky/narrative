@@ -37,6 +37,14 @@ const forTests: Test[] = [
     `
   },
   {
+    name: 'has index alias',
+    from: `
+      <For of={[1, 2, 3]}>
+        {(item, { index: i }) => <i key={i}>{item}</i>}
+      </For>
+    `
+  },
+  {
     name: 'for of with empty',
     from: `
       <For of={[1, 2, 3]}>
@@ -50,6 +58,15 @@ const forTests: Test[] = [
     from: `
       <For in={{ a: 1, b: 2, c: 3 }}>
         {(item, { key }) => <i key={key}>{item}</i>}
+        <Empty>no data</Empty>
+      </For>
+    `
+  },
+  {
+    name: 'has key alias',
+    from: `
+      <For in={{ a: 1, b: 2, c: 3 }}>
+        {(item, { key: k, index: i }) => <i key={k}>{item}-{i}</i>}
         <Empty>no data</Empty>
       </For>
     `

@@ -78,4 +78,23 @@ exports[`for wrapped in Fragments: for wrapped in Fragments 1`] = `
       </>;"
 `;
 
+exports[`has index alias: has index alias 1`] = `"[1, 2, 3]?.map((item, i) => <i key={i}>{item}</i>, this) || null;"`;
+
 exports[`has index: has index 1`] = `"[1, 2, 3]?.map((item, index) => <i key={index}>{item}</i>, this) || null;"`;
+
+exports[`has key alias: has key alias 1`] = `
+"(__obj => {
+  const __keys = __obj ? Object.keys(__obj) : [];
+  if (__keys.length) {
+    return __keys.map((k, i) => {
+      const item = __obj[k];
+      return <i key={k}>{item}-{i}</i>;
+    }, this);
+  }
+  return \\"no data\\";
+})({
+  a: 1,
+  b: 2,
+  c: 3
+});"
+`;

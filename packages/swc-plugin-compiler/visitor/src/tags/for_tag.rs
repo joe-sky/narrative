@@ -22,6 +22,7 @@ use swc_core::ecma::ast::{
   ObjectPat,
   ObjectPatProp,
   AssignPatProp,
+  KeyValuePatProp,
   BindingIdent,
   ParenExpr,
   BlockStmtOrExpr,
@@ -36,6 +37,7 @@ use swc_core::ecma::ast::{
   CondExpr,
   ArrayLit,
   ComputedPropName,
+  PropName,
 };
 use swc_core::ecma::atoms::JsWord;
 
@@ -60,32 +62,67 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
     if let Some(Pat::Object(ObjectPat { props, .. })) = meta_param {
       if has_in {
         for prop in props.iter() {
-          if let ObjectPatProp::Assign(AssignPatProp { key, .. }) = prop {
+          match prop {
+            ObjectPatProp::Assign(AssignPatProp { key, .. }) => {
+              let Ident { sym, .. } = key;
+              if sym == "key" {
+                generated_params.push(
+                  Pat::Ident(BindingIdent {
+                    id: key.clone(),
+                    type_ann: None,
+                  })
+                );
+                for_in_key_param = Some(key.clone());
+              }
+            }
+            ObjectPatProp::KeyValue(KeyValuePatProp { key, value, .. }) => {
+              if let PropName::Ident(Ident { sym, .. }) = key {
+                if sym == "key" {
+                  if let Pat::Ident(BindingIdent { id, .. }) = &**value {
+                    generated_params.push(
+                      Pat::Ident(BindingIdent {
+                        id: id.clone(),
+                        type_ann: None,
+                      })
+                    );
+                    for_in_key_param = Some(id.clone());
+                  }
+                }
+              }
+            }
+            _ => {}
+          }
+        }
+      }
+
+      for prop in props.iter() {
+        match prop {
+          ObjectPatProp::Assign(AssignPatProp { key, .. }) => {
             let Ident { sym, .. } = key;
-            if sym == "key" {
+            if sym == "index" {
               generated_params.push(
                 Pat::Ident(BindingIdent {
                   id: key.clone(),
                   type_ann: None,
                 })
               );
-              for_in_key_param = Some(key.clone());
             }
           }
-        }
-      }
-
-      for prop in props.iter() {
-        if let ObjectPatProp::Assign(AssignPatProp { key, .. }) = prop {
-          let Ident { sym, .. } = key;
-          if sym == "index" {
-            generated_params.push(
-              Pat::Ident(BindingIdent {
-                id: key.clone(),
-                type_ann: None,
-              })
-            );
+          ObjectPatProp::KeyValue(KeyValuePatProp { key, value, .. }) => {
+            if let PropName::Ident(Ident { sym, .. }) = key {
+              if sym == "index" {
+                if let Pat::Ident(BindingIdent { id, .. }) = &**value {
+                  generated_params.push(
+                    Pat::Ident(BindingIdent {
+                      id: id.clone(),
+                      type_ann: None,
+                    })
+                  );
+                }
+              }
+            }
           }
+          _ => {}
         }
       }
     }

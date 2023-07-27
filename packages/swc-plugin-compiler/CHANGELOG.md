@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.0] 2023.07.27
+
+- 🌟 Fix `index`, `key` parameters alias of `<For>`.
+
 ## [v0.1.3] 2023.06.30
 
 - 🐞 Support `StringLiteral JSXAttribute` for `is` attribute of `<Case>`.
