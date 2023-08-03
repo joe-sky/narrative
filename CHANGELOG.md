@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [v1.0.0] 2022.03.14
+## [v1.0.1] 2023.08.03
+
+- 👆 Optimization display errors.
+
+## [v1.0.0] 2023.03.14
 
 - 🐞 Fix transform errors wrapped in `React.Fragment`.
 
