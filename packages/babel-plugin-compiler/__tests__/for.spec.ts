@@ -91,6 +91,47 @@ const forTests: Test[] = [
         <div></div>
       </>
     `
+  },
+  {
+    name: 'for of with source',
+    from: `
+      <For of={[1, 2, 3]}>
+        {(item, { index }, arr) => (
+          <i>
+            {item}
+            <If when={index < arr.length - 1}> </If>
+          </i>
+        )}
+      </For>
+    `
+  },
+  {
+    name: 'for in with source',
+    from: `
+      <For in={{ a: 1, b: 2, c: 3 }}>
+        {(item, { key, index }, obj) => (
+          <i key={key}>
+            {item}
+            <If when={index < Object.keys(obj).length - 1}> </If>
+          </i>
+        )}
+        <Empty>no data</Empty>
+      </For>
+    `
+  },
+  {
+    name: 'for in with keys',
+    from: `
+      <For in={{ a: 1, b: 2, c: 3 }}>
+        {(item, { key, index, keys }) => (
+          <i key={key}>
+            {item}
+            <If when={index < keys.length - 1}> </If>
+          </i>
+        )}
+        <Empty>no data</Empty>
+      </For>
+    `
   }
 ];
 

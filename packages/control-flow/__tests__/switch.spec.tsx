@@ -25,7 +25,7 @@ const TestSwitch: React.FC<Props> = props => {
 
 test('switch-case with value', function () {
   const el = render(<TestSwitch expression={2} />);
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test2</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
 });
 
 const TestSwitchValues: React.FC<Props> = props => {
@@ -44,7 +44,7 @@ const TestSwitchValues: React.FC<Props> = props => {
   );
 };
 
-test('switch-case with values', function () {
+test('switch-case with multiple values', function () {
   const el = render(<TestSwitchValues expressionStr="2" />);
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test2</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
 });

@@ -34,6 +34,48 @@ exports[`for in with function block: for in with function block 1`] = `
 });"
 `;
 
+exports[`for in with keys: for in with keys 1`] = `
+"(__obj => {
+  const __keys = __obj ? Object.keys(__obj) : [];
+  if (__keys.length) {
+    return __keys.map((key, index) => {
+      const item = __obj[key];
+      const keys = __keys;
+      return <i key={key}>
+            {item}
+            {index < keys.length - 1 ? \\" \\" : null}
+          </i>;
+    }, this);
+  }
+  return \\"no data\\";
+})({
+  a: 1,
+  b: 2,
+  c: 3
+});"
+`;
+
+exports[`for in with source: for in with source 1`] = `
+"(__obj => {
+  const __keys = __obj ? Object.keys(__obj) : [];
+  if (__keys.length) {
+    return __keys.map((key, index) => {
+      const item = __obj[key];
+      const obj = __obj;
+      return <i key={key}>
+            {item}
+            {index < Object.keys(obj).length - 1 ? \\" \\" : null}
+          </i>;
+    }, this);
+  }
+  return \\"no data\\";
+})({
+  a: 1,
+  b: 2,
+  c: 3
+});"
+`;
+
 exports[`for in: for in 1`] = `
 "(__obj => {
   const __keys = __obj ? Object.keys(__obj) : [];
@@ -66,6 +108,13 @@ exports[`for of with function children empty: for of with function children empt
   }
   return (() => 'no data')();
 })([1, 2, 3]);"
+`;
+
+exports[`for of with source: for of with source 1`] = `
+"[1, 2, 3]?.map((item, index, arr) => <i>
+            {item}
+            {index < arr.length - 1 ? \\" \\" : null}
+          </i>, this) || null;"
 `;
 
 exports[`for of: for of 1`] = `"[1, 2, 3]?.map(item => <i>{item}</i>, this) || null;"`;

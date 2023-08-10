@@ -1,7 +1,8 @@
 import { Childrenable } from '../utils';
 
 /**
- * Narrative tag `If`, example:
+ * Narrative tag `If`
+ * @example
  * ```tsx
  * <If when={false}><input /></If>
  * ```
@@ -9,7 +10,8 @@ import { Childrenable } from '../utils';
 export declare function If<T>(props: { when: T } & Childrenable): JSX.Element;
 
 /**
- * Narrative tag `Else`, example:
+ * Narrative tag `Else`
+ * @example
  * ```tsx
  * <If when={foo > 10}>
  *   <input />
@@ -20,7 +22,8 @@ export declare function If<T>(props: { when: T } & Childrenable): JSX.Element;
 export declare function Else(props: Childrenable): JSX.Element;
 
 /**
- * Narrative tag `ElseIf`, example:
+ * Narrative tag `ElseIf`
+ * @example
  * ```tsx
  * <If when={foo > 10}>
  *   <input />

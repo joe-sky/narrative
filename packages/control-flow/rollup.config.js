@@ -86,7 +86,7 @@ if (type !== 'dts') {
 config.plugins.push(
   license({
     banner: `/*!
- * @narrative/control-flow v${require('../../package.json').version}
+ * @narrative/control-flow v${require('./package.json').version}
  * (c) 2021-present Joe_Sky
  * Released under the MIT License.
  */`

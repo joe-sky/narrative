@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`switch-case with value: <i>test2</i> 1`] = `
+exports[`switch-case with multiple values 1`] = `
 <i>
   test2
 </i>
 `;
 
-exports[`switch-case with values: <i>test2</i> 1`] = `
+exports[`switch-case with value 1`] = `
 <i>
   test2
 </i>

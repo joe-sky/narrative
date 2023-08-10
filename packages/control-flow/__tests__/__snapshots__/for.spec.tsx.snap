@@ -1,12 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`for object: <i>1</i><i>2</i><i>3</i> 1`] = `
+exports[`for object 1`] = `
 <div>
+  <i>
+    0
+  </i>
   <i>
     1
   </i>
+   
+  <i>
+    0
+  </i>
   <i>
     2
+  </i>
+   
+  <i>
+    0
   </i>
   <i>
     3
@@ -14,33 +25,35 @@ exports[`for object: <i>1</i><i>2</i><i>3</i> 1`] = `
 </div>
 `;
 
-exports[`for with empty: empty 1`] = `
+exports[`for with empty 1`] = `
 <div>
   empty
 </div>
 `;
 
-exports[`for with empty: empty 2`] = `empty`;
+exports[`for with empty 2`] = `empty`;
 
-exports[`for without empty: <div></div> 1`] = `<div />`;
-
-exports[`for without empty: <div></div> 2`] = `<div />`;
-
-exports[`for without empty: <div><i>1</i><i>2</i><i>3</i></div> 1`] = `
+exports[`for without empty 1`] = `
 <div>
   <i>
     1
   </i>
+   
   <i>
     2
   </i>
+   
   <i>
     3
   </i>
 </div>
 `;
 
-exports[`for without empty: <div><i>1</i><i>2</i><i>3</i></div> 2`] = `
+exports[`for without empty 2`] = `<div />`;
+
+exports[`for without empty 3`] = `<div />`;
+
+exports[`for without empty 4`] = `
 <div>
   <i>
     1

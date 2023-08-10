@@ -1,7 +1,8 @@
 import { Childrenable } from '../utils';
 
 /**
- * Narrative tag `Switch`, example:
+ * Narrative tag `Switch`
+ * @example
  * ```tsx
  * <Switch value={foo}>
  *   <Case is={1}><input /></Case>
@@ -13,7 +14,8 @@ import { Childrenable } from '../utils';
 export declare function Switch<T>(props: { value: T } & Childrenable): JSX.Element;
 
 /**
- * Narrative tag `Case`, example:
+ * Narrative tag `Case`
+ * @example
  * ```tsx
  * <Switch value={foo}>
  *   <Case is={1}><input /></Case>
@@ -27,11 +29,12 @@ export declare function Case<T>(props: { is: T } & Childrenable): JSX.Element;
 export declare function Case<T>(props: { in: ArrayLike<T> } & Childrenable): JSX.Element;
 
 /**
- * Narrative tag `Default`, example:
+ * Narrative tag `Default`
+ * @example
  * ```tsx
- * <Switch expr={foo}>
- *   <Case value={1}><input /></Case>
- *   <Case value={2}><input type="button" /></Case>
+ * <Switch value={foo}>
+ *   <Case is={1}><input /></Case>
+ *   <Case is={2}><input type="button" /></Case>
  *   <Default>nothing</Default>
  * </Switch>
  * ```

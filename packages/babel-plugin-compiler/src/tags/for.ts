@@ -19,8 +19,10 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
   const cbParams = blocks.callback.params;
   const itemParam = cbParams[0];
   const metaParam = cbParams[1] as types.ObjectPattern;
+  const sourceParam = cbParams[2];
   const generatedParams: astUtil.FuncParam[] = [];
   let keyProp: types.ObjectProperty | null = null;
+  let keysProp: types.ObjectProperty | null = null;
 
   if (attrs[ATTRS_FOR.OF]) {
     generatedParams.push(itemParam);
@@ -30,6 +32,8 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
       if (keyProp) {
         generatedParams.push(keyProp.value as types.Identifier);
       }
+
+      keysProp = astUtil.findPropByName(metaParam, 'keys');
     }
   }
 
@@ -38,6 +42,10 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
     if (indexProp) {
       generatedParams.push(indexProp.value as types.Identifier);
     }
+  }
+
+  if (sourceParam && attrs[ATTRS_FOR.OF]) {
+    generatedParams.push(sourceParam);
   }
 
   let ret: types.CallExpression | types.LogicalExpression | null = null;
@@ -101,6 +109,20 @@ export function transformFor(node: JSXElement, path: NodePath, file: BabelFile) 
                       types.memberExpression(types.identifier(OBJ_PARAM), keyProp?.value as types.Identifier, true)
                     )
                   ]),
+                  ...(keysProp
+                    ? [
+                        types.variableDeclaration('const', [
+                          types.variableDeclarator(keysProp.value as types.Identifier, types.identifier(KEYS_PARAM))
+                        ])
+                      ]
+                    : []),
+                  ...(sourceParam
+                    ? [
+                        types.variableDeclaration('const', [
+                          types.variableDeclarator(sourceParam, types.identifier(OBJ_PARAM))
+                        ])
+                      ]
+                    : []),
                   ...(types.isBlockStatement(blocks.callback.body)
                     ? blocks.callback.body.body
                     : [types.returnStatement(blocks.callback.body)])

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import { If, Else, ElseIf } from '../src/index';
 
@@ -17,7 +17,7 @@ const OnlyIf: React.FC<Props> = props => {
 test('only if', () => {
   const el = render(<OnlyIf condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el2 = render(<OnlyIf condition={2} />);
@@ -38,12 +38,12 @@ const IfAndElse: React.FC<Props> = props => {
 test('if and else', () => {
   const el = render(<IfAndElse condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el2 = render(<IfAndElse condition={2} />);
   expect(el2.queryByText('else')).toBeInTheDocument();
-  expect(el2.container.firstChild).toMatchSnapshot(`<i>else</i>`);
+  expect(el2.container.firstChild).toMatchSnapshot();
 });
 
 const IfAndElseIf: React.FC<Props> = props => {
@@ -61,12 +61,12 @@ const IfAndElseIf: React.FC<Props> = props => {
 test('if and else', () => {
   const el = render(<IfAndElseIf condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el2 = render(<IfAndElseIf condition={3} />);
   expect(el2.queryByText('test3')).toBeInTheDocument();
-  expect(el2.container.firstChild).toMatchSnapshot(`<i>test3</i>`);
+  expect(el2.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el3 = render(<IfAndElseIf condition={0} />);
@@ -91,15 +91,15 @@ const AllIfTags: React.FC<Props> = props => {
 test('all if tags', () => {
   const el = render(<AllIfTags condition={1} />);
   expect(el.queryByText('test1')).toBeInTheDocument();
-  expect(el.container.firstChild).toMatchSnapshot(`<i>test1</i>`);
+  expect(el.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el2 = render(<AllIfTags condition={3} />);
   expect(el2.queryByText('test3')).toBeInTheDocument();
-  expect(el2.container.firstChild).toMatchSnapshot(`<i>test3</i>`);
+  expect(el2.container.firstChild).toMatchSnapshot();
   el.unmount();
 
   const el3 = render(<AllIfTags condition={0} />);
   expect(el3.queryByText('else')).toBeInTheDocument();
-  expect(el3.container.firstChild).toMatchSnapshot(`<i>else</i>`);
+  expect(el3.container.firstChild).toMatchSnapshot();
 });

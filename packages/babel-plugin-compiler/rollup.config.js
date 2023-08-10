@@ -10,7 +10,7 @@ const config = {
 config.plugins.push(
   license({
     banner: `/*!
- * @narrative/babel-plugin-compiler v${require('../../package.json').version}
+ * @narrative/babel-plugin-compiler v${require('./package.json').version}
  * (c) 2020-present Joe_Sky
  * Released under the MIT License.
  */`
