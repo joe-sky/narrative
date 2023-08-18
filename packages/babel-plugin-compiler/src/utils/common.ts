@@ -49,7 +49,7 @@ export const SUB_TAGS_FOR = {
    *   </For>
    * </div>
    *
-   * ↓ ↓ ↓ ↓ ↓ ↓
+   * Compiled ↓ ↓ ↓ ↓ ↓ ↓
    *
    * <div>
    *   {(__arr => {
@@ -79,7 +79,7 @@ export const ATTRS_FOR = {
    *   </For>
    * </div>
    *
-   * ↓ ↓ ↓ ↓ ↓ ↓
+   * Compiled ↓ ↓ ↓ ↓ ↓ ↓
    *
    * <div>
    *   {[1, 2, 3]?.map((item, index, arr) => {
@@ -102,7 +102,7 @@ export const ATTRS_FOR = {
    *   </For>
    * </div>
    *
-   * ↓ ↓ ↓ ↓ ↓ ↓
+   * Compiled ↓ ↓ ↓ ↓ ↓ ↓
    *
    * <div>
    *   {(__obj => {

@@ -30,7 +30,7 @@ Configure `swc`
   </ElseIf>
 </If>
 
-↓ ↓ ↓ ↓ ↓ ↓
+Compiled ↓ ↓ ↓ ↓ ↓ ↓
 
 index > 5 ? <li>{todo * 2}</li> : index > 10 ? <li>{todo * 3}</li> : null
 ```
