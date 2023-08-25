@@ -3,7 +3,14 @@ use swc_core::ecma::ast::Expr;
 use swc_core::ecma::ast::{ CondExpr, JSXElement, JSXElementChild, JSXText };
 
 use crate::utils::{
-  ast::{ convert_children_to_expression, get_when_expression, get_tag_name, clone_children },
+  ast::{
+    convert_children_to_expression,
+    get_when_expression,
+    get_tag_name,
+    clone_children,
+    clean_jsx_element_literal_child,
+    jsx_text,
+  },
   common::{ display_error, ELSE, ELSE_IF },
 };
 
@@ -31,13 +38,13 @@ fn parse_if(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
     .fold((Vec::new(), Vec::new(), Vec::new()), |(mut cons, mut alts, mut elseif_cons), child| {
       match child {
         JSXElementChild::JSXText(JSXText { value, .. }) => {
-          let mut value = value.to_string();
+          let content = clean_jsx_element_literal_child(&value.to_string());
 
-          value = value.replace('\n', "");
-
-          if value.trim() == "" {
-            return (cons, alts, elseif_cons);
+          if content != "" {
+            cons.push(jsx_text(&content));
           }
+
+          return (cons, alts, elseif_cons);
         }
         JSXElementChild::JSXElement(child_jsx_element) => {
           let tag_name = get_tag_name(&child_jsx_element.opening.name);
@@ -58,12 +65,10 @@ fn parse_if(jsx_element: &JSXElement) -> (Vec<(Expr, Expr)>, Expr) {
             for item in &child_jsx_element.children {
               match item {
                 JSXElementChild::JSXText(JSXText { value, .. }) => {
-                  let mut value = value.to_string();
+                  let content = clean_jsx_element_literal_child(&value.to_string());
 
-                  value = value.replace('\n', "");
-
-                  if value.trim() != "" {
-                    alts.push((*item).clone());
+                  if content != "" {
+                    alts.push(jsx_text(&content));
                   }
                 }
                 _ => {

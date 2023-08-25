@@ -27,6 +27,7 @@ use swc_core::ecma::ast::{
   ExprOrSpread,
 };
 use swc_core::ecma::atoms::JsWord;
+use regex::Regex;
 
 use super::common::{ display_error, WHEN, IS, IN, VALUE, OF, FOR_IN };
 
@@ -37,18 +38,64 @@ pub fn get_tag_name(tag_name: &JSXElementName) -> &str {
   }
 }
 
+/// Clean up the text of the JSX element, remove the blank lines at the beginning and end of the text, and remove the blank lines between the text.
+///
+/// Reference from: https://github.com/babel/babel/blob/main/packages/babel-types/src/utils/react/cleanJSXElementLiteralChild.ts
+pub fn clean_jsx_element_literal_child(text: &str) -> String {
+  let mut jsx_text_lines = text.lines().enumerate().peekable();
+
+  let regex_blank_space = Regex::new(r"[^ \t]").unwrap();
+  let mut last_non_empty_line = 0;
+  for (index, line) in &mut jsx_text_lines.clone() {
+    if regex_blank_space.is_match(line) {
+      last_non_empty_line = index;
+    }
+  }
+
+  let mut lines = vec![];
+  while let Some((index, line)) = jsx_text_lines.next() {
+    let is_first_line = index == 0;
+    let is_last_line = jsx_text_lines.peek().is_none();
+    let is_last_non_empty_line = index == last_non_empty_line;
+
+    let mut trimmed_line = line.replace('\t', " ");
+    if !is_first_line {
+      trimmed_line = String::from(trimmed_line.trim_start());
+    }
+    if !is_last_line {
+      trimmed_line = String::from(trimmed_line.trim_end());
+    }
+
+    if !trimmed_line.is_empty() {
+      lines.push(trimmed_line);
+
+      if !is_last_non_empty_line {
+        lines.push(String::from(" "));
+      }
+    }
+  }
+
+  lines.join("")
+}
+
+pub fn jsx_text(content: &str) -> JSXElementChild {
+  JSXElementChild::JSXText(JSXText {
+    span: DUMMY_SP,
+    value: content.into(),
+    raw: content.into(),
+  })
+}
+
 pub fn clone_children(children: &Vec<JSXElementChild>) -> Vec<JSXElementChild> {
   let mut copy: Vec<JSXElementChild> = Vec::new();
 
   for child in children {
     match child {
       JSXElementChild::JSXText(JSXText { value, .. }) => {
-        let mut value = value.to_string();
+        let content = clean_jsx_element_literal_child(&value.to_string());
 
-        value = value.replace('\n', "");
-
-        if value.trim() != "" {
-          copy.push((*child).clone());
+        if content != "" {
+          copy.push(jsx_text(&content));
         }
       }
       _ => {
@@ -81,14 +128,10 @@ pub fn convert_children_to_expression(children: Vec<JSXElementChild>) -> Expr {
           }
         }
         JSXElementChild::JSXText(JSXText { value, .. }) => {
-          let mut content = value.to_string();
-
-          content = content.replace('\n', "");
-
           Expr::Lit(
             Lit::Str(Str {
               span: DUMMY_SP,
-              value: content.trim().into(),
+              value: value.to_string().into(),
               raw: None,
             })
           )

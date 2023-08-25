@@ -10,7 +10,7 @@
   "version": "1.0.0",
   "description": "A compiler tool for create neater control flow tags such as <If>/<For>/<Switch> for JSX/TSX.",
   "scripts": {
-    "build": "npm run build:lib && npm run build:babel",
+    "build": "npm run build:lib && npm run build:babel && npm run build:swc",
     "build:lib": "yarn workspace @narrative/control-flow build",
     "build:babel": "yarn workspace @narrative/babel-plugin-compiler build",
     "build:swc": "yarn workspace @narrative/swc-plugin-compiler build",

@@ -58,6 +58,8 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
     }
 
     let mut for_in_key_param = None;
+    let mut for_in_keys_param = None;
+
     let meta_param = params.get(1);
     if let Some(Pat::Object(ObjectPat { props, .. })) = meta_param {
       if has_in {
@@ -73,6 +75,8 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
                   })
                 );
                 for_in_key_param = Some(key.clone());
+              } else if sym == "keys" {
+                for_in_keys_param = Some(key.clone());
               }
             }
             ObjectPatProp::KeyValue(KeyValuePatProp { key, value, .. }) => {
@@ -86,6 +90,10 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
                       })
                     );
                     for_in_key_param = Some(id.clone());
+                  }
+                } else if sym == "keys" {
+                  if let Pat::Ident(BindingIdent { id, .. }) = &**value {
+                    for_in_keys_param = Some(id.clone());
                   }
                 }
               }
@@ -125,6 +133,11 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
           _ => {}
         }
       }
+    }
+
+    let source_param = params.get(2);
+    if !has_in && source_param.is_some() {
+      generated_params.push(source_param.unwrap().clone());
     }
 
     if !has_in {
@@ -384,6 +397,79 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
         )
       );
 
+      let mut arrow_body_block_stmt: Vec<Stmt> = Vec::new();
+      if for_in_key_param.is_some() {
+        arrow_body_block_stmt.push(
+          Stmt::Decl(
+            Decl::Var(
+              Box::new(VarDecl {
+                kind: VarDeclKind::Const,
+                declare: false,
+                decls: vec![VarDeclarator {
+                  span: DUMMY_SP,
+                  name: item_param.unwrap().clone(),
+                  init: Some(
+                    Box::new(
+                      Expr::Member(MemberExpr {
+                        obj: Box::new(Expr::Ident(obj_param.clone())),
+                        prop: MemberProp::Computed(ComputedPropName {
+                          expr: Box::new(Expr::Ident(for_in_key_param.unwrap().clone())),
+                          span: DUMMY_SP,
+                        }),
+                        span: DUMMY_SP,
+                      })
+                    )
+                  ),
+                  definite: false,
+                }],
+                span: DUMMY_SP,
+              })
+            )
+          )
+        );
+      }
+      if for_in_keys_param.is_some() {
+        arrow_body_block_stmt.push(
+          Stmt::Decl(
+            Decl::Var(
+              Box::new(VarDecl {
+                kind: VarDeclKind::Const,
+                declare: false,
+                decls: vec![VarDeclarator {
+                  span: DUMMY_SP,
+                  name: Pat::Ident(BindingIdent {
+                    id: for_in_keys_param.unwrap().clone(),
+                    type_ann: None,
+                  }),
+                  init: Some(Box::new(Expr::Ident(key_param.clone()))),
+                  definite: false,
+                }],
+                span: DUMMY_SP,
+              })
+            )
+          )
+        );
+      }
+      if source_param.is_some() {
+        arrow_body_block_stmt.push(
+          Stmt::Decl(
+            Decl::Var(
+              Box::new(VarDecl {
+                kind: VarDeclKind::Const,
+                declare: false,
+                decls: vec![VarDeclarator {
+                  span: DUMMY_SP,
+                  name: source_param.unwrap().clone(),
+                  init: Some(Box::new(Expr::Ident(obj_param.clone()))),
+                  definite: false,
+                }],
+                span: DUMMY_SP,
+              })
+            )
+          )
+        );
+      }
+
       outer_block_stmt.push(
         Stmt::If(IfStmt {
           test: Box::new(
@@ -425,34 +511,7 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
                                 body: Box::new(
                                   BlockStmtOrExpr::BlockStmt(BlockStmt {
                                     stmts: [
-                                      vec![
-                                        Stmt::Decl(
-                                          Decl::Var(
-                                            Box::new(VarDecl {
-                                              kind: VarDeclKind::Const,
-                                              declare: false,
-                                              decls: vec![VarDeclarator {
-                                                span: DUMMY_SP,
-                                                name: item_param.unwrap().clone(),
-                                                init: Some(
-                                                  Box::new(
-                                                    Expr::Member(MemberExpr {
-                                                      obj: Box::new(Expr::Ident(obj_param.clone())),
-                                                      prop: MemberProp::Computed(ComputedPropName {
-                                                        expr: Box::new(Expr::Ident(for_in_key_param.unwrap().clone())),
-                                                        span: DUMMY_SP,
-                                                      }),
-                                                      span: DUMMY_SP,
-                                                    })
-                                                  )
-                                                ),
-                                                definite: false,
-                                              }],
-                                              span: DUMMY_SP,
-                                            })
-                                          )
-                                        )
-                                      ],
+                                      arrow_body_block_stmt,
                                       match *body {
                                         BlockStmtOrExpr::BlockStmt(BlockStmt { stmts, .. }) => { stmts }
                                         BlockStmtOrExpr::Expr(expr) => {

@@ -41,7 +41,7 @@ pub const FOR: &str = "For";
 ///   </For>
 /// </div>
 ///
-/// ↓ ↓ ↓ ↓ ↓ ↓
+/// Compiled ↓ ↓ ↓ ↓ ↓ ↓
 ///
 /// <div>
 ///   {(__arr => {
@@ -68,7 +68,7 @@ pub const EMPTY: &str = "Empty";
 ///   </For>
 /// </div>
 ///
-/// ↓ ↓ ↓ ↓ ↓ ↓
+/// Compiled ↓ ↓ ↓ ↓ ↓ ↓
 ///
 /// <div>
 ///   {[1, 2, 3]?.map((item, index, arr) => {
@@ -90,7 +90,7 @@ pub const OF: &str = "of";
 ///   </For>
 /// </div>
 ///
-/// ↓ ↓ ↓ ↓ ↓ ↓
+/// Compiled ↓ ↓ ↓ ↓ ↓ ↓
 ///
 /// <div>
 ///   {(__obj => {

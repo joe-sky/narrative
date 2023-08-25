@@ -46,7 +46,7 @@ export type ForCallback<T = any, K = number, S = any> = (
  *
  * Compiled ↓ ↓ ↓ ↓ ↓ ↓
  *
- * {(__obj => {
+ * (__obj => {
  *   const __keys = __obj ? Object.keys(__obj) : [];
  *   if (__keys.length) {
  *     return __keys.map(key => {
@@ -54,7 +54,7 @@ export type ForCallback<T = any, K = number, S = any> = (
  *       return <i key={key}>{item}</i>;
  *     }, this);
  *   }
- * })({ a: 1, b: 2, c: 3 })}
+ * })({ a: 1, b: 2, c: 3 })
  * ```
  */
 export declare function For<T>(props: {
