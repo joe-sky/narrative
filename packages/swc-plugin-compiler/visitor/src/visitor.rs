@@ -61,7 +61,7 @@ impl<C: Comments> Fold for NtCompiler<C> {
             src: src.clone(),
             span: import_decl.span,
             type_only: false,
-            asserts: None,
+            with: None,
           };
         }
       }

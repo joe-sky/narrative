@@ -160,7 +160,7 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
                         span: DUMMY_SP,
                       })
                     ),
-                    question_dot_token: jsx_element.opening.span,
+                    optional: true,
                     span: DUMMY_SP,
                   })
                 )
@@ -232,7 +232,7 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
                                     span: DUMMY_SP,
                                   })
                                 ),
-                                question_dot_token: jsx_element.opening.span,
+                                optional: true,
                                 span: DUMMY_SP,
                               })
                             ),

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.1.0] 2023.08.28
+
+- 🌟 Add `keys` and `looping source` parameters to the `<For>` tag callback.
+
 ## [v1.0.1] 2023.08.03
 
 - 👆 Optimization display errors.

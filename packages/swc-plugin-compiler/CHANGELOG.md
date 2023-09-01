@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.1.0] 2023.08.28
+
+- 🌟 Add `keys` and `looping source` parameters to the `<For>` tag callback.
+
 ## [v1.0.0] 2023.07.27
 
 - 🌟 Fix `index`, `key` parameters alias of `<For>`.

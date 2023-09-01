@@ -8,13 +8,13 @@ edition = "2021"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-swc_core = { version = "0.76.6", features = ["ecma_plugin_transform"] }
+swc_core = { version = "0.82.11", features = ["ecma_plugin_transform"] }
 tracing = { version = "0.1.37", features = ["release_max_level_off"] }
 regex = "1.5.4"
 
 [dev-dependencies]
 testing = "0.33.13"
-swc_core = { version = "0.76.6", features = [
+swc_core = { version = "0.82.11", features = [
   "testing_transform",
   "ecma_parser",
 ] }
