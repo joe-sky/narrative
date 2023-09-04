@@ -3,7 +3,14 @@
   "version": "2.0.0",
   "description": "SWC plugin for compiling Narrative tags to runtime code.",
   "keywords": [
-    "swc-plugin"
+    "react",
+    "jsx",
+    "if",
+    "else",
+    "swc",
+    "swc-plugin",
+    "jsx-control-statements",
+    "react-component"
   ],
   "repository": {
     "type": "git",

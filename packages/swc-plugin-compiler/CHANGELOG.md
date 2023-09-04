@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v2.0.0] 2023.09.04
+
+- 💥 Upgrade `swc_core` from `v0.76.x` to `v0.82.x`.
+
 ## [v1.1.0] 2023.08.28
 
 - 🌟 Add `keys` and `looping source` parameters to the `<For>` tag callback.

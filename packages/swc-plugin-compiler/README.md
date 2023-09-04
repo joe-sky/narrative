@@ -2,6 +2,8 @@
 
 The compiler for `@narrative/control-flow`.
 
+Check more details in [documentation](https://github.com/joe-sky/narrative/blob/master/packages/control-flow/README.md).
+
 ## Usage
 
 ```bash
