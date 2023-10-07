@@ -1,6 +1,6 @@
 {
   "name": "@narrative/swc-plugin-compiler",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "SWC plugin for compiling Narrative tags to runtime code.",
   "keywords": [
     "react",

@@ -133,6 +133,8 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
           _ => {}
         }
       }
+    } else if meta_param.is_some() {
+      generated_params.push(meta_param.unwrap().clone());
     }
 
     let source_param = params.get(2);
