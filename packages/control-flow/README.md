@@ -17,68 +17,11 @@
 
 ## Introduction
 
-`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags such as `<If>`/`<For>`/`<Switch>` for JSX/TSX.
+`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags such as `<If>`/`<For>`/`<Switch>` for React JSX/TSX.
 
-[Live demo is here.](https://codesandbox.io/s/green-resonance-3fz52)
+The inspiration comes from [jsx-control-statements](https://github.com/AlexGilleran/jsx-control-statements), it's an alternative solution with syntactic differences to `jsx-control-statements`.
 
-## Features
-
-- ⚡ No runtime code, 0kb size.
-
-<!-- - 🌟 **Goal:** A utility-first idea that run JSX at any expressions or statements.
-- ✨ **Small:** Tiny size. `core`(about `750b`, can be used independently); `control-statement`(about `1.2kb`, optional).
-- 💫 **Simple:** No new syntax, just like regular JSX.
-- ⭐ **Type safe:** Developed by TypeScript, supports type inference.
-- 🔥 **Cross frameworks:** One write, run in multiple frameworks(React/Vue/Vanilla JS/etc).
-- 🔧 **Extensible:** Everything is extensible.
-- 🚀 **No dependencies** No any dependencies(except compiler). -->
-
-## Table of Contents
-
-<!-- - [Features](#features) -->
-
-- [Packages](#packages)
-- [Installation](#installation)
-  - [Using with Babel](#using-with-babel)
-  - [Using with SWC](#using-with-swc)
-- [Basic Overview](#basic-overview)
-- [The Origin of Name](#the-origin-of-name)
-
-## Installation
-
-### Using with Babel
-
-```bash
-npm i @narrative/control-flow @narrative/babel-plugin-compiler
-```
-
-.babelrc:
-
-```json
-{
-  "plugins": ["@narrative/compiler"]
-}
-```
-
-### Using with SWC
-
-```bash
-npm install @narrative/control-flow @narrative/swc-plugin-compiler
-```
-
-Configure `swc`
-
-```json
-{
-  "jsc": {
-    "experimental": {
-      "plugins": [["@narrative/swc-plugin-compiler", {}]]
-    }
-  }
-}
-```
-
-## Basic Overview
+### Basic Overview
 
 ```js
 import { useState, FC } from 'react';
@@ -130,7 +73,60 @@ const App: FC = () => {
 };
 ```
 
-<!-- > At present, the features of above tags has been fully implemented, and next the documentation needs to be completed. -->
+### Features
+
+`Narrative` has similar or different features as `jsx-control-statements`:
+
+- ✨ Tag names are more like native JavaScript control statements.
+- 💫 More concise syntax keywords of tags.
+- ⭐ Tags supports full TypeScript inference.
+- ⚡ No runtime code, just need compiler.
+- 🔥 Supports both Babel and SWC compilers.
+- 🔧 Support syntax error prompt for Babel and SWC.
+
+## Table of Contents
+
+- [Installation](#installation)
+  - [Using with Babel](#using-with-babel)
+  - [Using with SWC](#using-with-swc)
+- [Usage](#usage)
+- [The Origin of Name](#the-origin-of-name)
+
+## Installation
+
+### Using with Babel
+
+```bash
+npm i @narrative/control-flow @narrative/babel-plugin-compiler
+```
+
+.babelrc:
+
+```json
+{
+  "plugins": ["@narrative/compiler"]
+}
+```
+
+### Using with SWC
+
+```bash
+npm install @narrative/control-flow @narrative/swc-plugin-compiler
+```
+
+Configure `swc`
+
+```json
+{
+  "jsc": {
+    "experimental": {
+      "plugins": [["@narrative/swc-plugin-compiler", {}]]
+    }
+  }
+}
+```
+
+## Usage
 
 ## The Origin of Name
 
