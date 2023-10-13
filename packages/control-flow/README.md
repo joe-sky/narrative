@@ -100,7 +100,7 @@ const App: FC = () => {
 npm i @narrative/control-flow @narrative/babel-plugin-compiler
 ```
 
-.babelrc:
+Configure `Babel`:
 
 ```json
 {
@@ -114,7 +114,7 @@ npm i @narrative/control-flow @narrative/babel-plugin-compiler
 npm install @narrative/control-flow @narrative/swc-plugin-compiler
 ```
 
-Configure `swc`
+Configure `SWC`:
 
 ```json
 {
@@ -127,6 +127,12 @@ Configure `swc`
 ```
 
 ## Usage
+
+### If Tag
+
+### Switch Tag
+
+### For Tag
 
 ## The Origin of Name
 
