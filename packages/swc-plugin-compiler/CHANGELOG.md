@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v2.0.1] 2023.10.30
+
+- 🐞 Compiler optimization for `<For>`: `xxx.xxx?.map(...)` --> `xxx.xxx?.map?.(...)`
+
 ## [v2.0.0] 2023.09.04
 
 - 💥 Upgrade `swc_core` from `v0.76.x` to `v0.82.x`.

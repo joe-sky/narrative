@@ -3,7 +3,7 @@ import '@narrative/control-flow';
 export default ((props)=>{
     return <div>
 
-      {props.list?.map((item, index, arr)=><i>
+      {props.list?.map?.((item, index, arr)=><i>
 
             {item}
 

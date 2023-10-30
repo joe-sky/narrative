@@ -12,6 +12,7 @@ use swc_core::ecma::ast::{
   Callee,
   OptChainExpr,
   OptChainBase,
+  OptCall,
   MemberExpr,
   MemberProp,
   Ident,
@@ -147,51 +148,55 @@ pub fn transform_for(jsx_element: &JSXElement) -> Expr {
         return Expr::Bin(BinExpr {
           op: op!("||"),
           left: Box::new(
-            Expr::Call(CallExpr {
-              callee: Callee::Expr(
-                Box::new(
-                  Expr::OptChain(OptChainExpr {
-                    base: Box::new(
-                      OptChainBase::Member(MemberExpr {
-                        obj: Box::new(source.clone()),
-                        prop: MemberProp::Ident(Ident {
-                          sym: JsWord::from("map"),
-                          optional: false,
+            Expr::OptChain(OptChainExpr {
+              base: Box::new(
+                OptChainBase::Call(OptCall {
+                  callee: Box::new(
+                    Expr::OptChain(OptChainExpr {
+                      base: Box::new(
+                        OptChainBase::Member(MemberExpr {
+                          obj: Box::new(source.clone()),
+                          prop: MemberProp::Ident(Ident {
+                            sym: JsWord::from("map"),
+                            optional: false,
+                            span: DUMMY_SP,
+                          }),
                           span: DUMMY_SP,
-                        }),
-                        span: DUMMY_SP,
-                      })
-                    ),
-                    optional: true,
-                    span: DUMMY_SP,
-                  })
-                )
+                        })
+                      ),
+                      optional: true,
+                      span: DUMMY_SP,
+                    })
+                  ),
+                  args: vec![
+                    ExprOrSpread {
+                      expr: Box::new(
+                        Expr::Arrow(ArrowExpr {
+                          params: generated_params,
+                          body,
+                          is_async: false,
+                          is_generator: false,
+                          type_params: None,
+                          return_type: None,
+                          span: DUMMY_SP,
+                        })
+                      ),
+                      spread: None,
+                    },
+                    ExprOrSpread {
+                      expr: Box::new(
+                        Expr::This(ThisExpr {
+                          span: DUMMY_SP,
+                        })
+                      ),
+                      spread: None,
+                    }
+                  ],
+                  type_args: None,
+                  span: DUMMY_SP,
+                })
               ),
-              args: vec![
-                ExprOrSpread {
-                  expr: Box::new(
-                    Expr::Arrow(ArrowExpr {
-                      params: generated_params,
-                      body,
-                      is_async: false,
-                      is_generator: false,
-                      type_params: None,
-                      return_type: None,
-                      span: DUMMY_SP,
-                    })
-                  ),
-                  spread: None,
-                },
-                ExprOrSpread {
-                  expr: Box::new(
-                    Expr::This(ThisExpr {
-                      span: DUMMY_SP,
-                    })
-                  ),
-                  spread: None,
-                }
-              ],
-              type_args: None,
+              optional: true,
               span: DUMMY_SP,
             })
           ),

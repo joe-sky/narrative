@@ -130,6 +130,24 @@ Configure `SWC`:
 
 ### If Tag
 
+<details>
+  <summary>Click here to view how it works</summary>
+
+```tsx
+<If when={index > 5}>
+  <li>{todo * 2}</li>
+  <ElseIf when={index > 10}>
+    <li>{todo * 3}</li>
+  </ElseIf>
+</If>
+
+Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+index > 5 ? <li>{todo * 2}</li> : index > 10 ? <li>{todo * 3}</li> : null
+```
+
+</details>
+
 ### Switch Tag
 
 ### For Tag

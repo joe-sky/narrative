@@ -71,7 +71,7 @@ pub const EMPTY: &str = "Empty";
 /// Compiled ↓ ↓ ↓ ↓ ↓ ↓
 ///
 /// <div>
-///   {[1, 2, 3]?.map((item, index, arr) => {
+///   {[1, 2, 3]?.map?.((item, index, arr) => {
 ///     const length = arr.length;
 ///     const isFirst = index === 0;
 ///     const isLast = index === length - 1;
