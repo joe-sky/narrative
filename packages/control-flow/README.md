@@ -90,7 +90,9 @@ const App: FC = () => {
   - [Using with Babel](#using-with-babel)
   - [Using with SWC](#using-with-swc)
 - [Usage](#usage)
-- [The Origin of Name](#the-origin-of-name)
+  - [If Tag](#if-tag)
+  - [Switch Tag](#switch-tag)
+  - [For Tag](#for-tag)
 
 ## Installation
 
@@ -128,10 +130,54 @@ Configure `SWC`:
 
 ## Usage
 
+Each JSX tags must to be imported from `@narrative/control-flow` when use:
+
+```tsx
+import { If, Else, ElseIf } from '@narrative/control-flow';
+
+function render(no: number) {
+  return (
+    <If when={no === 1}>
+      <span>1</span>
+      <ElseIf when={no === 2}>
+        <span>2</span>
+      </ElseIf>
+      <Else>
+        <span>0</span>
+      </Else>
+    </If>
+  );
+}
+```
+
+As above the usage is similar to the regular React components. Each tags and its attributes also support TypeScript type checking.
+
 ### If Tag
 
+`<If>` tags used to write conditional logic in JSX, it is similar to the `if statement` in JavaScript. Also supports `<ElseIf>`, `<Else>`, and the syntax design fully supports JSX native formatting. Simple examples:
+
+```tsx
+import { If } from '@narrative/control-flow';
+
+// simple
+<If when={true}>
+  <span>IfBlock</span>
+</If>
+
+// using multiple child elements or expressions
+<If when={no < 5}>
+  one
+  {"two"}
+  <span>three</span>
+  <span>four</span>
+  <ElseIf when={no >= 5}>
+    <span>five</span>
+  </ElseIf>
+</If>
+```
+
 <details>
-  <summary>Click here to view how it works</summary>
+  <summary>Click here to view how the compiler works</summary>
 
 ```tsx
 <If when={index > 5}>
@@ -139,14 +185,171 @@ Configure `SWC`:
   <ElseIf when={index > 10}>
     <li>{todo * 3}</li>
   </ElseIf>
-</If>
+</If>;
 
-Compiled ↓ ↓ ↓ ↓ ↓ ↓
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
 
-index > 5 ? <li>{todo * 2}</li> : index > 10 ? <li>{todo * 3}</li> : null
+{
+  index > 5 ? <li>{todo * 2}</li> : index > 10 ? <li>{todo * 3}</li> : null;
+}
 ```
 
 </details>
+
+#### &lt;If&gt;
+
+If only use `<If>`, the body of `<If>` will be returned when the value of `when attribute` is true.
+
+| Prop Name | Prop Type | Required           |
+| --------- | --------- | ------------------ |
+| when      | boolean   | :white_check_mark: |
+
+```tsx
+import { If } from '@narrative/control-flow';
+
+<If when={no > 1}>
+  <span>IfBlock1</span>
+  <span>IfBlock2</span>
+</If>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  no > 1 ? (
+    <>
+      <span>IfBlock1</span>
+      <span>IfBlock2</span>
+    </>
+  ) : null;
+}
+```
+
+#### &lt;Else&gt;
+
+Only one `<Else>` can be added within a `<If>`. If the `when attribute` value of `<If>` is false, then the body of `<Else>` will be returned:
+
+```tsx
+import { If, Else } from '@narrative/control-flow';
+
+<If when={no > 1}>
+  <span>IfBlock1</span>
+  <span>IfBlock2</span>
+  <Else>
+    <span>IfBlock3</span>
+    <span>IfBlock4</span>
+  </Else>
+</If>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  no > 1 ? (
+    <>
+      <span>IfBlock1</span>
+      <span>IfBlock2</span>
+    </>
+  ) : (
+    <>
+      <span>IfBlock3</span>
+      <span>IfBlock4</span>
+    </>
+  );
+}
+```
+
+#### &lt;ElseIf&gt;
+
+Multiple `<ElseIf>` can be added within a `<If>`, and any one of the tag bodys with a `when attribute` of true will be returned:
+
+```tsx
+import { If, Else, ElseIf } from '@narrative/control-flow';
+
+<If when={no > 10}>
+  <span>IfBlock1</span>
+  <ElseIf when={no > 5}>
+    <span>IfBlock2</span>
+  </ElseIf>
+  <ElseIf when={no > 1}>
+    <span>IfBlock3</span>
+  </ElseIf>
+  <Else>
+    <span>IfBlock4</span>
+  </Else>
+</If>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  no > 10 ? (
+    <span>IfBlock1</span>
+  ) : no > 5 ? (
+    <span>IfBlock2</span>
+  ) : no > 1 ? (
+    <span>IfBlock3</span>
+  ) : (
+    <span>IfBlock4</span>
+  );
+}
+```
+
+#### Function Body of &lt;If&gt;
+
+The body of `<If>`, `<ElseIf>`, `<Else>` also supports a function. It can be used for logic that calculates first and then renders:
+
+```tsx
+import { If } from '@narrative/control-flow';
+
+<If when={no > 1}>
+  {() => {
+    const blockName = 'IfBlock';
+
+    return (
+      <>
+        <span>{blockName}1</span>
+        <span>{blockName}2</span>
+      </>
+    );
+  }}
+  <Else>
+    {() => {
+      const blockName = 'ElseBlock';
+
+      return (
+        <>
+          <span>{blockName}1</span>
+          <span>{blockName}2</span>
+        </>
+      );
+    }}
+  </Else>
+</If>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  no > 1
+    ? (() => {
+        const blockName = 'IfBlock';
+
+        return (
+          <>
+            <span>{blockName}1</span>
+            <span>{blockName}2</span>
+          </>
+        );
+      })()
+    : (() => {
+        const blockName = 'ElseBlock';
+
+        return (
+          <>
+            <span>{blockName}1</span>
+            <span>{blockName}2</span>
+          </>
+        );
+      })();
+}
+```
 
 ### Switch Tag
 
