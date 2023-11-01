@@ -91,7 +91,15 @@ const App: FC = () => {
   - [Using with SWC](#using-with-swc)
 - [Usage](#usage)
   - [If Tag](#if-tag)
+    - [&lt;If&gt;](#if)
+    - [&lt;Else&gt;](#else)
+    - [&lt;ElseIf&gt;](#elseif)
+    - [Function Body of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;](#function-body-of-if-elseif-else)
   - [Switch Tag](#switch-tag)
+    - [&lt;Switch&gt; &lt;Case&gt;](#switch-case)
+    - [Multiple values of &lt;Case&gt;](#multiple-values-of-case)
+    - [&lt;Default&gt;](#default)
+    - [Function Body of &lt;Case&gt; &lt;Default&gt;](#function-body-of-case-default)
   - [For Tag](#for-tag)
 
 ## Installation
@@ -387,6 +395,49 @@ import { Switch } from '@narrative/control-flow';
   );
 }
 ```
+
+#### &lt;Switch&gt; &lt;Case&gt;
+
+`<Switch>` requires to set the `value attribute`.
+
+| Prop Name | Prop Type | Required           |
+| --------- | --------- | ------------------ |
+| value     | any       | :white_check_mark: |
+
+Each `<Case>` matches the `value attribute of <Switch>` via `is attribute`. At least one `<Case>` is required within the `<Switch>`.
+
+| Prop Name | Prop Type | Required           |
+| --------- | --------- | ------------------ |
+| is        | any       | :white_check_mark: |
+
+Example:
+
+```tsx
+import { Switch, Case } from '@narrative/control-flow';
+
+<Switch value={todos.length}>
+  <Case is={1}>
+    <span>1</span>
+  </Case>
+  <Case is={2}>
+    <span>2</span>
+  </Case>
+</Switch>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos.length === 1 ? <span>1</span> : todos.length === 2 ? <span>2</span> : null;
+}
+```
+
+As above, the `<Case>` use `strict equality(===)` when matching.
+
+#### Multiple values of &lt;Case&gt;
+
+#### &lt;Default&gt;
+
+#### Function Body of &lt;Case&gt; &lt;Default&gt;
 
 ### For Tag
 
