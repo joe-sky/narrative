@@ -154,7 +154,7 @@ As above the usage is similar to the regular React components. Each tags and its
 
 ### If Tag
 
-`<If>` tags used to write conditional logic in JSX, it is similar to the `if statement` in JavaScript. Also supports `<ElseIf>`, `<Else>`, and the syntax design fully supports JSX native formatting. Simple examples:
+`<If>` tag is an alternative syntax for conditional logic in JSX, it is similar to the `if statement` in JavaScript. Also supports `<ElseIf>`, `<Else>`, and the syntax design fully supports JSX native formatting. Simple examples:
 
 ```tsx
 import { If } from '@narrative/control-flow';
@@ -292,7 +292,7 @@ import { If, Else, ElseIf } from '@narrative/control-flow';
 }
 ```
 
-#### Function Body of &lt;If&gt;
+#### Function Body of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;
 
 The body of `<If>`, `<ElseIf>`, `<Else>` also supports a function. It can be used for logic that calculates first and then renders:
 
@@ -352,6 +352,41 @@ import { If } from '@narrative/control-flow';
 ```
 
 ### Switch Tag
+
+`<Switch>` tag is an alternative syntax for multi branch conditional statements in JSX, it is similar to the `switch statement` in JavaScript. Also supports `<Case>`, `<Default>`. Simple examples:
+
+```tsx
+import { Switch } from '@narrative/control-flow';
+
+<Switch value={todos.length}>
+  <Case is={1}>
+    <span>1</span>
+  </Case>
+  <Case is={2}>
+    <span>2</span>
+  </Case>
+  <Case is={3}>
+    <span>3</span>
+  </Case>
+  <Default>
+    <span>0</span>
+  </Default>
+</Switch>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos.length === 1 ? (
+    <span>1</span>
+  ) : todos.length === 2 ? (
+    <span>2</span>
+  ) : todos.length === 3 ? (
+    <span>3</span>
+  ) : (
+    <span>0</span>
+  );
+}
+```
 
 ### For Tag
 
