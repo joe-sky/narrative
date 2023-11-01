@@ -406,9 +406,9 @@ import { Switch } from '@narrative/control-flow';
 
 Each `<Case>` matches the `value attribute of <Switch>` via `is attribute`. At least one `<Case>` is required within the `<Switch>`.
 
-| Prop Name | Prop Type | Required           |
-| --------- | --------- | ------------------ |
-| is        | any       | :white_check_mark: |
+| Prop Name | Prop Type | Required                        |
+| --------- | --------- | ------------------------------- |
+| is        | any       | Either `is` or `in` is required |
 
 Example:
 
@@ -435,9 +435,128 @@ As above, the `<Case>` use `strict equality(===)` when matching.
 
 #### Multiple values of &lt;Case&gt;
 
+If multiple values need to be matched in one `<Case>`, the `in attribute` can be used.
+
+| Prop Name | Prop Type            | Required                        |
+| --------- | -------------------- | ------------------------------- |
+| in        | ArrayLike&lt;any&gt; | Either `is` or `in` is required |
+
+Example:
+
+```tsx
+import { Switch, Case } from '@narrative/control-flow';
+
+<Switch value={todos.length}>
+  <Case is={1}>
+    <span>1</span>
+  </Case>
+  <Case is={2}>
+    <span>2</span>
+  </Case>
+  <Case in={[3, 4, 5]}>
+    <span>3/4/5</span>
+  </Case>
+</Switch>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos.length === 1 ? (
+    <span>1</span>
+  ) : todos.length === 2 ? (
+    <span>2</span>
+  ) : [3, 4, 5].includes(todos.length) ? (
+    <span>3/4/5</span>
+  ) : null;
+}
+```
+
 #### &lt;Default&gt;
 
+`<Switch>` can have one `<Default>` inside it, which will be matched to the `<Default>` when all `<Case>` do not match:
+
+```tsx
+import { Switch, Case, Default } from '@narrative/control-flow';
+
+<Switch value={todos.length}>
+  <Case is={1}>
+    <span>1</span>
+  </Case>
+  <Case in={[2, 3]}>
+    <span>2/3</span>
+  </Case>
+  <Default>
+    <span>0</span>
+  </Default>
+</Switch>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos.length === 1 ? <span>1</span> : [2, 3].includes(todos.length) ? <span>2/3</span> : <span>0</span>;
+}
+```
+
 #### Function Body of &lt;Case&gt; &lt;Default&gt;
+
+The body of `<Case>`, `<Default>` also supports a function. It can be used for logic that calculates first and then renders:
+
+```tsx
+import { Switch, Case, Default } from '@narrative/control-flow';
+
+<Switch value={todos.length}>
+  <Case is={1}>
+    {() => {
+      const blockName = 'CaseBlock';
+
+      return (
+        <>
+          <span>{blockName}1</span>
+          <span>{blockName}2</span>
+        </>
+      );
+    }}
+  </Case>
+  <Default>
+    {() => {
+      const blockName = 'DefaultBlock';
+
+      return (
+        <>
+          <span>{blockName}1</span>
+          <span>{blockName}2</span>
+        </>
+      );
+    }}
+  </Default>
+</Switch>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos.length === 1
+    ? (() => {
+        const blockName = 'CaseBlock';
+
+        return (
+          <>
+            <span>{blockName}1</span>
+            <span>{blockName}2</span>
+          </>
+        );
+      })()
+    : (() => {
+        const blockName = 'DefaultBlock';
+
+        return (
+          <>
+            <span>{blockName}1</span>
+            <span>{blockName}2</span>
+          </>
+        );
+      })();
+}
+```
 
 ### For Tag
 
