@@ -73,7 +73,7 @@ const App: FC = () => {
 };
 ```
 
-### Features
+### Highlights
 
 `Narrative` has similar or different features as `jsx-control-statements`:
 
@@ -94,13 +94,17 @@ const App: FC = () => {
     - [&lt;If&gt;](#if)
     - [&lt;Else&gt;](#else)
     - [&lt;ElseIf&gt;](#elseif)
-    - [Function Body of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;](#function-body-of-if-elseif-else)
+    - [Function children of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;](#function-children-of-if-elseif-else)
   - [Switch Tag](#switch-tag)
     - [&lt;Switch&gt; &lt;Case&gt;](#switch-case)
     - [Multiple values of &lt;Case&gt;](#multiple-values-of-case)
     - [&lt;Default&gt;](#default)
-    - [Function Body of &lt;Case&gt; &lt;Default&gt;](#function-body-of-case-default)
+    - [Function children of &lt;Case&gt; &lt;Default&gt;](#function-children-of-case-default)
   - [For Tag](#for-tag)
+    - [&lt;For of&gt;](#for-of)
+    - [&lt;For in&gt;](#for-in)
+    - [Loop iteration metadata](#loop-iteration-metadata)
+    - [&lt;Empty&gt;](#empty)
 
 ## Installation
 
@@ -158,7 +162,7 @@ function render(no: number) {
 }
 ```
 
-As above the usage is similar to the regular React components. Each tags and its attributes also support TypeScript type checking.
+As above the usage is similar to the regular React components. Each tags and its props also support TypeScript type checking.
 
 ### If Tag
 
@@ -206,7 +210,7 @@ import { If } from '@narrative/control-flow';
 
 #### &lt;If&gt;
 
-If only use `<If>`, the body of `<If>` will be returned when the value of `when attribute` is true.
+If only use `<If>`, the children of `<If>` will be returned when the value of `when prop` is true.
 
 | Prop Name | Prop Type | Required           |
 | --------- | --------- | ------------------ |
@@ -234,7 +238,7 @@ import { If } from '@narrative/control-flow';
 
 #### &lt;Else&gt;
 
-Only one `<Else>` can be added within a `<If>`. If the `when attribute` value of `<If>` is false, then the body of `<Else>` will be returned:
+Only one `<Else>` can be added within a `<If>`. If the `when prop` value of `<If>` is false, then the children of `<Else>` will be returned:
 
 ```tsx
 import { If, Else } from '@narrative/control-flow';
@@ -267,7 +271,7 @@ import { If, Else } from '@narrative/control-flow';
 
 #### &lt;ElseIf&gt;
 
-Multiple `<ElseIf>` can be added within a `<If>`, and any one of the tag bodys with a `when attribute` of true will be returned:
+Multiple `<ElseIf>` can be added within a `<If>`, and any one of the tag children with a `when prop` of true will be returned:
 
 ```tsx
 import { If, Else, ElseIf } from '@narrative/control-flow';
@@ -300,9 +304,9 @@ import { If, Else, ElseIf } from '@narrative/control-flow';
 }
 ```
 
-#### Function Body of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;
+#### Function children of &lt;If&gt; &lt;ElseIf&gt; &lt;Else&gt;
 
-The body of `<If>`, `<ElseIf>`, `<Else>` also supports a function. It can be used for logic that calculates first and then renders:
+The children of `<If>`, `<ElseIf>`, `<Else>` also supports a function. It can be used for logic that calculates first and then renders:
 
 ```tsx
 import { If } from '@narrative/control-flow';
@@ -398,13 +402,13 @@ import { Switch } from '@narrative/control-flow';
 
 #### &lt;Switch&gt; &lt;Case&gt;
 
-`<Switch>` requires to set the `value attribute`.
+`<Switch>` requires to set the `value prop`.
 
 | Prop Name | Prop Type | Required           |
 | --------- | --------- | ------------------ |
 | value     | any       | :white_check_mark: |
 
-Each `<Case>` matches the `value attribute of <Switch>` via `is attribute`. At least one `<Case>` is required within the `<Switch>`.
+Each `<Case>` matches the `value prop of <Switch>` via `is prop`. At least one `<Case>` is required within the `<Switch>`.
 
 | Prop Name | Prop Type | Required                        |
 | --------- | --------- | ------------------------------- |
@@ -435,7 +439,7 @@ As above, the `<Case>` use `strict equality(===)` when matching.
 
 #### Multiple values of &lt;Case&gt;
 
-If multiple values need to be matched in one `<Case>`, the `in attribute` can be used.
+If multiple values need to be matched in one `<Case>`, the `in prop` can be used.
 
 | Prop Name | Prop Type            | Required                        |
 | --------- | -------------------- | ------------------------------- |
@@ -497,9 +501,9 @@ import { Switch, Case, Default } from '@narrative/control-flow';
 }
 ```
 
-#### Function Body of &lt;Case&gt; &lt;Default&gt;
+#### Function children of &lt;Case&gt; &lt;Default&gt;
 
-The body of `<Case>`, `<Default>` also supports a function. It can be used for logic that calculates first and then renders:
+The children of `<Case>`, `<Default>` also supports a function. It can be used for logic that calculates first and then renders:
 
 ```tsx
 import { Switch, Case, Default } from '@narrative/control-flow';
@@ -559,6 +563,176 @@ import { Switch, Case, Default } from '@narrative/control-flow';
 ```
 
 ### For Tag
+
+`<For>` tag is an alternative syntax for loops logic in JSX. Example:
+
+```tsx
+import { For } from '@narrative/control-flow';
+
+<For of={todos}>
+  {(todo, { index }) => <li key={index}>{todo}</li>}
+  <Empty>
+    <li>No data</li>
+  </Empty>
+</For>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  (__arr => {
+    if (__arr?.length) {
+      return __arr.map((todo, index) => <i key={index}>{todo}</i>, this);
+    }
+    return <li>No data</li>;
+  })(todos);
+}
+```
+
+#### &lt;For of&gt;
+
+`<For of>` loops is similar to the `for of statement` in JavaScript, the `of prop` accepts Arrays and Array-likes.
+
+| Prop Name | Prop Type            | Required           |
+| --------- | -------------------- | ------------------ |
+| of        | ArrayLike&lt;any&gt; | :white_check_mark: |
+
+The loop callback function is in children of `<For of>`, example:
+
+```tsx
+import { For } from '@narrative/control-flow';
+
+<For of={todos}>{(todo, { index }, arr) => <li key={index}>{todo}</li>}</For>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  todos?.map?.((todo, index, arr) => {
+    return <i key={index}>{todo}</i>;
+  }, this) || null;
+}
+```
+
+As above the callback function parameters:
+
+| Parameter order | Type                                                | Description                 | Required           |
+| --------------- | --------------------------------------------------- | --------------------------- | ------------------ |
+| first           | type of Array items                                 | each items of Array         | :white_check_mark: |
+| second          | [Loop iteration metadata](#loop-iteration-metadata) | mainly using index of Array |                    |
+| third           | type of Array                                       | looping Array variable      |                    |
+
+#### &lt;For in&gt;
+
+`<For in>` loops is similar to the `for in statement` in JavaScript, the `in prop` accepts an Object.
+
+| Prop Name | Prop Type        | Required           |
+| --------- | ---------------- | ------------------ |
+| in        | Record<any, any> | :white_check_mark: |
+
+The loop callback function is in children of `<For in>`, example:
+
+```tsx
+import { For } from '@narrative/control-flow';
+
+<For in={{ a: 1, b: 2, c: 3 }}>{(item, { key }, obj) => <i key={key}>{item}</i>}</For>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  (__obj => {
+    const __keys = __obj ? Object.keys(__obj) : [];
+
+    if (__keys.length) {
+      return __keys.map(key => {
+        const item = __obj[key];
+        const obj = __obj;
+        return <i key={key}>{item}</i>;
+      }, this);
+    }
+  })({ a: 1, b: 2, c: 3 });
+}
+```
+
+As above the callback function parameters:
+
+| Parameter order | Type                                                | Description                  | Required           |
+| --------------- | --------------------------------------------------- | ---------------------------- | ------------------ |
+| first           | type of Object values                               | each values of source object | :white_check_mark: |
+| second          | [Loop iteration metadata](#loop-iteration-metadata) | mainly using key and keys    |                    |
+| third           | type of Object                                      | looping Object variable      |                    |
+
+#### Loop iteration metadata
+
+Access additional information about each iteration by the second callback argument:
+
+- `index`: A number from 0 to the length of the Arrays or Objects.
+- `key`: The key for this item in Objects, same as `index` for Arrays.
+- `keys`: The keys Arrays for Objects.
+
+```tsx
+import { For, If } from '@narrative/control-flow';
+
+<For in={{ a: 1, b: 2, c: 3 }}>
+  {(item, { key, index, keys }) => (
+    <i key={key}>
+      {item}
+      <If when={keys.length > 2 && index > 1}>{index}</If>
+    </i>
+  )}
+</For>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  (__obj => {
+    const __keys = __obj ? Object.keys(__obj) : [];
+
+    if (__keys.length) {
+      return __keys.map((key, index) => {
+        const item = __obj[key];
+        const keys = __keys;
+        return (
+          <i key={key}>
+            {item}
+            {keys.length > 2 && index > 1 ? index : null}
+          </i>
+        );
+      }, this);
+    }
+  })({ a: 1, b: 2, c: 3 });
+}
+```
+
+#### &lt;Empty&gt;
+
+A common pattern when rendering a collection is to render a special case when the collection is empty. Optionally provide a `<Empty>` to handle this case for both `<For in>` and `<For of>` loops. `<Empty>` should be set in the children of `<For>`, Example:
+
+```tsx
+import { For, Empty } from '@narrative/control-flow';
+
+const emptyObj = {};
+
+<For in={emptyObj}>
+  {(item, { key }) => <i key={key}>{item}</i>}
+  <Empty>No Data</Empty>
+</For>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  (__obj => {
+    const __keys = __obj ? Object.keys(__obj) : [];
+
+    if (__keys.length) {
+      return __keys.map(key => {
+        const item = __obj[key];
+        return <i key={key}>{item}</i>;
+      }, this);
+    }
+
+    return 'No Data';
+  })(emptyObj);
+}
+```
 
 ## The Origin of Name
 

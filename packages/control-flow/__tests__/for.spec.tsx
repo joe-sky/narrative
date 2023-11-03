@@ -9,7 +9,7 @@ const TestFor = (props: { list: number[] | null }) => {
         {(item, { index }, arr) => (
           <Fragment key={index}>
             <i>{item}</i>
-            <If when={index < arr.length - 1}> </If>
+            <If when={arr && index < arr.length - 1}> </If>
           </Fragment>
         )}
       </For>

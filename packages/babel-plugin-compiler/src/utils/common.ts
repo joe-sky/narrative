@@ -44,7 +44,7 @@ export const SUB_TAGS_FOR = {
    * ```tsx
    * <div>
    *   <For of={[1, 2, 3]}>
-   *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+   *     {(item, { index }) => <i key={index}>{item}</i>}
    *     <Empty>No Data</Empty>
    *   </For>
    * </div>
@@ -55,9 +55,6 @@ export const SUB_TAGS_FOR = {
    *   {(__arr => {
    *     if (__arr?.length) {
    *       return __arr.map((item, index, arr) => {
-   *         const length = arr.length;
-   *         const isFirst = index === 0;
-   *         const isLast = index === length - 1;
    *         return <i key={index}>{item}</i>;
    *       }, this);
    *     }
@@ -75,7 +72,7 @@ export const ATTRS_FOR = {
    * ```tsx
    * <div>
    *   <For of={[1, 2, 3]}>
-   *     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+   *     {(item, { index }) => <i key={index}>{item}</i>}
    *   </For>
    * </div>
    *
@@ -83,9 +80,6 @@ export const ATTRS_FOR = {
    *
    * <div>
    *   {[1, 2, 3]?.map((item, index, arr) => {
-   *     const length = arr.length;
-   *     const isFirst = index === 0;
-   *     const isLast = index === length - 1;
    *     return <i key={index}>{item}</i>;
    *   }, this) || null}
    * </div>
@@ -109,11 +103,8 @@ export const ATTRS_FOR = {
    *     const __keys = __obj ? Object.keys(__obj) : [];
    *
    *     if (__keys.length) {
-   *       return __keys.map((key, index, arr) => {
+   *       return __keys.map(key => {
    *         const item = __obj[key];
-   *         const length = arr.length;
-   *         const isFirst = index === 0;
-   *         const isLast = index === length - 1;
    *         return <i key={key}>{item}</i>;
    *       }, this);
    *     }

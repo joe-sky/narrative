@@ -2,12 +2,12 @@ import { Childrenable, JSXChild, JSXNode } from '../utils';
 
 export interface ForCallbackMeta<K = number> {
   index: number;
+  key: K;
+  keys: K[];
   /**
    * @internal Not yet implemented
    */
   length: number;
-  key: K;
-  keys: K[];
   /**
    * @internal Not yet implemented
    */
@@ -23,6 +23,10 @@ export type ForCallback<T = any, K = number, S = any> = (
   meta: ForCallbackMeta<K>,
   source: S
 ) => JSXChild | void;
+
+type ArraySource<T> = Iterable<T> | ArrayLike<T> | null | undefined;
+
+type ObjectSource<O> = O | null | undefined;
 
 /**
  * Narrative tag `For`
@@ -57,13 +61,13 @@ export type ForCallback<T = any, K = number, S = any> = (
  * })({ a: 1, b: 2, c: 3 })
  * ```
  */
-export declare function For<T>(props: {
-  of: Iterable<T> | ArrayLike<T> | null | undefined;
-  children: ForCallback<T, number, T[]> | (ForCallback<T, number, T[]> | JSXNode)[];
+export declare function For<T, S>(props: {
+  of: S extends ArraySource<T> ? S : ArraySource<T>;
+  children: ForCallback<T, number, S> | (ForCallback<T, number, S> | JSXNode)[];
 }): JSX.Element;
-export declare function For<O extends Record<string, unknown>, K extends keyof O>(props: {
-  in: O | null | undefined;
-  children: ForCallback<O[K], K, O> | (ForCallback<O[K], K, O> | JSXNode)[];
+export declare function For<O extends Record<string, unknown>, K extends keyof O, S>(props: {
+  in: S extends ObjectSource<O> ? S : ObjectSource<O>;
+  children: ForCallback<O[K], K, S> | (ForCallback<O[K], K, S> | JSXNode)[];
 }): JSX.Element;
 
 /**
@@ -83,7 +87,7 @@ export declare function For<O extends Record<string, unknown>, K extends keyof O
  *     return __arr.map((item, index) => <i key={index}>{item}</i>, this);
  *   }
  *   return 'nothing';
- * )([1, 2, 3])
+ * })([1, 2, 3])
  * ```
  */
 export declare function Empty(props: Childrenable): JSX.Element;

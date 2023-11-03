@@ -36,7 +36,7 @@ pub const FOR: &str = "For";
 ///
 /// <div>
 ///   <For of={[1, 2, 3]}>
-///     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+///     {(item, { index }) => <i key={index}>{item}</i>}
 ///     <Empty>No Data</Empty>
 ///   </For>
 /// </div>
@@ -47,9 +47,6 @@ pub const FOR: &str = "For";
 ///   {(__arr => {
 ///     if (__arr?.length) {
 ///       return __arr.map((item, index, arr) => {
-///         const length = arr.length;
-///         const isFirst = index === 0;
-///         const isLast = index === length - 1;
 ///         return <i key={index}>{item}</i>;
 ///       }, this);
 ///     }
@@ -64,7 +61,7 @@ pub const EMPTY: &str = "Empty";
 ///
 /// <div>
 ///   <For of={[1, 2, 3]}>
-///     {(item, { index, isFirst, isLast }) => <i key={index}>{item}</i>}
+///     {(item, { index }) => <i key={index}>{item}</i>}
 ///   </For>
 /// </div>
 ///
@@ -72,9 +69,6 @@ pub const EMPTY: &str = "Empty";
 ///
 /// <div>
 ///   {[1, 2, 3]?.map?.((item, index, arr) => {
-///     const length = arr.length;
-///     const isFirst = index === 0;
-///     const isLast = index === length - 1;
 ///     return <i key={index}>{item}</i>;
 ///   }, this) || null}
 /// </div>
@@ -97,11 +91,8 @@ pub const OF: &str = "of";
 ///     const __keys = __obj ? Object.keys(__obj) : [];
 ///
 ///     if (__keys.length) {
-///       return __keys.map((key, index, arr) => {
+///       return __keys.map(key => {
 ///         const item = __obj[key];
-///         const length = arr.length;
-///         const isFirst = index === 0;
-///         const isLast = index === length - 1;
 ///         return <i key={key}>{item}</i>;
 ///       }, this);
 ///     }
