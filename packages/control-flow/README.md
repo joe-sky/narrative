@@ -17,9 +17,25 @@
 
 ## Introduction
 
-`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags such as `<If>`/`<For>`/`<Switch>` for React JSX/TSX.
+`Narrative`(abbreviated as `nt`) is a compiler tool for create neater control flow tags such as `<If>`/`<Switch>`/`<For>` for React JSX/TSX. It does so by transforming component-like control flow tags to their JavaScript counterparts:
 
-The inspiration comes from [jsx-control-statements](https://github.com/AlexGilleran/jsx-control-statements), it's an alternative solution with syntactic differences to `jsx-control-statements`.
+```tsx
+<If when={condition()}>Hello World!</If>;
+
+// Compiled ↓ ↓ ↓ ↓ ↓ ↓
+
+{
+  condition() ? 'Hello World!' : null;
+}
+```
+
+The inspiration mainly comes from [jsx-control-statements](https://github.com/AlexGilleran/jsx-control-statements), this tool can be seen as an alternative solution with syntactic differences to `jsx-control-statements`. It also only depends on Babel(or SWC), and it's compatible with React and React Native.
+
+> In addition, its API has also referenced the following projects:
+
+- [React If](https://github.com/romac/react-if)
+- [React Loops](https://github.com/leebyron/react-loops)
+- [Solid(Control Flow)](https://www.solidjs.com/docs/latest/api#control-flow)
 
 ### Basic Overview
 
