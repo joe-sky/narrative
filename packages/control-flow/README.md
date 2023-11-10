@@ -102,6 +102,7 @@ const App: FC = () => {
 
 ## Table of Contents
 
+- [Examples](#examples)
 - [Installation](#installation)
   - [Using with Babel](#using-with-babel)
   - [Using with SWC](#using-with-swc)
@@ -121,6 +122,16 @@ const App: FC = () => {
     - [&lt;For in&gt;](#for-in)
     - [Loop iteration metadata](#loop-iteration-metadata)
     - [&lt;Empty&gt;](#empty)
+
+## Examples
+
+### React + Vite(use Babel compiler)
+
+narrative-react-vite-demo[https://github.com/joe-sky/narrative-react-vite-demo]
+
+### React + Vite(use SWC compiler)
+
+narrative-react-vite-swc-demo[https://github.com/joe-sky/narrative-react-vite-swc-demo]
 
 ## Installation
 
@@ -154,6 +165,12 @@ Configure `SWC`:
     }
   }
 }
+```
+
+- If your `swc_core` version is lower than 0.8, please install the old version:
+
+```bash
+npm install @narrative/swc-plugin-compiler@1.1.0
 ```
 
 ## Usage
